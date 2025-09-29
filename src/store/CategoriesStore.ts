@@ -33,8 +33,6 @@ class CategoriesStore {
         { data: {}, order: [] } as IStoreCategories,
       );
 
-      console.log(categoriesMap);
-
       this.setCategories(categoriesMap);
     }
   };

@@ -5,6 +5,7 @@ import { dbClient } from '../db/dbClient.ts';
 class AuthStore {
   session: Session | null = null;
   isAuth: boolean = false;
+  userId: string | null = null;
   constructor() {
     makeAutoObservable(this);
   }
@@ -12,6 +13,7 @@ class AuthStore {
   setSession(session: Session | null): void {
     this.session = session;
     this.isAuth = !!session;
+    this.userId = session?.user.id ?? null;
   }
 
   async logoutUser() {

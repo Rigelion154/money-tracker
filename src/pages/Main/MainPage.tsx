@@ -1,17 +1,22 @@
-import { Button, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { ROUTES } from '../../routes/routes.ts';
 import { useEffect, useState } from 'react';
-import { categoriesStore } from '../../store/CategoriesStore.ts';
 import { observer } from 'mobx-react-lite';
+import { Button, Spinner } from 'react-bootstrap';
+
+import { ROUTES } from '../../routes/routes.ts';
+import { categoriesStore } from '../../store/CategoriesStore.ts';
 import { authStore } from '../../store/AuthStore.ts';
+import { dbClient } from '../../db/dbClient.ts';
 
 const MainPage = observer(() => {
   const { categories } = categoriesStore;
+  const { session, userId } = authStore;
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    categoriesStore.getCategories().finally(() => setIsLoading(false));
+    categoriesStore
+      .getCategories(userId ?? '')
+      .finally(() => setIsLoading(false));
   }, []);
 
   return (
@@ -30,6 +35,18 @@ const MainPage = observer(() => {
             <Button variant="warning">Добавить расход</Button>
           </Link>
           <Button onClick={authStore.logoutUser}>Выход</Button>
+          <Button
+            onClick={async () => {
+              const { data } = await dbClient
+                .from('categories')
+                .insert({ title: 'test', icon: 'bi-balloon', user_id: userId });
+
+              console.log(data);
+            }}
+          >
+            Создать категорию
+          </Button>
+          <pre>{JSON.stringify(session, null, 2)}</pre>
           <pre>{JSON.stringify(categories, null, 2)}</pre>
         </>
       )}

@@ -15,7 +15,7 @@ const CategoryItem = ({
   onChange,
   name,
 }: ICategoryItemProps) => {
-  const isChecked = value === category.uid;
+  const isChecked = value === category.id;
 
   return (
     <FormLabel
@@ -35,7 +35,7 @@ const CategoryItem = ({
       <FormCheckInput
         name={name}
         type="radio"
-        value={category.uid}
+        value={category.id}
         onChange={(e) => onChange(e.target.value)}
         className="d-none"
       />

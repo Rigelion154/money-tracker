@@ -1,5 +1,5 @@
 export interface ICategory {
-  uid: string;
+  id: string;
   title: string;
   color?: string;
   icon?: string;
@@ -7,6 +7,6 @@ export interface ICategory {
 }
 
 export interface IStoreCategories {
-  data: Record<ICategory['uid'], ICategory>;
+  data: Record<ICategory['id'], ICategory>;
   order: string[];
 }

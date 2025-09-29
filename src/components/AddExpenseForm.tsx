@@ -1,7 +1,9 @@
 import { Field, Form } from 'react-final-form';
 import { Button, FormLabel } from 'react-bootstrap';
-import CategoryList from './CategoryList.tsx';
+
 import { dbClient } from '../db/dbClient.ts';
+
+import CategoryList from './CategoryList.tsx';
 
 const AddExpenseForm = () => {
   const handleFormSubmit = async (values: Record<string, string>) => {
@@ -23,35 +25,28 @@ const AddExpenseForm = () => {
     }
   };
 
-  const deleteCat = async () => {
-    const { data, error } = await dbClient.rpc('delete_category', {
-      category_uid: '625a9701-8e99-4efd-a655-c9bb2d5b7608',
-    });
-
-    console.log(data);
-    console.log(error);
-  };
-
   return (
-    <Form onSubmit={handleFormSubmit}>
-      {({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
-          <FormLabel className="fw-bold">Выбор категории:</FormLabel>
-          <CategoryList />
-          <div>
-            <FormLabel className="fw-bold">Сумма:</FormLabel>
-            <Field name="amount">
-              {({ input }) => (
-                <input className="d-block" type="number" {...input} />
-              )}
-            </Field>
-          </div>
+    <>
+      <Form onSubmit={handleFormSubmit}>
+        {({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <FormLabel className="fw-bold">Выбор категории:</FormLabel>
+            <CategoryList />
+            {/*<CustomCategoriesList />*/}
+            <div>
+              <FormLabel className="fw-bold">Сумма:</FormLabel>
+              <Field name="amount">
+                {({ input }) => (
+                  <input className="d-block" type="number" {...input} />
+                )}
+              </Field>
+            </div>
 
-          <Button type="submit">Submit</Button>
-          <Button onClick={deleteCat}>DeleteCat</Button>
-        </form>
-      )}
-    </Form>
+            <Button type="submit">Submit</Button>
+          </form>
+        )}
+      </Form>
+    </>
   );
 };
 

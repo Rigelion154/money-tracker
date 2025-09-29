@@ -13,8 +13,11 @@ class CategoriesStore {
     this.categories = categories;
   }
 
-  getCategories = async () => {
-    const { data, error } = await dbClient.from('categories').select();
+  getCategories = async (userId: string) => {
+    const { data, error } = await dbClient
+      .from('categories')
+      .select()
+      .or(`user_id.eq.${userId},is_default.eq.true`);
 
     if (error) {
       return error;
@@ -23,9 +26,9 @@ class CategoriesStore {
     if (data) {
       const categoriesMap = (data as ICategory[]).reduce(
         (acc, current) => {
-          if (!acc.data[current.uid]) {
-            acc.data[current.uid] = current;
-            acc.order.push(current.uid);
+          if (!acc.data[current.id]) {
+            acc.data[current.id] = current;
+            acc.order.push(current.id);
           }
 
           return acc;

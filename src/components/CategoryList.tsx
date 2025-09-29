@@ -5,6 +5,7 @@ import { categoriesStore } from '../store/CategoriesStore.ts';
 
 const CategoryList = observer(() => {
   const { categories } = categoriesStore;
+
   return (
     <div className="d-flex flex-wrap justify-content-center gap-3">
       {categories &&

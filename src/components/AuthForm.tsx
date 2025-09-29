@@ -1,23 +1,30 @@
+import { useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { Button, FormControl } from 'react-bootstrap';
+
 import { dbClient } from '../db/dbClient.ts';
-import { useState } from 'react';
+
+import ErrorBar from './ErrorBar.tsx';
 
 const AuthForm = () => {
   const [type, setType] = useState<'login' | 'register'>('login');
   const handleSubmitForm = async (values: Record<string, string>) => {
     if (type === 'register') {
-      await dbClient.auth.signUp({
+      const { error } = await dbClient.auth.signUp({
         email: values.email,
         password: values.password,
       });
+
+      return { submitError: error?.message };
     }
 
     if (type === 'login') {
-      await dbClient.auth.signInWithPassword({
+      const { error } = await dbClient.auth.signInWithPassword({
         email: values.email,
         password: values.password,
       });
+
+      return { submitError: error?.message };
     }
   };
 
@@ -64,6 +71,9 @@ const AuthForm = () => {
                 />
               )}
             </Field>
+          </div>
+          <div className="text-center">
+            <ErrorBar name="submitError" />
           </div>
 
           <div className="text-center">

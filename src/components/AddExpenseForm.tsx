@@ -1,27 +1,38 @@
 import { Field, Form } from 'react-final-form';
-import { Button, FormLabel } from 'react-bootstrap';
-
-import { dbClient } from '../db/dbClient.ts';
+import { Button } from 'react-bootstrap';
 
 import CategoryList from './CategoryList.tsx';
+import { dbClient } from '../db/dbClient.ts';
+import { observer } from 'mobx-react-lite';
+import { authStore } from '../store/AuthStore.ts';
+import { CurrencyInput } from 'react-currency-input-field';
+import ErrorBar from './ErrorBar.tsx';
+import { toasterStore } from '../store/ToasterStore.ts';
 
-const AddExpenseForm = () => {
-  const handleFormSubmit = async (values: Record<string, string>) => {
-    console.log(values);
-    try {
-      const { data, error } = await dbClient.rpc('add_to_category_amount2', {
-        category_uid: values.category,
-        amount_to_add: parseFloat(values.amount), // преобразуем строку в число
-      });
+const AddExpenseForm = observer(() => {
+  const { userId } = authStore;
 
-      if (error) {
-        console.error('Error updating category amount:', error);
-        return;
-      }
+  const handleFormSubmit = async (
+    values: Record<string, string>,
+    form: Record<string, any>,
+  ) => {
+    const { error, data } = await dbClient
+      .from('expenses')
+      .upsert({
+        category_id: values.category,
+        amount: parseFloat(values.amount),
+        user_id: userId,
+      })
+      .select();
 
-      console.log('Category amount updated successfully', data);
-    } catch (e) {
-      console.error(e);
+    if (data) {
+      toasterStore.addToast('Сумма успешно добавлена', 'success');
+      form.reset();
+    }
+
+    if (error) {
+      toasterStore.addToast('Ошибка добавления суммы', 'error');
+      return { submitError: error.message };
     }
   };
 
@@ -29,25 +40,40 @@ const AddExpenseForm = () => {
     <>
       <Form onSubmit={handleFormSubmit}>
         {({ handleSubmit }) => (
-          <form onSubmit={handleSubmit}>
-            <FormLabel className="fw-bold">Выбор категории:</FormLabel>
+          <form
+            onSubmit={handleSubmit}
+            className="d-flex flex-column align-items-center mt-3 gap-3"
+          >
+            <h3 className="fw-bold text-primary">Выбор категории</h3>
             <CategoryList />
             {/*<CustomCategoriesList />*/}
-            <div>
-              <FormLabel className="fw-bold">Сумма:</FormLabel>
-              <Field name="amount">
-                {({ input }) => (
-                  <input className="d-block" type="number" {...input} />
-                )}
-              </Field>
-            </div>
 
-            <Button type="submit">Submit</Button>
+            <h3 className="fw-bold text-primary">Сумма</h3>
+            <Field name="amount">
+              {({ input }) => (
+                <CurrencyInput
+                  name={input.name}
+                  value={input.value}
+                  onValueChange={(value) => input.onChange(value)}
+                  className="rounded-1 px-2 py-1 border border-primary"
+                  placeholder="Введите сумму"
+                  decimalsLimit={2}
+                  suffix=" ₽"
+                  style={{ fontSize: '1.2rem', outlineColor: '#0d6efd' }}
+                  autoComplete="off"
+                />
+              )}
+            </Field>
+
+            <Button type="submit" variant="outline-success" size="lg">
+              Добавить
+            </Button>
+            <ErrorBar name="submitError" />
           </form>
         )}
       </Form>
     </>
   );
-};
+});
 
 export default AddExpenseForm;

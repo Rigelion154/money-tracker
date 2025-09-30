@@ -30,7 +30,10 @@ const AddTransactionPage = observer(() => {
             to={ROUTES.MAIN}
             style={{ color: 'inherit', textDecoration: 'none' }}
           >
-            <Button variant="warning">Назад</Button>
+            <Button variant="warning" size="lg" className="rounded-1">
+              <i className="bi bi-arrow-left me-2"></i>
+              Назад
+            </Button>
           </Link>
 
           <AddExpenseForm />

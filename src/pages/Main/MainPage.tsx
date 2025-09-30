@@ -11,7 +11,7 @@ import BaseLoader from '../../components/helpers/BaseLoader.tsx';
 import ExpenseList from '../../components/ExpenseList.tsx';
 
 const MainPage = observer(() => {
-  const { expenses } = categoriesStore;
+  // const { expenses } = categoriesStore;
   const { userId } = authStore;
   const [isLoading, setIsLoading] = useState(true);
 
@@ -19,7 +19,7 @@ const MainPage = observer(() => {
     categoriesStore
       .getUserExpenses(userId ?? '')
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [userId]);
 
   const handleLogout = async () => {
     setIsLoading(true);
@@ -29,10 +29,14 @@ const MainPage = observer(() => {
 
   return (
     <>
-      {isLoading && <BaseLoader />}
+      {isLoading && (
+        <div className="w-100" style={{ height: '90vh' }}>
+          <BaseLoader />
+        </div>
+      )}
       {!isLoading && (
         <>
-          <div className="d-flex justify-content-between mb-3">
+          <div className="d-flex justify-content-between mb-3 w-100">
             <Link
               to={ROUTES.ADD_TRANSACTION}
               style={{ color: 'inherit', textDecoration: 'none' }}
@@ -58,7 +62,7 @@ const MainPage = observer(() => {
 
           <ExpenseList />
 
-          <pre>{JSON.stringify(expenses, null, 2)}</pre>
+          {/*<pre>{JSON.stringify(expenses, null, 2)}</pre>*/}
         </>
       )}
     </>

@@ -19,11 +19,15 @@ const AddTransactionPage = observer(() => {
     categoriesStore
       .getCategories(userId ?? '')
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [userId]);
 
   return (
     <>
-      {isLoading && <BaseLoader />}
+      {isLoading && (
+        <div className="w-100" style={{ height: '90vh' }}>
+          <BaseLoader />
+        </div>
+      )}
       {!isLoading && categories && (
         <div>
           <Link

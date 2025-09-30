@@ -1,6 +1,12 @@
 import { Field } from 'react-final-form';
 
-const ErrorBar = ({ name }: { name: string }) => (
+const ErrorBar = ({
+  name,
+  color = 'danger',
+}: {
+  name: string;
+  color?: string;
+}) => (
   <Field
     name={name}
     subscription={{
@@ -13,7 +19,7 @@ const ErrorBar = ({ name }: { name: string }) => (
       return (
         <div style={{ height: '25px' }}>
           {(touched || dirty) && (error || submitError) ? (
-            <p className="text-danger mb-0">{error || submitError}</p>
+            <p className={`text-${color} mb-0`}>{error || submitError}</p>
           ) : null}
         </div>
       );

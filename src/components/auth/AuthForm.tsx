@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { Button, FormControl } from 'react-bootstrap';
 
-import { dbClient } from '../db/dbClient.ts';
+import { dbClient } from '../../db/dbClient.ts';
 
-import ErrorBar from './ErrorBar.tsx';
+import ErrorBar from '../helpers/ErrorBar.tsx';
 
 const AuthForm = () => {
   const [type, setType] = useState<'login' | 'register'>('login');

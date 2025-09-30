@@ -6,7 +6,7 @@ import { dbClient } from '../db/dbClient.ts';
 import { observer } from 'mobx-react-lite';
 import { authStore } from '../store/AuthStore.ts';
 import { CurrencyInput } from 'react-currency-input-field';
-import ErrorBar from './ErrorBar.tsx';
+import ErrorBar from './helpers/ErrorBar.tsx';
 import { toasterStore } from '../store/ToasterStore.ts';
 
 const AddExpenseForm = observer(() => {
@@ -20,7 +20,7 @@ const AddExpenseForm = observer(() => {
       .from('expenses')
       .upsert({
         category_id: values.category,
-        amount: parseFloat(values.amount),
+        amount: parseFloat(values.amount.replace(',', '.')),
         user_id: userId,
       })
       .select();

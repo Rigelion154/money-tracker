@@ -7,7 +7,7 @@ import { ROUTES } from '../../routes/routes.ts';
 import { categoriesStore } from '../../store/CategoriesStore.ts';
 import { authStore } from '../../store/AuthStore.ts';
 
-import BaseLoader from '../../components/BaseLoader.tsx';
+import BaseLoader from '../../components/helpers/BaseLoader.tsx';
 import AddExpenseForm from '../../components/AddExpenseForm.tsx';
 
 const AddTransactionPage = observer(() => {

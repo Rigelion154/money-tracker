@@ -22,7 +22,7 @@ const CategoryItem = ({
       className="d-flex flex-column align-items-center p-2 pt-0 rounded-3"
       style={{
         backgroundColor: isChecked ? category.color : '',
-        width: '120px',
+        width: '100px',
       }}
       role="button"
     >
@@ -31,7 +31,18 @@ const CategoryItem = ({
         style={{ fontSize: '2.5rem', backgroundColor: category.color }}
       />
 
-      <span className={isChecked ? 'text-white' : ''}>{category.title}</span>
+      <span
+        className={isChecked ? 'text-white' : ''}
+        style={{
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+          width: '100px',
+          textAlign: 'center',
+        }}
+      >
+        {category.title}
+      </span>
       <FormCheckInput
         name={name}
         type="radio"

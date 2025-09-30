@@ -16,13 +16,13 @@ class AuthStore {
     this.userId = session?.user.id ?? null;
   }
 
-  async logoutUser() {
+  logoutUser = async () => {
     try {
       await dbClient.auth.signOut();
     } catch (e) {
       throw e;
     }
-  }
+  };
 }
 
 export const authStore = new AuthStore();

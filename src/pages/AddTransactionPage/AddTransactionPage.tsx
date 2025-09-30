@@ -29,7 +29,7 @@ const AddTransactionPage = observer(() => {
         </div>
       )}
       {!isLoading && categories && (
-        <div>
+        <div className="w-100">
           <Link
             to={ROUTES.MAIN}
             style={{ color: 'inherit', textDecoration: 'none' }}

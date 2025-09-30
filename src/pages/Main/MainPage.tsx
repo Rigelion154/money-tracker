@@ -11,7 +11,7 @@ import BaseLoader from '../../components/helpers/BaseLoader.tsx';
 import ExpenseList from '../../components/ExpenseList.tsx';
 
 const MainPage = observer(() => {
-  // const { expenses } = categoriesStore;
+  const { expenses } = categoriesStore;
   const { userId } = authStore;
   const [isLoading, setIsLoading] = useState(true);
 
@@ -62,7 +62,7 @@ const MainPage = observer(() => {
 
           <ExpenseList />
 
-          {/*<pre>{JSON.stringify(expenses, null, 2)}</pre>*/}
+          <pre>{JSON.stringify(expenses, null, 2)}</pre>
         </>
       )}
     </>

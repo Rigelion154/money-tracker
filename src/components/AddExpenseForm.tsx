@@ -1,13 +1,14 @@
 import { Field, Form } from 'react-final-form';
 import { Button } from 'react-bootstrap';
-
-import CategoryList from './CategoryList.tsx';
-import { dbClient } from '../db/dbClient.ts';
-import { observer } from 'mobx-react-lite';
-import { authStore } from '../store/AuthStore.ts';
 import { CurrencyInput } from 'react-currency-input-field';
-import ErrorBar from './helpers/ErrorBar.tsx';
+import { observer } from 'mobx-react-lite';
+
+import { dbClient } from '../db/dbClient.ts';
+import { authStore } from '../store/AuthStore.ts';
 import { toasterStore } from '../store/ToasterStore.ts';
+
+import ErrorBar from './helpers/ErrorBar.tsx';
+import CategoryList from './categories/CategoryList.tsx';
 
 const AddExpenseForm = observer(() => {
   const { userId } = authStore;
@@ -46,7 +47,6 @@ const AddExpenseForm = observer(() => {
           >
             <h3 className="fw-bold text-primary">Выбор категории</h3>
             <CategoryList />
-            {/*<CustomCategoriesList />*/}
 
             <h3 className="fw-bold text-primary">Сумма</h3>
             <Field name="amount">

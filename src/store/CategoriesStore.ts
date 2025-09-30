@@ -60,7 +60,7 @@ class CategoriesStore {
       .from('expenses')
       .select(`*,categories (title, color, icon), subcategories (id, title)`)
       .eq('user_id', userId)
-      .order('date', { ascending: true });
+      .order('amount', { ascending: false });
 
     if (data && data.length > 0) {
       const expensesMap = (data as IExpense[]).reduce(

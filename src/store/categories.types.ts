@@ -8,8 +8,11 @@ export interface ICategory {
 }
 
 export interface ISubcategory {
-  id: string;
-  title: string;
+  "id": string;
+  "created_at": string;
+  "title": string;
+  "user_id": string;
+  "category_id": string;
 }
 
 export interface IExpense {

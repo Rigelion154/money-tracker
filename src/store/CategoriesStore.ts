@@ -4,13 +4,21 @@ import type {
   IExpense,
   IStoreCategories,
   IStoreExpense,
+  ISubcategory,
 } from './categories.types.ts';
 import { dbClient } from '../db/dbClient.ts';
+
+interface ITotalAmountCategory {
+  totalAmount: number;
+  category: Partial<ICategory>;
+  expenses: IExpense[];
+}
 
 class CategoriesStore {
   categories: IStoreCategories | null = null;
   expenses: Record<ICategory['id'], IStoreExpense> | null = null;
-  isLoading: boolean = true;
+  totalAmountCategoryList: ITotalAmountCategory[] = [];
+  currentSubcategoryList: ISubcategory[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -20,15 +28,17 @@ class CategoriesStore {
     this.categories = categories;
   }
 
-  getCategories = async (userId: string) => {
-    // const { data, error } = await dbClient
-    //   .from('categories')
-    //   .select()
-    //   .or(`user_id.eq.${userId},is_default.eq.true`);
+  private setTotalAmountCategoryList = (data: ITotalAmountCategory[]) =>
+    (this.totalAmountCategoryList = data);
 
-    const { data, error } = await dbClient.rpc('get_user_categories', {
-      user_uuid: userId,
-    });
+  setCurrentSubcategoryList = (data: ISubcategory[]) =>
+    (this.currentSubcategoryList = data);
+
+  getCategories = async (userId: string) => {
+    const { data, error } = await dbClient
+      .from('categories')
+      .select()
+      .or(`user_id.eq.${userId},is_default.eq.true`);
 
     if (error) {
       return error;
@@ -51,52 +61,86 @@ class CategoriesStore {
     }
   };
 
-  private setExpenses = (expenses: Record<ICategory['id'], IStoreExpense>) => {
-    this.expenses = expenses;
+  getSubcategories = async (userId: string, categoryId: string) => {
+    const { data } = await dbClient
+      .from('subcategories')
+      .select()
+      .eq('user_id', userId)
+      .eq('category_id', categoryId);
+
+    if (data) {
+      this.setCurrentSubcategoryList(data);
+    }
   };
 
   getUserExpenses = async (userId: string) => {
     const { data } = await dbClient
       .from('expenses')
-      .select(`*,categories (title, color, icon), subcategories (id, title)`)
+      .select(
+        `*,categories (id, title, color, icon), subcategories (id, title)`,
+      )
       .eq('user_id', userId)
       .order('amount', { ascending: false });
 
-    if (data && data.length > 0) {
-      const expensesMap = (data as IExpense[]).reduce(
-        (acc, current) => {
-          if (!acc[current.category_id]) {
-            acc[current.category_id] = {
-              category: current.categories,
-              subcategories: {},
-              totalAmount: 0,
-              items: [],
-            };
-          }
-          // Добавляем подкатегорию если она есть
-          if (current.subcategory_id && current.subcategories) {
-            if (!acc[current.category_id].subcategories) {
-              acc[current.category_id].subcategories = {};
-            }
+    if (data) {
+      const tempMap: Record<string, ITotalAmountCategory> = {};
 
-            if (
-              !acc[current.category_id].subcategories[current.subcategory_id]
-            ) {
-              acc[current.category_id].subcategories[current.subcategory_id] =
-                current.subcategories;
-            }
-          }
-          // Обновляем сумму и добавляем запись
-          acc[current.category_id].totalAmount += current.amount;
-          acc[current.category_id].items.push(current);
+      for (const expense of data as IExpense[]) {
+        if (!tempMap[expense.category_id]) {
+          tempMap[expense.category_id] = {
+            category: expense.categories,
+            totalAmount: 0,
+            expenses: [],
+          };
+        }
+        tempMap[expense.category_id].totalAmount += expense.amount;
+        tempMap[expense.category_id].expenses.push(expense);
+      }
+      // Преобразуем в массив и сразу сортируем
+      const categoryTotals = Object.entries(tempMap)
+        .map(([_, item]) => ({ ...item }))
+        .sort((a, b) => b.totalAmount - a.totalAmount);
 
-          return acc;
-        },
-        {} as Record<ICategory['id'], IStoreExpense>,
-      );
-
-      this.setExpenses(expensesMap);
+      this.setTotalAmountCategoryList(categoryTotals);
     }
+
+    // console.log('expenses sorted:', toJS(this.totalAmountCategoryList));
+
+    // if (data && data.length > 0) {
+    //   const expensesMap = (data as IExpense[]).reduce(
+    //     (acc, current) => {
+    //       if (!acc[current.category_id]) {
+    //         acc[current.category_id] = {
+    //           category: current.categories,
+    //           subcategories: {},
+    //           totalAmount: 0,
+    //           items: [],
+    //         };
+    //       }
+    //       // Добавляем подкатегорию если она есть
+    //       if (current.subcategory_id && current.subcategories) {
+    //         if (!acc[current.category_id].subcategories) {
+    //           acc[current.category_id].subcategories = {};
+    //         }
+    //
+    //         if (
+    //           !acc[current.category_id].subcategories[current.subcategory_id]
+    //         ) {
+    //           acc[current.category_id].subcategories[current.subcategory_id] =
+    //             current.subcategories;
+    //         }
+    //       }
+    //       // Обновляем сумму и добавляем запись
+    //       acc[current.category_id].totalAmount += current.amount;
+    //       acc[current.category_id].items.push(current);
+    //
+    //       return acc;
+    //     },
+    //     {} as Record<ICategory['id'], IStoreExpense>,
+    //   );
+    //
+    //   this.setExpenses(expensesMap);
+    // }
   };
 }
 

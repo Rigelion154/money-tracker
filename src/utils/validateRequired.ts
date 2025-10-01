@@ -1,0 +1,1 @@
+export const validateRequired = (value: string) => value ? false : 'Поле обязательно к заполнению'

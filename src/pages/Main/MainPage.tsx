@@ -18,33 +18,15 @@ const MainPage = observer(() => {
   }, [userId]);
 
   return (
-    <>
-      {isLoading && (
-        <div style={{ height: '90vh' }}>
-          <BaseLoader />
-        </div>
-      )}
+    <div style={{ padding: '5rem 0' }} className="w-100">
+      {isLoading && <BaseLoader />}
       {!isLoading && (
-        <div style={{ paddingTop: '5rem' }}>
-          {/*<Button*/}
-          {/*  onClick={async () => {*/}
-          {/*    const { data } = await dbClient*/}
-          {/*      .from('categories')*/}
-          {/*      .insert({ title: 'test', icon: 'bi-balloon', user_id: userId });*/}
-
-          {/*    console.log(data);*/}
-          {/*  }}*/}
-          {/*>*/}
-          {/*  Создать категорию*/}
-          {/*</Button>*/}
-
+        <>
           <ExpenseList />
           <PeriodBar />
-
-          {/*<pre>{JSON.stringify(expenses, null, 2)}</pre>*/}
-        </div>
+        </>
       )}
-    </>
+    </div>
   );
 });
 

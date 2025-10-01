@@ -22,12 +22,11 @@ const AddTransactionPage = observer(() => {
   }, [userId]);
 
   return (
-    <>
-      {isLoading && (
-        <div style={{ height: '90vh' }}>
-          <BaseLoader />
-        </div>
-      )}
+    <div
+      style={{ paddingTop: '2rem' }}
+      className="d-flex flex-column flex-grow-1"
+    >
+      {isLoading && <BaseLoader />}
       {!isLoading && categories && (
         <>
           <Link
@@ -43,7 +42,7 @@ const AddTransactionPage = observer(() => {
           <AddExpenseForm />
         </>
       )}
-    </>
+    </div>
   );
 });
 

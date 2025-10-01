@@ -2,6 +2,7 @@ import { Field } from 'react-final-form';
 import { observer } from 'mobx-react-lite';
 
 import { categoriesStore } from '../../store/CategoriesStore.ts';
+import { validateRequired } from '../../utils/validateRequired.ts';
 
 import CategoryItem from './CategoryItem.tsx';
 
@@ -12,16 +13,20 @@ const CategoryList = observer(() => {
 
   return (
     <div className={styles.categories__container}>
-      {categories &&
-        categories.order.map((categoryUid) => {
-          const category = categories.data[categoryUid];
+      <Field name="category" validate={validateRequired}>
+        {({ input }) => (
+          <>
+            {categories &&
+              categories.order.map((categoryUid) => {
+                const category = categories.data[categoryUid];
 
-          return (
-            <Field name="category" key={categoryUid}>
-              {({ input }) => <CategoryItem {...{ category, ...input }} />}
-            </Field>
-          );
-        })}
+                return (
+                  <CategoryItem {...{ category, ...input }} key={categoryUid} />
+                );
+              })}
+          </>
+        )}
+      </Field>
     </div>
   );
 });

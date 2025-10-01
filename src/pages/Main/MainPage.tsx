@@ -1,17 +1,13 @@
-import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Button } from 'react-bootstrap';
-
-import { ROUTES } from '../../routes/routes.ts';
 import { categoriesStore } from '../../store/CategoriesStore.ts';
 import { authStore } from '../../store/AuthStore.ts';
 
 import BaseLoader from '../../components/helpers/BaseLoader.tsx';
 import ExpenseList from '../../components/ExpenseList.tsx';
+import PeriodBar from '../../components/layuot/PeriodBar/PeriodBar.tsx';
 
 const MainPage = observer(() => {
-  const { expenses } = categoriesStore;
   const { userId } = authStore;
   const [isLoading, setIsLoading] = useState(true);
 
@@ -21,33 +17,15 @@ const MainPage = observer(() => {
       .finally(() => setIsLoading(false));
   }, [userId]);
 
-  const handleLogout = async () => {
-    setIsLoading(true);
-    await authStore.logoutUser();
-    setIsLoading(false);
-  };
-
   return (
     <>
       {isLoading && (
-        <div className="w-100" style={{ height: '90vh' }}>
+        <div style={{ height: '90vh' }}>
           <BaseLoader />
         </div>
       )}
       {!isLoading && (
-        <>
-          <div className="d-flex justify-content-between mb-3 w-100">
-            <Link
-              to={ROUTES.ADD_TRANSACTION}
-              style={{ color: 'inherit', textDecoration: 'none' }}
-            >
-              <Button variant="warning">Добавить расход</Button>
-            </Link>
-            <Button onClick={handleLogout}>
-              <span className="me-2">Выход</span>
-              <span>{userId}</span>
-            </Button>
-          </div>
+        <div style={{ paddingTop: '5rem' }}>
           {/*<Button*/}
           {/*  onClick={async () => {*/}
           {/*    const { data } = await dbClient*/}
@@ -61,9 +39,10 @@ const MainPage = observer(() => {
           {/*</Button>*/}
 
           <ExpenseList />
+          <PeriodBar />
 
-          <pre>{JSON.stringify(expenses, null, 2)}</pre>
-        </>
+          {/*<pre>{JSON.stringify(expenses, null, 2)}</pre>*/}
+        </div>
       )}
     </>
   );

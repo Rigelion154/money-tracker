@@ -24,12 +24,12 @@ const AddTransactionPage = observer(() => {
   return (
     <>
       {isLoading && (
-        <div className="w-100" style={{ height: '90vh' }}>
+        <div style={{ height: '90vh' }}>
           <BaseLoader />
         </div>
       )}
       {!isLoading && categories && (
-        <div className="w-100">
+        <>
           <Link
             to={ROUTES.MAIN}
             style={{ color: 'inherit', textDecoration: 'none' }}
@@ -41,7 +41,7 @@ const AddTransactionPage = observer(() => {
           </Link>
 
           <AddExpenseForm />
-        </div>
+        </>
       )}
     </>
   );

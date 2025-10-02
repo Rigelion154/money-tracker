@@ -112,14 +112,15 @@ const AddExpenseForm = observer(() => {
 
                 <Button
                   type="submit"
-                  variant="success"
-                  className="position-fixed start-50 bottom-0 translate-middle-x mb-2"
+                  variant="outline-success"
+                  className="position-fixed start-50 bottom-0 translate-middle-x mb-2 rounded-3 px-5 text-success"
+                  style={{
+                    backdropFilter: 'blur(5px)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                  }}
                 >
                   Добавить
                 </Button>
-
-                {/*<pre>{JSON.stringify(errors, null, 2)}</pre>*/}
-                {/*<pre>{JSON.stringify(values, null, 2)}</pre>*/}
               </form>
             )}
           </Form>

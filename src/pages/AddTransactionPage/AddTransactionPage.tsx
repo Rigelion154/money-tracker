@@ -1,49 +1,7 @@
-import { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { observer } from 'mobx-react-lite';
+import AddExpenseForm from '../../components/form/AddExpenseForm/AddExpenseForm.tsx';
 
-import { ROUTES } from '../../routes/routes.ts';
-import { categoriesStore } from '../../store/CategoriesStore.ts';
-import { authStore } from '../../store/AuthStore.ts';
-
-import BaseLoader from '../../components/helpers/BaseLoader.tsx';
-import AddExpenseForm from '../../components/AddExpenseForm.tsx';
-
-const AddTransactionPage = observer(() => {
-  const { categories } = categoriesStore;
-  const { userId } = authStore;
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    categoriesStore
-      .getCategories(userId ?? '')
-      .finally(() => setIsLoading(false));
-  }, [userId]);
-
-  return (
-    <div
-      style={{ paddingTop: '2rem' }}
-      className="d-flex flex-column flex-grow-1"
-    >
-      {isLoading && <BaseLoader />}
-      {!isLoading && categories && (
-        <>
-          <Link
-            to={ROUTES.MAIN}
-            style={{ color: 'inherit', textDecoration: 'none' }}
-          >
-            <Button variant="warning" size="lg" className="rounded-1">
-              <i className="bi bi-arrow-left me-2"></i>
-              Назад
-            </Button>
-          </Link>
-
-          <AddExpenseForm />
-        </>
-      )}
-    </div>
-  );
-});
+const AddTransactionPage = () => {
+  return <AddExpenseForm />;
+};
 
 export default AddTransactionPage;

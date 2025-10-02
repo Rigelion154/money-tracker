@@ -1,11 +1,11 @@
 import { observer } from 'mobx-react-lite';
 
-import { toasterStore } from '../../../store/ToasterStore.ts';
+import { appToaster } from '../../../store/AppToaster.ts';
 
 import styles from './AppToaster.module.css';
 
 const AppToaster = observer(() => {
-  const { toasts } = toasterStore;
+  const { toasts } = appToaster;
 
   return (
     toasts &&
@@ -19,7 +19,7 @@ const AppToaster = observer(() => {
             <span>{toast.message}</span>
             <button
               className={styles.toast__close}
-              onClick={() => toasterStore.handleToastClose(toast.id)}
+              onClick={() => appToaster.handleToastClose(toast.id)}
             >
               <span style={{ marginBottom: '2px' }}>×</span>
             </button>

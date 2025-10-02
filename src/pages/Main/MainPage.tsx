@@ -18,7 +18,7 @@ const MainPage = observer(() => {
   }, [userId]);
 
   return (
-    <div style={{ padding: '5rem 0' }} className="w-100">
+    <div className="w-100">
       {isLoading && <BaseLoader />}
       {!isLoading && (
         <>

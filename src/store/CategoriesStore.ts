@@ -1,11 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import type {
-  ICategory,
-  IExpense,
-  IStoreCategories,
-  IStoreExpense,
-  ISubcategory,
-} from './categories.types.ts';
+import type { ICategory, IExpense, IStoreCategories, IStoreExpense } from './categories.types.ts';
 import { dbClient } from '../db/dbClient.ts';
 
 interface ITotalAmountCategory {
@@ -18,7 +12,6 @@ class CategoriesStore {
   categories: IStoreCategories | null = null;
   expenses: Record<ICategory['id'], IStoreExpense> | null = null;
   totalAmountCategoryList: ITotalAmountCategory[] = [];
-  currentSubcategoryList: ISubcategory[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -30,9 +23,6 @@ class CategoriesStore {
 
   private setTotalAmountCategoryList = (data: ITotalAmountCategory[]) =>
     (this.totalAmountCategoryList = data);
-
-  setCurrentSubcategoryList = (data: ISubcategory[]) =>
-    (this.currentSubcategoryList = data);
 
   getCategories = async (userId: string) => {
     const { data, error } = await dbClient
@@ -61,24 +51,27 @@ class CategoriesStore {
     }
   };
 
-  getSubcategories = async (userId: string, categoryId: string) => {
-    const { data } = await dbClient
-      .from('subcategories')
-      .select()
-      .eq('user_id', userId)
-      .eq('category_id', categoryId);
-
-    if (data) {
-      this.setCurrentSubcategoryList(data);
-    }
+  addExpense = async (
+    userId: string | null,
+    categoryId: string,
+    amount: string,
+    subcategoryId?: string,
+  ) => {
+    return dbClient
+      .from('expenses')
+      .upsert({
+        category_id: categoryId,
+        subcategory_id: subcategoryId,
+        amount: parseFloat(amount.replace(',', '.')),
+        user_id: userId,
+      })
+      .select();
   };
 
   getUserExpenses = async (userId: string) => {
     const { data } = await dbClient
       .from('expenses')
-      .select(
-        `*,categories (id, title, color, icon), subcategories (id, title)`,
-      )
+      .select(`*,categories (id, title, color, icon), subcategories (id, title)`)
       .eq('user_id', userId)
       .order('amount', { ascending: false });
 

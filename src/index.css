@@ -21,6 +21,7 @@
 
 body {
     box-sizing: border-box;
+    overflow-y: scroll;
 }
 
 .modal__content {

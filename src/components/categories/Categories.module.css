@@ -58,3 +58,10 @@
         width: 80px;
     }
 }
+
+.add__subcategory_modal__wrapper {
+    width: 30%;
+    @media screen and (max-width: 1200px) {
+        width: 90%;
+    }
+}

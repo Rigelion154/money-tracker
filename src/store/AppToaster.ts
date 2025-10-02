@@ -42,4 +42,4 @@ class ToasterStore {
   };
 }
 
-export const toasterStore = new ToasterStore();
+export const appToaster = new ToasterStore();

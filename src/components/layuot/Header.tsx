@@ -1,10 +1,13 @@
+import UserMenu from './UserMenu.tsx';
+
 const Header = () => {
   return (
     <div
-      className="d-flex d-xl-none align-items-center justify-content-between bg-secondary-subtle px-3 position-fixed top-0 start-0 w-100 py-2"
-      style={{ zIndex: 50 }}
+      className="d-flex align-items-center justify-content-between bg-light px-3 w-100"
+      style={{ height: '40px' }}
     >
-      <div>Burger</div>
+      <i className="bi bi-list" style={{ fontSize: '1.5rem' }}></i>
+      <UserMenu />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, observable } from 'mobx';
 
 interface IModalItem {
   style?: string;
@@ -18,7 +18,7 @@ class ModalStore {
   modalOverflow: 'scroll' | 'hidden' = 'scroll';
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this, { modalList: observable.shallow });
   }
 
   openModal = (modalData: IModalItem) => {

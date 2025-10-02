@@ -1,4 +1,4 @@
-import { Button } from 'react-bootstrap';
+import { Button, InputGroup } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { Field, Form } from 'react-final-form';
 import { CurrencyInput } from 'react-currency-input-field';
@@ -59,12 +59,14 @@ const AddExpenseForm = observer(() => {
       {isLoading && <BaseLoader />}
       {!isLoading && categories && (
         <>
-          <Link to={ROUTES.MAIN} style={{ color: 'inherit', textDecoration: 'none' }}>
-            <Button variant="warning" size="lg" className="rounded-1">
-              <i className="bi bi-arrow-left me-2"></i>
-              Назад
-            </Button>
-          </Link>
+          <div>
+            <Link to={ROUTES.MAIN} style={{ color: 'inherit', textDecoration: 'none' }}>
+              <Button variant="warning" className="rounded-2 px-3">
+                <i className="bi bi-arrow-left me-2"></i>
+                Назад
+              </Button>
+            </Link>
+          </div>
 
           <Form onSubmit={handleFormSubmit}>
             {({ handleSubmit }) => (
@@ -77,17 +79,22 @@ const AddExpenseForm = observer(() => {
 
                   <Field name={ADD_EXPENSE_FIELDS.AMOUNT}>
                     {({ input }) => (
-                      <CurrencyInput
-                        name={input.name}
-                        value={input.value}
-                        onValueChange={(value) => input.onChange(value)}
-                        className="rounded-1 px-2 py-1 border border-primary"
-                        placeholder="Введите сумму"
-                        decimalsLimit={2}
-                        suffix=" ₽"
-                        style={{ fontSize: '1.2rem', outlineColor: '#0d6efd' }}
-                        autoComplete="off"
-                      />
+                      <InputGroup className="border-primary">
+                        <CurrencyInput
+                          name={input.name}
+                          value={input.value}
+                          onValueChange={(value) => input.onChange(value)}
+                          className="rounded-start-2 rounded-end-0 px-2 py-1 border border-success"
+                          // placeholder="Введите сумму"
+                          decimalsLimit={2}
+                          suffix=" ₽"
+                          style={{ fontSize: '1.2rem', outlineColor: '#0d6efd' }}
+                          autoComplete="off"
+                        />
+                        <InputGroup.Text className="border-success py-0 px-2">
+                          <i className="bi bi-coin text-success fs-4"></i>
+                        </InputGroup.Text>
+                      </InputGroup>
                     )}
                   </Field>
                 </div>

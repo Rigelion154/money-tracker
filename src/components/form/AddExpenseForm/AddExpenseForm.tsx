@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Button, InputGroup } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { Field, Form } from 'react-final-form';
@@ -6,14 +8,12 @@ import { CurrencyInput } from 'react-currency-input-field';
 import { authStore } from '../../../store/AuthStore.ts';
 import { appToaster } from '../../../store/AppToaster.ts';
 import { categoriesStore } from '../../../store/CategoriesStore.ts';
+import { ADD_EXPENSE_FIELDS } from './addExpenseform.constants.ts';
+import { ROUTES } from '../../../routes/routes.ts';
 
+import BaseLoader from '../../helpers/BaseLoader.tsx';
 import CategoryList from '../../categories/CategoryList.tsx';
 import SubcategoryList from '../../categories/SubcategoryList.tsx';
-import { ADD_EXPENSE_FIELDS } from './addExpenseform.constants.ts';
-import { Link } from 'react-router-dom';
-import { ROUTES } from '../../../routes/routes.ts';
-import { useEffect, useState } from 'react';
-import BaseLoader from '../../helpers/BaseLoader.tsx';
 import ChangeSubcategoryButton from '../../categories/ChangeSubcategoryButton.tsx';
 import AddSubcategoryButton from '../../categories/AddSubcategoryButton.tsx';
 
@@ -61,7 +61,7 @@ const AddExpenseForm = observer(() => {
         <>
           <div>
             <Link to={ROUTES.MAIN} style={{ color: 'inherit', textDecoration: 'none' }}>
-              <Button variant="warning" className="rounded-2 px-3">
+              <Button variant="warning" className="rounded-4 px-4">
                 <i className="bi bi-arrow-left me-2"></i>
                 Назад
               </Button>
@@ -102,15 +102,14 @@ const AddExpenseForm = observer(() => {
                 <h3 className="fw-bold text-primary mb-0">Категории</h3>
                 <CategoryList />
 
-                <div
-                  className="d-flex align-items-center justify-content-between gap-2"
-                  style={{ minHeight: '35px' }}
-                >
-                  <div style={{ width: '35px' }}>
+                <div className="d-grid gap-2" style={{ gridTemplateColumns: '1fr auto 1fr' }}>
+                  <div>
                     <ChangeSubcategoryButton />
                   </div>
+
                   <h3 className="fw-bold text-primary mb-0">Подкатегории</h3>
-                  <div style={{ width: '35px' }}>
+
+                  <div>
                     <AddSubcategoryButton />
                   </div>
                 </div>
@@ -120,7 +119,7 @@ const AddExpenseForm = observer(() => {
                 <Button
                   type="submit"
                   variant="outline-success"
-                  className="position-fixed start-50 bottom-0 translate-middle-x mb-2 rounded-3 px-5 text-success"
+                  className="position-fixed start-50 bottom-0 translate-middle-x mb-2 rounded-4 px-5 text-success"
                   style={{
                     backdropFilter: 'blur(5px)',
                     backgroundColor: 'rgba(255, 255, 255, 0.2)',

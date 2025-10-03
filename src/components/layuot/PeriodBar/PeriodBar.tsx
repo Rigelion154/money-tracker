@@ -9,7 +9,7 @@ const buttonsList = [
     id: 1,
     title: 'День',
     variant: 'primary',
-    styles: 'rounded-0 border-end flex-fill w-25 py-2 fw-bold rounded-start-3',
+    styles: 'rounded-0 border-end flex-fill w-25 py-2 fw-bold rounded-start-5',
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ const buttonsList = [
     id: 4,
     title: 'Период',
     variant: 'primary',
-    styles: 'rounded-0  flex-fill w-25 py-2 fw-bold rounded-end-3',
+    styles: 'rounded-0  flex-fill w-25 py-2 fw-bold rounded-end-5',
   },
 ];
 const PeriodBar = () => {
@@ -42,7 +42,7 @@ const PeriodBar = () => {
       </div>
 
       <div
-        className="d-flex align-items-center justify-content-center w-100 position-relative px-2"
+        className="d-flex align-items-center justify-content-center w-100 position-relative"
         style={{ height: '40px' }}
       >
         {buttonsList.map((button) => (

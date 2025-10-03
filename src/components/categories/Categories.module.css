@@ -1,10 +1,17 @@
 .categories__container {
+    width: 45%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
 
     @media screen and (max-width: 1200px) {
+        width: 60%;
+        gap: .5rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
         gap: .5rem;
     }
 }
@@ -63,5 +70,17 @@
     width: 30%;
     @media screen and (max-width: 1200px) {
         width: 90%;
+    }
+}
+
+.subcategories__container {
+    width: 35%;
+    min-height: 70px;
+
+    @media screen and (max-width: 1200px) {
+        width: 75%;
+    }
+    @media screen and (max-width: 768px) {
+        width: 100%;
     }
 }

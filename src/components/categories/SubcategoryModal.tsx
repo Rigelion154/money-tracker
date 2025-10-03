@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { Field, Form } from 'react-final-form';
-import { Button, FormControl, FormLabel } from 'react-bootstrap';
+import { Button, FormControl, FormLabel, InputGroup } from 'react-bootstrap';
 
 import { authStore } from '../../store/AuthStore.ts';
 import { modalStore } from '../../store/ModalStore.ts';
@@ -95,23 +95,41 @@ const SubcategoryModal = observer(({ categoryId, subcategoryId }: AddSubcategory
 
             <Field name="subcategoryTitle">
               {({ input }) => (
-                <FormControl
-                  placeholder="Веедите название"
-                  className="rounded-1 shadow-none"
-                  {...input}
-                />
+                <InputGroup>
+                  <FormControl
+                    placeholder="Веедите название"
+                    className="shadow-none border-primary"
+                    {...input}
+                  />
+                  <InputGroup.Text className="border-primary">
+                    <i className="bi bi-pencil-fill"></i>
+                  </InputGroup.Text>
+                </InputGroup>
               )}
             </Field>
 
             <div className="d-flex gap-2 justify-content-between">
-              <Button variant="success" className="rounded-1" type="submit">
+              <Button variant="outline-success" size="sm" className="rounded-3 px-3" type="submit">
                 Принять
               </Button>
-              <div className="d-flex gap-2">
-                <Button variant="danger" className="rounded-1" onClick={handleDeleteSubcategory}>
-                  Удалить
-                </Button>
-                <Button variant="secondary" className="rounded-1" onClick={modalStore.closeModal}>
+              <div className="d-flex gap-1">
+                {subcategoryId && (
+                  <Button
+                    variant="outline-danger"
+                    size="sm"
+                    className="rounded-3 px-3"
+                    onClick={handleDeleteSubcategory}
+                  >
+                    Удалить
+                  </Button>
+                )}
+
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  className="rounded-3 px-3"
+                  onClick={modalStore.closeModal}
+                >
                   Отменить
                 </Button>
               </div>

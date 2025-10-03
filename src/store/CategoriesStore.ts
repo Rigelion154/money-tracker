@@ -12,6 +12,7 @@ class CategoriesStore {
   categories: IStoreCategories | null = null;
   expenses: Record<ICategory['id'], IStoreExpense> | null = null;
   totalAmountCategoryList: ITotalAmountCategory[] = [];
+  totalAmount: number = 0;
 
   constructor() {
     makeAutoObservable(this);
@@ -23,6 +24,8 @@ class CategoriesStore {
 
   private setTotalAmountCategoryList = (data: ITotalAmountCategory[]) =>
     (this.totalAmountCategoryList = data);
+
+  private setTotalAmount = (current: number) => (this.totalAmount += current);
 
   getCategories = async (userId: string) => {
     const { data, error } = await dbClient
@@ -88,6 +91,7 @@ class CategoriesStore {
         }
         tempMap[expense.category_id].totalAmount += expense.amount;
         tempMap[expense.category_id].expenses.push(expense);
+        this.setTotalAmount(expense.amount);
       }
       // Преобразуем в массив и сразу сортируем
       const categoryTotals = Object.entries(tempMap)
@@ -96,44 +100,6 @@ class CategoriesStore {
 
       this.setTotalAmountCategoryList(categoryTotals);
     }
-
-    // console.log('expenses sorted:', toJS(this.totalAmountCategoryList));
-
-    // if (data && data.length > 0) {
-    //   const expensesMap = (data as IExpense[]).reduce(
-    //     (acc, current) => {
-    //       if (!acc[current.category_id]) {
-    //         acc[current.category_id] = {
-    //           category: current.categories,
-    //           subcategories: {},
-    //           totalAmount: 0,
-    //           items: [],
-    //         };
-    //       }
-    //       // Добавляем подкатегорию если она есть
-    //       if (current.subcategory_id && current.subcategories) {
-    //         if (!acc[current.category_id].subcategories) {
-    //           acc[current.category_id].subcategories = {};
-    //         }
-    //
-    //         if (
-    //           !acc[current.category_id].subcategories[current.subcategory_id]
-    //         ) {
-    //           acc[current.category_id].subcategories[current.subcategory_id] =
-    //             current.subcategories;
-    //         }
-    //       }
-    //       // Обновляем сумму и добавляем запись
-    //       acc[current.category_id].totalAmount += current.amount;
-    //       acc[current.category_id].items.push(current);
-    //
-    //       return acc;
-    //     },
-    //     {} as Record<ICategory['id'], IStoreExpense>,
-    //   );
-    //
-    //   this.setExpenses(expensesMap);
-    // }
   };
 }
 

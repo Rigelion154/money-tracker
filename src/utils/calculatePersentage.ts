@@ -1,0 +1,1 @@
+export const calculatePercentage = (total: number, part: number) => Math.round((part / total) * 100) ;

@@ -12,13 +12,11 @@ const MainPage = observer(() => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    categoriesStore
-      .getUserExpenses(userId ?? '')
-      .finally(() => setIsLoading(false));
+    categoriesStore.getUserExpenses(userId ?? '').finally(() => setIsLoading(false));
   }, [userId]);
 
   return (
-    <div className="w-100">
+    <div className="w-100 py-3 pb-5">
       {isLoading && <BaseLoader />}
       {!isLoading && (
         <>

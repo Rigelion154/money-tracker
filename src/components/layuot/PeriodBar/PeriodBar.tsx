@@ -9,25 +9,25 @@ const buttonsList = [
     id: 1,
     title: 'День',
     variant: 'primary',
-    styles: 'rounded-0 border-end flex-fill w-25 py-2 fw-bold rounded-start-5',
+    styles: 'rounded-0 btn-solid-blue border-end flex-fill w-25 py-2 fw-bold rounded-start-5',
   },
   {
     id: 2,
     title: 'Месяц',
     variant: 'primary',
-    styles: 'rounded-0 border-end  flex-fill w-25 py-2 fw-bold',
+    styles: 'rounded-0 btn-solid-blue border-end  flex-fill w-25 py-2 fw-bold',
   },
   {
     id: 3,
     title: 'Год',
     variant: 'primary',
-    styles: 'rounded-0 border-end  flex-fill w-25 py-2 fw-bold',
+    styles: 'rounded-0 btn-solid-blue border-end  flex-fill w-25 py-2 fw-bold',
   },
   {
     id: 4,
     title: 'Период',
     variant: 'primary',
-    styles: 'rounded-0  flex-fill w-25 py-2 fw-bold rounded-end-5',
+    styles: 'rounded-0 btn-solid-blue  flex-fill w-25 py-2 fw-bold rounded-end-5',
   },
 ];
 const PeriodBar = () => {

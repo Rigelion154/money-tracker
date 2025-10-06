@@ -7,6 +7,7 @@ import { CurrencyInput } from 'react-currency-input-field';
 
 import { authStore } from '../../../store/AuthStore.ts';
 import { appToaster } from '../../../store/AppToaster.ts';
+import { expensesStore } from '../../../store/ExpensesStore.ts';
 import { categoriesStore } from '../../../store/CategoriesStore.ts';
 import { ADD_EXPENSE_FIELDS } from './addExpenseform.constants.ts';
 import { ROUTES } from '../../../routes/routes.ts';
@@ -19,7 +20,8 @@ import AddSubcategoryButton from '../../categories/AddSubcategoryButton.tsx';
 
 const AddExpenseForm = observer(() => {
   const { userId } = authStore;
-  const { addExpense, categories } = categoriesStore;
+  const { categories } = categoriesStore;
+  const { addExpense } = expensesStore;
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

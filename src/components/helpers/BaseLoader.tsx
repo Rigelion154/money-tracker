@@ -1,9 +1,20 @@
 import { Spinner } from 'react-bootstrap';
 
-const BaseLoader = () => {
+type TVariant =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'danger'
+  | 'warning'
+  | 'info'
+  | 'dark'
+  | 'light'
+  | string;
+
+const BaseLoader = ({ variant = 'primary' }: { variant?: TVariant }) => {
   return (
-    <div className="d-flex align-items-center justify-content-center p-3 h-100">
-      <Spinner variant="primary" />
+    <div className="d-flex align-items-center justify-content-center p-3 h-100 w-100">
+      <Spinner variant={variant} />
     </div>
   );
 };

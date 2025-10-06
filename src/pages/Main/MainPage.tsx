@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { categoriesStore } from '../../store/CategoriesStore.ts';
+
+import { expensesStore } from '../../store/ExpensesStore.ts';
 import { authStore } from '../../store/AuthStore.ts';
 
 import BaseLoader from '../../components/helpers/BaseLoader.tsx';
-import ExpenseList from '../../components/ExpenseList.tsx';
+import ExpenseList from '../../components/expenses/ExpenseList.tsx';
 import PeriodBar from '../../components/layuot/PeriodBar/PeriodBar.tsx';
 
 const MainPage = observer(() => {
@@ -12,7 +13,7 @@ const MainPage = observer(() => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    categoriesStore.getUserExpenses(userId ?? '').finally(() => setIsLoading(false));
+    expensesStore.getUserExpenses(userId ?? '').finally(() => setIsLoading(false));
   }, [userId]);
 
   return (

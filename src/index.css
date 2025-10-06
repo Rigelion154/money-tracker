@@ -1,3 +1,4 @@
+@import "./styles/modal-styles.css";
 
 :root {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -7,6 +8,14 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    --gradient-minimal-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-neon-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-deep-purple : linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
+    --gradient-purple-sunset: linear-gradient(to right, #8360c3, #2ebf91);
+    --gradient-purple-dream : linear-gradient(135deg, #b06ab3 0%, #4568dc 100%);
+    --gradient-dark-purple : linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+    --gradient-purple-pink : linear-gradient(45deg, #f857a6, #ff5858);
+    --gradient-elegant-purple : linear-gradient(to right, #654ea3, #eaafc8);
 }
 
 * {
@@ -48,51 +57,11 @@ body {
     }
 }
 
-/* 1. Фиолетовый неон (современный) */
-.gradient-neon-purple {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-/* 2. Deep Purple (темный и стильный) */
-.gradient-deep-purple {
-    background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
-}
-
-/* 3. Фиолетовый закат (популярный в UI) */
-.gradient-purple-sunset {
-    background: linear-gradient(to right, #8360c3, #2ebf91);
-}
-
-/* 4. Purple Dream (мягкий пастельный) */
-.gradient-purple-dream {
-    background: linear-gradient(135deg, #b06ab3 0%, #4568dc 100%);
-}
-
-/* 5. Темный фиолетовый (для темной темы) */
-.gradient-dark-purple {
-    background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
-}
-
-/* 6. Фиолетовый с розовым (трендовый) */
-.gradient-purple-pink {
-    background: linear-gradient(45deg, #f857a6, #ff5858);
-}
-
-/* 7. Элегантный фиолетовый */
-.gradient-elegant-purple {
-    background: linear-gradient(to right, #654ea3, #eaafc8);
-}
-
 /* 8. Анимированный градиент (с эффектом движения) */
 .gradient-animated-purple {
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
     animation: gradient-move 15s ease infinite;
-}
-
-/* 9. Минималистичный светлый */
-.gradient-minimal-purple {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 /* Анимация для анимированного градиента */
@@ -106,7 +75,6 @@ body {
     background: #3b82f6;
     border: none;
     color: white;
-    padding: 12px 24px;
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
@@ -135,5 +103,8 @@ body {
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
+.accordion-button:after {
+    display: none !important;
+}
 
 

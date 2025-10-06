@@ -1,18 +1,11 @@
 import { makeAutoObservable } from 'mobx';
-import type { ICategory, IExpense, IStoreCategories, IStoreExpense } from './categories.types.ts';
-import { dbClient } from '../db/dbClient.ts';
 
-interface ITotalAmountCategory {
-  totalAmount: number;
-  category: Partial<ICategory>;
-  expenses: IExpense[];
-}
+import type { ICategory, IStoreCategories } from './categories.types.ts';
+
+import { dbClient } from '../db/dbClient.ts';
 
 class CategoriesStore {
   categories: IStoreCategories | null = null;
-  expenses: Record<ICategory['id'], IStoreExpense> | null = null;
-  totalAmountCategoryList: ITotalAmountCategory[] = [];
-  totalAmount: number = 0;
 
   constructor() {
     makeAutoObservable(this);
@@ -21,11 +14,6 @@ class CategoriesStore {
   private setCategories(categories: IStoreCategories) {
     this.categories = categories;
   }
-
-  private setTotalAmountCategoryList = (data: ITotalAmountCategory[]) =>
-    (this.totalAmountCategoryList = data);
-
-  private setTotalAmount = (current: number) => (this.totalAmount += current);
 
   getCategories = async (userId: string) => {
     const { data, error } = await dbClient
@@ -51,54 +39,6 @@ class CategoriesStore {
       );
 
       this.setCategories(categoriesMap);
-    }
-  };
-
-  addExpense = async (
-    userId: string | null,
-    categoryId: string,
-    amount: string,
-    subcategoryId?: string,
-  ) => {
-    return dbClient
-      .from('expenses')
-      .upsert({
-        category_id: categoryId,
-        subcategory_id: subcategoryId,
-        amount: parseFloat(amount.replace(',', '.')),
-        user_id: userId,
-      })
-      .select();
-  };
-
-  getUserExpenses = async (userId: string) => {
-    const { data } = await dbClient
-      .from('expenses')
-      .select(`*,categories (id, title, color, icon), subcategories (id, title)`)
-      .eq('user_id', userId)
-      .order('amount', { ascending: false });
-
-    if (data) {
-      const tempMap: Record<string, ITotalAmountCategory> = {};
-
-      for (const expense of data as IExpense[]) {
-        if (!tempMap[expense.category_id]) {
-          tempMap[expense.category_id] = {
-            category: expense.categories,
-            totalAmount: 0,
-            expenses: [],
-          };
-        }
-        tempMap[expense.category_id].totalAmount += expense.amount;
-        tempMap[expense.category_id].expenses.push(expense);
-        this.setTotalAmount(expense.amount);
-      }
-      // Преобразуем в массив и сразу сортируем
-      const categoryTotals = Object.entries(tempMap)
-        .map(([_, item]) => ({ ...item }))
-        .sort((a, b) => b.totalAmount - a.totalAmount);
-
-      this.setTotalAmountCategoryList(categoryTotals);
     }
   };
 }

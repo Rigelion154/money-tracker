@@ -1,15 +1,16 @@
 import { Button } from 'react-bootstrap';
 import { modalStore } from '../../store/ModalStore.ts';
+import { GrClose } from 'react-icons/gr';
 
 const CloseModalButton = () => {
   const closeHandler = () => modalStore.closeModal();
   return (
     <Button
       variant="outline-dark"
-      className="border-0 py-1 px-2 rounded-1"
+      className="border-0 rounded-1 p-2 d-flex align-items-center justify-content-center"
       onClick={closeHandler}
     >
-      <i className="bi bi-x"></i>
+      <GrClose size={12} />
     </Button>
   );
 };

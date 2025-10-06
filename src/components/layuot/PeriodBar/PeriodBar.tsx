@@ -15,13 +15,13 @@ const buttonsList = [
     id: 2,
     title: 'Месяц',
     variant: 'primary',
-    styles: 'rounded-0 btn-solid-blue border-end  flex-fill w-25 py-2 fw-bold',
+    styles: 'rounded-0 btn-solid-blue border-end flex-fill w-25 py-2 fw-bold',
   },
   {
     id: 3,
     title: 'Год',
     variant: 'primary',
-    styles: 'rounded-0 btn-solid-blue border-end  flex-fill w-25 py-2 fw-bold',
+    styles: 'rounded-0 btn-solid-blue border-end flex-fill w-25 py-2 fw-bold',
   },
   {
     id: 4,

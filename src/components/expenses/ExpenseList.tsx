@@ -1,12 +1,20 @@
 import { observer } from 'mobx-react-lite';
 import { Accordion, Card } from 'react-bootstrap';
 
-import { getCurrencyString } from '../utils/getCurrencyString.ts';
-import { calculatePercentage } from '../utils/calculatePersentage.ts';
-import { categoriesStore } from '../store/CategoriesStore.ts';
+import { getCurrencyString } from '../../utils/getCurrencyString.ts';
+import { calculatePercentage } from '../../utils/calculatePersentage.ts';
+import { expensesStore } from '../../store/ExpensesStore.ts';
+import { modalStore } from '../../store/ModalStore.ts';
+import ExpenseDetailsModal from './ExpenseDetailsModal.tsx';
+
+import styles from './Expenses.module.css';
 
 const ExpenseList = observer(() => {
-  const { totalAmountCategoryList, totalAmount } = categoriesStore;
+  const { expenseList, totalAmount } = expensesStore;
+
+  const handleExpenseClick = async (id: string) => {
+    modalStore.openModal({ children: <ExpenseDetailsModal id={id} /> });
+  };
 
   return (
     <div className="row flex-column justify-content-center align-items-center gap-2">
@@ -16,7 +24,8 @@ const ExpenseList = observer(() => {
           <span>{getCurrencyString(totalAmount)}</span>
         </Card.Body>
       </Card>
-      {totalAmountCategoryList.map((item) => {
+
+      {expenseList.map((item) => {
         return (
           <div className="col-12 col-md-8 col-xl-4" key={item.category.id}>
             <Accordion>
@@ -25,7 +34,6 @@ const ExpenseList = observer(() => {
                   className={`${item.category.icon} rounded-circle py-1 px-2 text-white`}
                   style={{ backgroundColor: item.category.color }}
                 />
-                {/*<div className="w-100 d-flex align-items-center justify-content-between px-2">*/}
                 <div
                   className="w-100 px-2"
                   style={{
@@ -44,15 +52,12 @@ const ExpenseList = observer(() => {
                 </div>
               </Accordion.Button>
 
-              <Accordion.Body className="d-flex flex-column gap-2 p-2 bg-light border roudned-2 shadow-sm">
+              <Accordion.Body className="d-flex flex-column gap-2 py-2 px-0 bg-light border roudned-2 shadow-sm">
                 {item.expenses.map((expense) => (
                   <div
-                    style={{
-                      display: 'grid',
-                      gridTemplateColumns: '5fr 1fr 3fr',
-                      gap: '.5rem',
-                    }}
+                    className={styles.expense__list_wrapper}
                     key={expense.id}
+                    onClick={() => handleExpenseClick(expense.id)}
                   >
                     <span style={{ color: item.category.color }}>
                       {expense.subcategory_id ? expense.subcategories.title : item.category.title}

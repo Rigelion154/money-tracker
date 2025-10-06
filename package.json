@@ -22,6 +22,7 @@
     "react-currency-input-field": "^4.0.3",
     "react-dom": "^19.1.1",
     "react-final-form": "^7.0.0",
+    "react-icons": "^5.5.0",
     "react-router-dom": "^7.9.3"
   },
   "devDependencies": {

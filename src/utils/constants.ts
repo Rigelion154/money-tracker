@@ -1,0 +1,1 @@
+export const DEFAULT_TIME_FORMAT = 'DD.MM.YYYY HH:mm:ss'

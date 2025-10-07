@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { Accordion, Card } from 'react-bootstrap';
+import { Accordion } from 'react-bootstrap';
 
 import { expensesStore } from '../../store/ExpensesStore.ts';
 import { modalStore } from '../../store/ModalStore.ts';
@@ -7,8 +7,10 @@ import { getCurrencyString } from '../../utils/getCurrencyString.ts';
 import { calculatePercentage } from '../../utils/calculatePersentage.ts';
 
 import ExpenseDetailsModal from './ExpenseDetailsModal.tsx';
+import ExpensesTotalBar from './ExpensesTotalBar.tsx';
 
 import styles from './Expenses.module.css';
+import ExpenseSubcategoryList from './ExpenseSubcategoryList.tsx';
 
 const ExpenseList = observer(() => {
   const { totalAmount, expenses } = expensesStore;
@@ -19,12 +21,7 @@ const ExpenseList = observer(() => {
 
   return (
     <div className="row flex-column justify-content-center align-items-center gap-2">
-      <Card className="col-10 col-md-7 col-xl-3 mb-3 rounded-4 text-white gradient-animated-purple">
-        <Card.Body className="d-flex align-items-center justify-content-between gap-3">
-          <span className="mb-0">Общий расход</span>
-          <span>{getCurrencyString(totalAmount)}</span>
-        </Card.Body>
-      </Card>
+      <ExpensesTotalBar />
 
       {expenses.map((category) => (
         <div className="col-12 col-md-8 col-xl-4" key={category.id}>
@@ -58,54 +55,15 @@ const ExpenseList = observer(() => {
               </div>
             </Accordion.Button>
 
-            <Accordion.Body
-              className="d-flex flex-column gap-2 py-2 px-0 bg-light border roudned-2 shadow-sm"
-              style={{ fontSize: '.8rem' }}
-            >
-              <>
+            <Accordion.Body className="d-flex flex-column gap-2 py-2 px-0 bg-white border roudned-2 shadow-sm">
+              <div className="rounded-3 overflow-hidden">
                 {category?.subcategories.map(
                   (subcategory) =>
                     subcategory.expenses.length > 1 && (
-                      <Accordion key={subcategory.id}>
-                        <Accordion.Button
-                          className="border rounded-0 py-1 p-2 shadow-none"
-                          style={{ fontSize: '.8rem' }}
-                        >
-                          <div className="col-6">{subcategory.title}</div>
-                          <div className="col-2 text-center">
-                            {calculatePercentage(
-                              category.category_total_amount,
-                              subcategory.subcategory_total_amount,
-                            )}
-                            %
-                          </div>
-                          <div className="col-4 text-end">
-                            {getCurrencyString(subcategory.subcategory_total_amount)}
-                          </div>
-                        </Accordion.Button>
-                        <Accordion.Body className="d-flex flex-column gap-2 py-2 px-0 bg-light border roudned-2 shadow-sm">
-                          {subcategory.expenses.map((expense) => (
-                            <div
-                              className={styles.expense__list_wrapper}
-                              key={expense.id + expense.subcategory_id}
-                              onClick={() => handleExpenseClick(expense.id)}
-                            >
-                              <span style={{ color: category.color }}>{subcategory.title}</span>
-                              <small className="fw-bold text-primary">
-                                {calculatePercentage(
-                                  category.category_total_amount,
-                                  expense.amount,
-                                )}
-                                %
-                              </small>
-                              <span className="ms-auto">{getCurrencyString(expense.amount)}</span>
-                            </div>
-                          ))}
-                        </Accordion.Body>
-                      </Accordion>
+                      <ExpenseSubcategoryList {...{ category, subcategory, handleExpenseClick }} />
                     ),
                 )}
-              </>
+              </div>
               {category.expenses.map((expense) => (
                 <div
                   className={styles.expense__list_wrapper}

@@ -1,5 +1,7 @@
 import { makeAutoObservable } from 'mobx';
-import type { ISubcategory } from './categories.types.ts';
+
+import type { ISubcategory } from '../types/expenses.types.ts';
+
 import { dbClient } from '../db/dbClient.ts';
 
 class SubcategoriesStore {

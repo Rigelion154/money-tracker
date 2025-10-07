@@ -4,7 +4,7 @@ import { appToaster } from '../../../store/AppToaster.ts';
 
 import styles from './AppToaster.module.css';
 
-const AppToaster = observer(() => {
+const AppToasterComponent = observer(() => {
   const { toasts } = appToaster;
 
   return (
@@ -30,4 +30,4 @@ const AppToaster = observer(() => {
   );
 });
 
-export default AppToaster;
+export default AppToasterComponent;

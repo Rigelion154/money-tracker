@@ -3,8 +3,9 @@ import { observer } from 'mobx-react-lite';
 import { Button } from 'react-bootstrap';
 import moment from 'moment';
 
-import type { IExpense } from '../../store/categories.types.ts';
+import type { IExpenseDetails } from '../../types/expenses.types.ts';
 
+import { getCurrencyString } from '../../utils/getCurrencyString.ts';
 import { expensesStore } from '../../store/ExpensesStore.ts';
 import { appToaster } from '../../store/AppToaster.ts';
 import { modalStore } from '../../store/ModalStore.ts';
@@ -15,7 +16,7 @@ import CloseModalButton from '../ui/CloseModalButton.tsx';
 
 const ExpenseDetailsModal = observer(({ id }: { id: string }) => {
   const { userId } = authStore;
-  const [expense, setExpense] = useState<IExpense | null>(null);
+  const [expense, setExpense] = useState<IExpenseDetails | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const ExpenseDetailsModal = observer(({ id }: { id: string }) => {
             <h6 className="text-muted mb-0">Сумма</h6>
             <CloseModalButton />
           </div>
-          <span>{expense.amount}</span>
+          <span>{getCurrencyString(expense.amount)}</span>
 
           <h6 className="text-muted mb-0">Дата</h6>
           <span>{moment(expense.date).format('DD.MM.YYYY HH:mm:ss')}</span>

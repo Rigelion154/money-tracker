@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 
-import type { ICategory, IStoreCategories } from './categories.types.ts';
+import type { ICategoryOld, IStoreCategories } from './categories.types.ts';
 
 import { dbClient } from '../db/dbClient.ts';
 
@@ -26,7 +26,7 @@ class CategoriesStore {
     }
 
     if (data) {
-      const categoriesMap = (data as ICategory[]).reduce(
+      const categoriesMap = (data as ICategoryOld[]).reduce(
         (acc, current) => {
           if (!acc.data[current.id]) {
             acc.data[current.id] = current;

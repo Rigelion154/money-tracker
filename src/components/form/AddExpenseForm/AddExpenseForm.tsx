@@ -104,7 +104,10 @@ const AddExpenseForm = observer(() => {
                 <h3 className="fw-bold text-primary mb-0">Категории</h3>
                 <CategoryList />
 
-                <div className="d-grid gap-2" style={{ gridTemplateColumns: '1fr auto 1fr' }}>
+                <div
+                  className="d-grid gap-2"
+                  style={{ gridTemplateColumns: '1fr auto 1fr', alignItems: 'center' }}
+                >
                   <div>
                     <ChangeSubcategoryButton />
                   </div>

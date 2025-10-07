@@ -9,7 +9,7 @@ import { subcategoriesStore } from '../../store/SubcategoriesStore.ts';
 
 import BaseLoader from '../helpers/BaseLoader.tsx';
 
-import styles from './Categories.module.css';
+import styles from '../categories/Categories.module.css';
 
 interface ISubcategoryProps {
   categoryValue: string;

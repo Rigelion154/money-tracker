@@ -4,3 +4,10 @@
         width: 90%;
     }
 }
+
+.category__modal {
+    width: 30%;
+    @media screen and (max-width: 1200px) {
+        width: 90%;
+    }
+}

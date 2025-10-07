@@ -14,9 +14,11 @@ import { ROUTES } from '../../../routes/routes.ts';
 
 import BaseLoader from '../../helpers/BaseLoader.tsx';
 import CategoryList from '../../categories/CategoryList.tsx';
-import SubcategoryList from '../../categories/SubcategoryList.tsx';
-import ChangeSubcategoryButton from '../../categories/ChangeSubcategoryButton.tsx';
-import AddSubcategoryButton from '../../categories/AddSubcategoryButton.tsx';
+import SubcategoryList from '../../subcategories/SubcategoryList.tsx';
+import ChangeSubcategoryButton from '../../subcategories/ChangeSubcategoryButton.tsx';
+import AddSubcategoryButton from '../../subcategories/AddSubcategoryButton.tsx';
+import AddCategoryButton from '../../categories/AddCategoryButton.tsx';
+import ChangeCategoryButton from '../../categories/ChangeCategoryButton.tsx';
 
 const AddExpenseForm = observer(() => {
   const { userId } = authStore;
@@ -74,7 +76,7 @@ const AddExpenseForm = observer(() => {
             {({ handleSubmit }) => (
               <form
                 onSubmit={handleSubmit}
-                className="d-flex flex-column align-items-center mt-3 gap-2 flex-grow-1 pb-5"
+                className="d-flex flex-column align-items-center mt-3 gap-3 flex-grow-1 pb-5"
               >
                 <div className="d-flex flex-column align-items-center gap-2">
                   <h3 className="fw-bold text-primary mb-0">Сумма</h3>
@@ -87,7 +89,6 @@ const AddExpenseForm = observer(() => {
                           value={input.value}
                           onValueChange={(value) => input.onChange(value)}
                           className="rounded-start-2 rounded-end-0 px-2 py-1 border border-success"
-                          // placeholder="Введите сумму"
                           decimalsLimit={2}
                           suffix=" ₽"
                           style={{ fontSize: '1.2rem', outlineColor: '#0d6efd' }}
@@ -101,18 +102,23 @@ const AddExpenseForm = observer(() => {
                   </Field>
                 </div>
 
-                <h3 className="fw-bold text-primary mb-0">Категории</h3>
+                <div className="d-grid gap-3" style={{ gridTemplateColumns: '1fr auto 1fr' }}>
+                  <div>
+                    <ChangeCategoryButton />
+                  </div>
+                  <h3 className="fw-bold text-primary">Категории</h3>
+                  <div>
+                    <AddCategoryButton />
+                  </div>
+                </div>
                 <CategoryList />
 
-                <div
-                  className="d-grid gap-2"
-                  style={{ gridTemplateColumns: '1fr auto 1fr', alignItems: 'center' }}
-                >
+                <div className="d-grid gap-3" style={{ gridTemplateColumns: '1fr auto 1fr' }}>
                   <div>
                     <ChangeSubcategoryButton />
                   </div>
 
-                  <h3 className="fw-bold text-primary mb-0">Подкатегории</h3>
+                  <h3 className="fw-bold text-primary">Подкатегории</h3>
 
                   <div>
                     <AddSubcategoryButton />

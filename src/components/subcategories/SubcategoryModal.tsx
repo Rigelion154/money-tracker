@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { Field, Form } from 'react-final-form';
-import { Button, FormControl, FormLabel, InputGroup } from 'react-bootstrap';
+import { FormControl, FormLabel, InputGroup } from 'react-bootstrap';
 
 import { authStore } from '../../store/AuthStore.ts';
 import { modalStore } from '../../store/ModalStore.ts';
@@ -10,7 +10,8 @@ import { subcategoriesStore } from '../../store/SubcategoriesStore.ts';
 
 import CloseModalButton from '../ui/CloseModalButton.tsx';
 
-import styles from './Categories.module.css';
+import styles from '../categories/Categories.module.css';
+import SubmitModalButtons from '../ui/SubmitModalButtons.tsx';
 
 interface AddSubcategoryProps {
   categoryId: string;
@@ -26,8 +27,9 @@ const SubcategoryModal = observer(({ categoryId, subcategoryId }: AddSubcategory
     : '';
 
   const handleFormSubmit = async (values: Record<string, string>) => {
-    if (!values.subcategoryTitle)
+    if (!values.subcategoryTitle) {
       return appToaster.addToast('Необходимо ввести название', 'warning');
+    }
 
     const isExist = await subcategoriesStore.isSubcategoryExist(
       userId,
@@ -108,32 +110,7 @@ const SubcategoryModal = observer(({ categoryId, subcategoryId }: AddSubcategory
               )}
             </Field>
 
-            <div className="d-flex gap-2 justify-content-between">
-              <Button variant="outline-success" size="sm" className="rounded-3 px-3" type="submit">
-                Принять
-              </Button>
-              <div className="d-flex gap-1">
-                {subcategoryId && (
-                  <Button
-                    variant="outline-danger"
-                    size="sm"
-                    className="rounded-3 px-3"
-                    onClick={handleDeleteSubcategory}
-                  >
-                    Удалить
-                  </Button>
-                )}
-
-                <Button
-                  variant="outline-secondary"
-                  size="sm"
-                  className="rounded-3 px-3"
-                  onClick={modalStore.closeModal}
-                >
-                  Отменить
-                </Button>
-              </div>
-            </div>
+            <SubmitModalButtons id={subcategoryId} handler={handleDeleteSubcategory} />
           </form>
         )}
       </Form>

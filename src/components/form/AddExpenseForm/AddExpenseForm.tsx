@@ -20,6 +20,7 @@ import AddSubcategoryButton from '../../subcategories/AddSubcategoryButton.tsx';
 import AddCategoryButton from '../../categories/AddCategoryButton.tsx';
 import ChangeCategoryButton from '../../categories/ChangeCategoryButton.tsx';
 import AppDatepicker from '../../ui/AppDatepicker.tsx';
+import moment from 'moment';
 
 const AddExpenseForm = observer(() => {
   const { userId } = authStore;
@@ -106,6 +107,16 @@ const AddExpenseForm = observer(() => {
                     {({ input }) => <AppDatepicker {...input} />}
                   </Field>
                 </div>
+
+                <Field name={ADD_EXPENSE_FIELDS.DATE}>
+                  {({ input }) =>
+                    input.value && (
+                      <span className="text-center fw-bold fs__small text-success">
+                        Дата: {moment(input.value).format('DD MMMM YYYY HH:mm')}
+                      </span>
+                    )
+                  }
+                </Field>
 
                 <div className="d-grid gap-3" style={{ gridTemplateColumns: '1fr auto 1fr' }}>
                   <div>

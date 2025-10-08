@@ -2,12 +2,12 @@ import React from 'react';
 import { FormLabel } from 'react-bootstrap';
 import FormCheckInput from 'react-bootstrap/FormCheckInput';
 
-import type { ICategoryOld } from '../../store/categories.types.ts';
+import type { ICategory } from '../../types/expenses.types.ts';
 
 import styles from './Categories.module.css';
 
 interface ICategoryItemProps {
-  category: ICategoryOld;
+  category: ICategory;
   value: string;
   onChange: (value: string) => void;
   name?: string;

@@ -10,9 +10,7 @@ const AppDatepicker = ({ onChange }: { value: any; onChange: any }) => {
   const [value, setValue] = useState<any>(null);
 
   useEffect(() => {
-    if (value) {
-      onChange(value);
-    }
+    onChange(value);
   }, [value]);
 
   return (

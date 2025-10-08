@@ -16,10 +16,9 @@ const CategoryList = observer(() => {
       <Field name={ADD_EXPENSE_FIELDS.CATEGORY_ID}>
         {({ input }) => (
           <>
-            {categories &&
-              categories.order.map((categoryId) => (
-                <CategoryItem category={categories.data[categoryId]} {...input} key={categoryId} />
-              ))}
+            {Object.values(categories ?? {}).map((category) => (
+              <CategoryItem category={category} {...input} key={category.id} />
+            ))}
           </>
         )}
       </Field>

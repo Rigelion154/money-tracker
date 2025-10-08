@@ -47,7 +47,7 @@ const SubcategoryItem = observer(({ categoryValue, value, onChange, name }: ISub
       {!isLoading && categories && (
         <div className="d-flex flex-wrap justify-content-center gap-2">
           {currentSubcategoryList.map((subcategory) => {
-            const color = categories.data[subcategory.category_id].color;
+            const color = categories[subcategory.category_id].color;
             const isChecked = value === subcategory.id;
 
             return (

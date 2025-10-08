@@ -18,7 +18,7 @@ const ChangeCategoryButton = observer(() => {
   return (
     <Field name={ADD_EXPENSE_FIELDS.CATEGORY_ID}>
       {({ input }) => {
-        const isDefaultCategory = categories?.data[input.value]?.is_default;
+        const isDefaultCategory = categories?.[input.value]?.is_default;
 
         return (
           input.value &&

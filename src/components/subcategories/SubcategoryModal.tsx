@@ -88,10 +88,10 @@ const SubcategoryModal = observer(({ categoryId, subcategoryId }: AddSubcategory
                 className="px-2 py-1 rounded-1"
                 style={{
                   color: 'white',
-                  backgroundColor: categories?.data[categoryId].color,
+                  backgroundColor: categories?.[categoryId].color,
                 }}
               >
-                {categories?.data[categoryId].title}
+                {categories?.[categoryId].title}
               </span>
             </div>
 
@@ -109,8 +109,11 @@ const SubcategoryModal = observer(({ categoryId, subcategoryId }: AddSubcategory
                 </InputGroup>
               )}
             </Field>
-
-            <SubmitModalButtons id={subcategoryId} handler={handleDeleteSubcategory} />
+            <SubmitModalButtons
+              id={subcategoryId}
+              handler={handleDeleteSubcategory}
+              title={`подкатегории "${subcategoryTitle}"`}
+            />
           </form>
         )}
       </Form>

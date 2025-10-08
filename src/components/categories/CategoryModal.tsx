@@ -21,9 +21,9 @@ interface IFormValues {
 const CategoryModal = observer(({ categoryId }: ICategoryModalProps) => {
   const { userId } = authStore;
   const { categories } = categoriesStore;
-  const categoryTitle = categoryId ? categories?.data[categoryId]?.title : '';
-  const categoryColor = categoryId ? categories?.data[categoryId]?.color : '';
-  const categoryIcon = categoryId ? categories?.data[categoryId]?.icon : '';
+  const categoryTitle = categoryId ? categories?.[categoryId]?.title : '';
+  const categoryColor = categoryId ? categories?.[categoryId]?.color : '';
+  const categoryIcon = categoryId ? categories?.[categoryId]?.icon : '';
   const handleFormSubmit = async (values: IFormValues) => {
     if (!values.categoryTitle) {
       return appToaster.addToast('Необходимо ввести название', 'warning');
@@ -142,7 +142,11 @@ const CategoryModal = observer(({ categoryId }: ICategoryModalProps) => {
               )}
             </Field>
 
-            <SubmitModalButtons id={categoryId} handler={handleDeleteCategory} />
+            <SubmitModalButtons
+              id={categoryId}
+              handler={handleDeleteCategory}
+              title={`категории "${categoryTitle}"`}
+            />
           </form>
         )}
       </Form>

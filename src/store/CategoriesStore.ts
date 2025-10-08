@@ -1,45 +1,32 @@
 import { makeAutoObservable } from 'mobx';
 
-import type { ICategoryOld, IStoreCategories } from './categories.types.ts';
-
 import { dbClient } from '../db/dbClient.ts';
+import type { ICategory } from '../types/expenses.types.ts';
 
 class CategoriesStore {
-  categories: IStoreCategories | null = null;
+  categories: Record<ICategory['id'], ICategory> | null = null;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  private setCategories(categories: IStoreCategories) {
-    this.categories = categories;
+  private setCategories(categories: ICategory[]) {
+    this.categories = categories.reduce(
+      (acc, current) => {
+        if (!acc[current.id]) acc[current.id] = current;
+        return acc;
+      },
+      {} as Record<ICategory['id'], ICategory>,
+    );
   }
 
   getCategories = async (userId: string | null) => {
-    const { data, error } = await dbClient
+    const { data } = await dbClient
       .from('categories')
       .select()
       .or(`user_id.eq.${userId},is_default.eq.true`);
 
-    if (error) {
-      return error;
-    }
-
-    if (data) {
-      const categoriesMap = (data as ICategoryOld[]).reduce(
-        (acc, current) => {
-          if (!acc.data[current.id]) {
-            acc.data[current.id] = current;
-            acc.order.push(current.id);
-          }
-
-          return acc;
-        },
-        { data: {}, order: [] } as IStoreCategories,
-      );
-
-      this.setCategories(categoriesMap);
-    }
+    if (data) this.setCategories(data);
   };
 
   isCategoryExist = async (userId: string | null, title: string, categoryId?: string) => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
-import { DateCalendar, LocalizationProvider } from '@mui/x-date-pickers';
+import { LocalizationProvider, StaticDateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { CiCalendarDate } from 'react-icons/ci';
 
@@ -22,7 +22,13 @@ const AppDatepicker = ({ onChange }: { value: any; onChange: any }) => {
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ru}>
-          <DateCalendar
+          {/*<DateCalendar*/}
+          {/*  value={value}*/}
+          {/*  onChange={(newValue) => {*/}
+          {/*    setValue(newValue);*/}
+          {/*  }}*/}
+          {/*/>*/}
+          <StaticDateTimePicker
             value={value}
             onChange={(newValue) => {
               setValue(newValue);

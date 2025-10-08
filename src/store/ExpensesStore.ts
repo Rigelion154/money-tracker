@@ -53,7 +53,7 @@ class ExpensesStore {
         subcategory_id: subcategoryId,
         amount: parseFloat(amount.replace(',', '.')),
         user_id: userId,
-        date,
+        date: date ?? undefined,
       })
       .select();
 

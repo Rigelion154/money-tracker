@@ -9,9 +9,9 @@ import { categoriesStore } from '../../store/CategoriesStore.ts';
 import { subcategoriesStore } from '../../store/SubcategoriesStore.ts';
 
 import CloseModalButton from '../ui/CloseModalButton.tsx';
+import SubmitModalButtons from '../ui/SubmitModalButtons.tsx';
 
 import styles from '../categories/Categories.module.css';
-import SubmitModalButtons from '../ui/SubmitModalButtons.tsx';
 
 interface AddSubcategoryProps {
   categoryId: string;

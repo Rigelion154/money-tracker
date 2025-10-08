@@ -5,7 +5,7 @@ import { expensesStore } from '../../store/ExpensesStore.ts';
 import { authStore } from '../../store/AuthStore.ts';
 
 import BaseLoader from '../../components/helpers/BaseLoader.tsx';
-import ExpenseList from '../../components/expenses/ExpenseList.tsx';
+import ExpenseCategoryList from '../../components/expenses/ExpenseCategoryList.tsx';
 import PeriodBar from '../../components/layuot/PeriodBar/PeriodBar.tsx';
 
 const MainPage = observer(() => {
@@ -21,7 +21,7 @@ const MainPage = observer(() => {
       {isLoading && <BaseLoader />}
       {!isLoading && (
         <>
-          <ExpenseList />
+          <ExpenseCategoryList />
           <PeriodBar />
         </>
       )}

@@ -70,6 +70,7 @@ const AuthForm = () => {
                     className="shadow-none"
                     type="password"
                     placeholder="Password"
+                    autoComplete="off"
                   />
                 )}
               </Field>
@@ -79,13 +80,9 @@ const AuthForm = () => {
             </div>
 
             <div className="text-center">
-              <Button type="submit">
-                {type === 'register' ? 'Создать аккаунт' : 'Войти'}
-              </Button>
+              <Button type="submit">{type === 'register' ? 'Создать аккаунт' : 'Войти'}</Button>
               <Button variant="link" onClick={handleSwitchType}>
-                {type === 'register'
-                  ? 'Уже есть аккаунт?'
-                  : 'Еще нет аккаунта?'}
+                {type === 'register' ? 'Уже есть аккаунт?' : 'Еще нет аккаунта?'}
               </Button>
             </div>
           </form>

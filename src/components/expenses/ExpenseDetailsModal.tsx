@@ -78,8 +78,9 @@ const ExpenseDetailsModal = observer(({ id }: { id: string }) => {
           )}
 
           <Button
-            variant="link"
-            className="text-decoration-none text-uppercase text-danger align-self-end"
+            variant="outline-danger"
+            size="sm"
+            className="text-uppercase align-self-end border-0"
             onClick={() => handleDeleteExpense(expense.id)}
           >
             Удалить

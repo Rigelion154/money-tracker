@@ -48,15 +48,15 @@ const ExpenseDetailsModal = observer(({ id }: { id: string }) => {
       {!isLoading && expense && (
         <div className="modal__content expense__details_modal d-flex flex-column gap-2">
           <div className="d-flex align-items-center justify-content-between">
-            <h6 className="text-muted mb-0">Сумма</h6>
+            <h6 className="mb-0">Сумма</h6>
             <CloseModalButton />
           </div>
           <span>{getCurrencyString(expense.amount)}</span>
 
-          <h6 className="text-muted mb-0">Дата</h6>
+          <h6 className="mb-0">Дата</h6>
           <span>{moment(expense.date).format('DD.MM.YYYY HH:mm:ss')}</span>
 
-          <h6 className="text-muted mb-0">Категория</h6>
+          <h6 className="mb-0">Категория</h6>
           <div className="col-6 px-0 d-flex align-items-center gap-2">
             <i
               className={`${expense.categories.icon} rounded-circle text-white align-items-center justify-content-center`}
@@ -72,7 +72,7 @@ const ExpenseDetailsModal = observer(({ id }: { id: string }) => {
 
           {expense?.subcategories && (
             <>
-              <h6 className="text-muted mb-0">Подкатегория</h6>
+              <h6 className="mb-0">Подкатегория</h6>
               <span
                 style={{ backgroundColor: expense.categories.color }}
                 className="text-white px-2 rounded-5 align-self-start"

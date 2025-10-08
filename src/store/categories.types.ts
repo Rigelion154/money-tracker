@@ -5,6 +5,7 @@ export interface ICategoryOld {
   icon?: string;
   created_at: string;
   totalAmount: number;
+  is_default: boolean
 }
 
 export interface IStoreCategories {

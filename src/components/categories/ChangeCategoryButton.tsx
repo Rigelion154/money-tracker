@@ -1,10 +1,15 @@
+import { observer } from 'mobx-react-lite';
 import { Field } from 'react-final-form';
 import { Button } from 'react-bootstrap';
-import { ADD_EXPENSE_FIELDS } from '../form/AddExpenseForm/addExpenseform.constants.ts';
+
 import { modalStore } from '../../store/ModalStore.ts';
+import { categoriesStore } from '../../store/CategoriesStore.ts';
+import { ADD_EXPENSE_FIELDS } from '../form/AddExpenseForm/addExpenseform.constants.ts';
+
 import CategoryModal from './CategoryModal.tsx';
 
-const ChangeCategoryButton = () => {
+const ChangeCategoryButton = observer(() => {
+  const { categories } = categoriesStore;
   const handleOpenCategoryModal = (categoryId: string) =>
     modalStore.openModal({
       children: <CategoryModal {...{ categoryId }} />,
@@ -12,20 +17,25 @@ const ChangeCategoryButton = () => {
 
   return (
     <Field name={ADD_EXPENSE_FIELDS.CATEGORY_ID}>
-      {({ input }) =>
-        input.value && (
-          <Button
-            variant="warning"
-            size="sm"
-            className="rounded-circle py-1 px-2"
-            onClick={() => handleOpenCategoryModal(input.value)}
-          >
-            <i className="bi bi-pencil-fill fs-6"></i>
-          </Button>
-        )
-      }
+      {({ input }) => {
+        const isDefaultCategory = categories?.data[input.value]?.is_default;
+
+        return (
+          input.value &&
+          !isDefaultCategory && (
+            <Button
+              variant="warning"
+              size="sm"
+              className="rounded-circle py-1 px-2"
+              onClick={() => handleOpenCategoryModal(input.value)}
+            >
+              <i className="bi bi-pencil-fill fs-6"></i>
+            </Button>
+          )
+        );
+      }}
     </Field>
   );
-};
+});
 
 export default ChangeCategoryButton;

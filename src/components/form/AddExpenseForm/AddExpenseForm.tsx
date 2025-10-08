@@ -19,6 +19,7 @@ import ChangeSubcategoryButton from '../../subcategories/ChangeSubcategoryButton
 import AddSubcategoryButton from '../../subcategories/AddSubcategoryButton.tsx';
 import AddCategoryButton from '../../categories/AddCategoryButton.tsx';
 import ChangeCategoryButton from '../../categories/ChangeCategoryButton.tsx';
+import AppDatepicker from '../../ui/AppDatepicker.tsx';
 
 const AddExpenseForm = observer(() => {
   const { userId } = authStore;
@@ -46,6 +47,7 @@ const AddExpenseForm = observer(() => {
       values[ADD_EXPENSE_FIELDS.CATEGORY_ID],
       values[ADD_EXPENSE_FIELDS.AMOUNT],
       values[ADD_EXPENSE_FIELDS.SUBCATEGORY_ID],
+      values[ADD_EXPENSE_FIELDS.DATE],
     );
 
     if (error) appToaster.addToast('Ошибка добавления суммы', 'error');
@@ -78,9 +80,8 @@ const AddExpenseForm = observer(() => {
                 onSubmit={handleSubmit}
                 className="d-flex flex-column align-items-center mt-3 gap-3 flex-grow-1 pb-5"
               >
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <h3 className="fw-bold text-primary mb-0">Сумма</h3>
-
+                <h3 className="fw-bold text-primary mb-0">Сумма</h3>
+                <div className="d-flex align-items-center gap-2">
                   <Field name={ADD_EXPENSE_FIELDS.AMOUNT}>
                     {({ input }) => (
                       <InputGroup className="border-primary">
@@ -99,6 +100,10 @@ const AddExpenseForm = observer(() => {
                         </InputGroup.Text>
                       </InputGroup>
                     )}
+                  </Field>
+
+                  <Field name={ADD_EXPENSE_FIELDS.DATE}>
+                    {({ input }) => <AppDatepicker {...input} />}
                   </Field>
                 </div>
 

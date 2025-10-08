@@ -1,4 +1,5 @@
 import type { IExpense } from '../types/expenses.types.ts';
+import moment from 'moment';
 
 interface IGroupedExpenses {
   [date: string]: IExpense[];
@@ -8,7 +9,7 @@ export const groupExpensesByDate = (expenses: IExpense[]): IGroupedExpenses => {
   const grouped: IGroupedExpenses = {};
 
   expenses.forEach((expense) => {
-    const date = expense.date.split('T')[0];
+    const date = moment(expense.date).format('MM.DD.YYYY');
 
     if (!grouped[date]) {
       grouped[date] = [];

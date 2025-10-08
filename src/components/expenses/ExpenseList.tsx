@@ -16,7 +16,7 @@ const ExpenseList = ({ category, handleExpenseClick }: IExpenseListProps) => {
   return (
     <div className="p-1">
       {Object.entries(groupedExpenses).map(([date, expenses]) => (
-        <>
+        <div key={date}>
           <div className="px-2 rounded-2 fw-bold bg-secondary-subtle text-dark text-center fs__small text-capitalize">
             {moment(date).format('DD MMMM YYYY')}
           </div>
@@ -39,7 +39,7 @@ const ExpenseList = ({ category, handleExpenseClick }: IExpenseListProps) => {
               <span className="col-6 text-end">{getCurrencyString(expense.amount)}</span>
             </div>
           ))}
-        </>
+        </div>
       ))}
     </div>
   );

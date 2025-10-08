@@ -39,6 +39,7 @@ class ExpensesStore {
     categoryId: string,
     amount: string,
     subcategoryId?: string,
+    date?: string,
   ) =>
     dbClient
       .from('expenses')
@@ -47,6 +48,7 @@ class ExpensesStore {
         subcategory_id: subcategoryId,
         amount: parseFloat(amount.replace(',', '.')),
         user_id: userId,
+        date,
       })
       .select();
 

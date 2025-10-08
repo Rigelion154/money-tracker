@@ -29,10 +29,15 @@ const ExpenseCategoryList = observer(() => {
               <Accordion.Button className="border rounded-2 p-2 shadow-sm">
                 <div className="container-fluid">
                   <div className="row align-items-center">
-                    <div className="col-6 px-0">
+                    <div className="col-6 px-0 d-flex align-items-center gap-2">
                       <i
-                        className={`${category.icon} rounded-circle py-1 px-2 text-white me-2`}
-                        style={{ backgroundColor: category.color }}
+                        className={`${category.icon} rounded-circle text-white align-items-center justify-content-center`}
+                        style={{
+                          backgroundColor: category.color,
+                          width: '30px',
+                          height: '30px',
+                          display: 'inline-flex',
+                        }}
                       />
                       <span>{category.title}</span>
                     </div>

@@ -1,36 +1,17 @@
+import { observer } from 'mobx-react-lite';
 import { Link } from 'react-router-dom';
-import { ROUTES } from '../../../routes/routes.ts';
 import { Button } from 'react-bootstrap';
+
+import { ROUTES } from '../../../routes/routes.ts';
+import { expensesStore } from '../../../store/ExpensesStore.ts';
 
 import styles from './PeriodBar.module.css';
 
-const buttonsList = [
-  {
-    id: 1,
-    title: 'День',
-    variant: 'primary',
-    styles: 'rounded-0 btn-solid-blue border-end flex-fill w-25 py-2 fw-bold rounded-start-5',
-  },
-  {
-    id: 2,
-    title: 'Месяц',
-    variant: 'primary',
-    styles: 'rounded-0 btn-solid-blue border-end flex-fill w-25 py-2 fw-bold',
-  },
-  {
-    id: 3,
-    title: 'Год',
-    variant: 'primary',
-    styles: 'rounded-0 btn-solid-blue border-end flex-fill w-25 py-2 fw-bold',
-  },
-  {
-    id: 4,
-    title: 'Период',
-    variant: 'primary',
-    styles: 'rounded-0 btn-solid-blue  flex-fill w-25 py-2 fw-bold rounded-end-5',
-  },
-];
-const PeriodBar = () => {
+const PeriodBar = observer(() => {
+  const { activePeriod } = expensesStore;
+
+  const handleDayClick = (type: 'day' | 'month' | 'year') => expensesStore.setActivePeriod(type);
+
   return (
     <div className={`${styles.bar__container} border-bottom`}>
       <div className={styles.add__button_container}>
@@ -45,14 +26,39 @@ const PeriodBar = () => {
         className="d-flex align-items-center justify-content-center w-100 position-relative"
         style={{ height: '40px' }}
       >
-        {buttonsList.map((button) => (
-          <Button key={button.id} variant={button.variant} className={button.styles}>
-            {button.title}
-          </Button>
-        ))}
+        <Button
+          variant="primary"
+          className="rounded-0 btn-solid-blue border-end flex-fill w-25 py-2 fw-bold rounded-start-5"
+          onClick={() => handleDayClick('day')}
+          active={activePeriod === 'day'}
+        >
+          День
+        </Button>
+        <Button
+          variant="primary"
+          className="rounded-0 btn-solid-blue border-end flex-fill w-25 py-2 fw-bold"
+          onClick={() => handleDayClick('month')}
+          active={activePeriod === 'month'}
+        >
+          Месяц
+        </Button>
+        <Button
+          variant="primary"
+          className="rounded-0 btn-solid-blue border-end flex-fill w-25 py-2 fw-bold"
+          onClick={() => handleDayClick('year')}
+          active={activePeriod === 'year'}
+        >
+          Год
+        </Button>
+        <Button
+          variant="primary"
+          className="rounded-0 btn-solid-blue  flex-fill w-25 py-2 fw-bold rounded-end-5"
+        >
+          Период
+        </Button>
       </div>
     </div>
   );
-};
+});
 
 export default PeriodBar;

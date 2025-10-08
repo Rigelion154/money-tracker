@@ -1,9 +1,8 @@
-import { Sidebar } from 'primereact/sidebar';
 import { type Dispatch, type SetStateAction, useState } from 'react';
 import { authStore } from '../../store/AuthStore.ts';
 import BaseLoader from '../helpers/BaseLoader.tsx';
 import { observer } from 'mobx-react-lite';
-import { Button } from 'react-bootstrap';
+import { Button, Offcanvas } from 'react-bootstrap';
 
 interface IUserMenuProps {
   visible: boolean;
@@ -27,19 +26,14 @@ const UserMenu = observer(({ visible, setVisible }: IUserMenuProps) => {
   }
 
   return (
-    <Sidebar
-      visible={visible}
-      onHide={() => setVisible(false)}
-      position="right"
-      showCloseIcon={false}
-    >
+    <Offcanvas show={visible} onHide={() => setVisible(false)} placement="end">
       <div className="d-flex flex-column justify-content-center align-items-center h-100 gap-3">
         <h5 className="text-center">{userId}</h5>
         <Button variant="primary" onClick={handleLogout}>
           Выход
         </Button>
       </div>
-    </Sidebar>
+    </Offcanvas>
   );
 });
 

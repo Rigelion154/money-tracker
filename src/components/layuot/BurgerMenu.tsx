@@ -1,5 +1,5 @@
-import { Sidebar } from 'primereact/sidebar';
 import type { Dispatch, SetStateAction } from 'react';
+import { Offcanvas } from 'react-bootstrap';
 
 interface IBurgerMenuProps {
   visible: boolean;
@@ -8,9 +8,9 @@ interface IBurgerMenuProps {
 
 const BurgerMenu = ({ visible, setVisible }: IBurgerMenuProps) => {
   return (
-    <Sidebar visible={visible} onHide={() => setVisible(false)} showCloseIcon={false}>
+    <Offcanvas show={visible} onHide={() => setVisible(false)}>
       <h2>Sidebar</h2>
-    </Sidebar>
+    </Offcanvas>
   );
 };
 

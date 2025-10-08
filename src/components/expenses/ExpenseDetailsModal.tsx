@@ -57,13 +57,18 @@ const ExpenseDetailsModal = observer(({ id }: { id: string }) => {
           <span>{moment(expense.date).format('DD.MM.YYYY HH:mm:ss')}</span>
 
           <h6 className="text-muted mb-0">Категория</h6>
-          <span>
+          <div className="col-6 px-0 d-flex align-items-center gap-2">
             <i
-              className={`${expense.categories.icon} rounded-circle py-1 px-2 text-white`}
-              style={{ backgroundColor: expense.categories.color }}
+              className={`${expense.categories.icon} rounded-circle text-white align-items-center justify-content-center`}
+              style={{
+                backgroundColor: expense.categories.color,
+                width: '30px',
+                height: '30px',
+                display: 'inline-flex',
+              }}
             />
-            <span className="ms-2">{expense.categories.title}</span>
-          </span>
+            <span>{expense.categories.title}</span>
+          </div>
 
           {expense?.subcategories && (
             <>

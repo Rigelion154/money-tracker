@@ -1,7 +1,10 @@
+import { Divider } from 'primereact/divider';
+import moment from 'moment';
+
 import type { IExpenseCategory } from '../../types/expenses.types.ts';
+
 import { groupExpensesByDate } from '../../utils/groupExpensesByDate.ts';
 import { getCurrencyString } from '../../utils/getCurrencyString.ts';
-import moment from 'moment';
 
 import styles from './Expenses.module.css';
 
@@ -17,9 +20,10 @@ const ExpenseList = ({ category, handleExpenseClick }: IExpenseListProps) => {
     <div className="p-1">
       {Object.entries(groupedExpenses).map(([date, expenses]) => (
         <div key={date}>
-          <div className="px-2 rounded-2 fw-bold bg-secondary-subtle text-dark text-center fs__small text-capitalize">
+          <Divider className="fs__small py-1 text-muted">
             {moment(date).format('DD MMMM YYYY')}
-          </div>
+          </Divider>
+
           {expenses.map((expense) => (
             <div
               className={styles.expense__list_wrapper}
@@ -33,9 +37,6 @@ const ExpenseList = ({ category, handleExpenseClick }: IExpenseListProps) => {
                     )?.title
                   : category.title}
               </span>
-              {/*<small className="fw-bold text-primary col-2 text-center">*/}
-              {/*  {calculatePercentage(category.category_total_amount, expense.amount)}%*/}
-              {/*</small>*/}
               <span className="col-6 text-end">{getCurrencyString(expense.amount)}</span>
             </div>
           ))}

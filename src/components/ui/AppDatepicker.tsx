@@ -1,7 +1,7 @@
 import { Dropdown } from 'react-bootstrap';
-import { CiCalendarDate } from 'react-icons/ci';
 import { Calendar } from 'primereact/calendar';
 import { addLocale } from 'primereact/api';
+import { IoCalendarNumberOutline } from 'react-icons/io5';
 
 addLocale('ru', {
   firstDayOfWeek: 1,
@@ -42,16 +42,10 @@ addLocale('ru', {
 });
 
 const AppDatepicker = ({ value, onChange }: { value: any; onChange: any }) => {
-  // const [value, setValue] = useState<any>(null);
-
-  // useEffect(() => {
-  //   onChange(value);
-  // }, [value]);
-
   return (
     <Dropdown>
-      <Dropdown.Toggle className="p-0 border-0 d-flex justify-content-center align-items-center rounded-1 bg-transparent text-dark">
-        <CiCalendarDate size={40} />
+      <Dropdown.Toggle className="p-0 border-0 d-flex justify-content-center align-items-center rounded-1 bg-transparent text-secondary">
+        <IoCalendarNumberOutline size={35} />
       </Dropdown.Toggle>
       <Dropdown.Menu className="p-0">
         <Calendar
@@ -62,6 +56,8 @@ const AppDatepicker = ({ value, onChange }: { value: any; onChange: any }) => {
           inline
           showButtonBar
           locale="ru"
+          className="px-2"
+          panelClassName="border-0"
         />
       </Dropdown.Menu>
     </Dropdown>

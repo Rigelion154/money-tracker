@@ -27,7 +27,12 @@ const UserMenu = observer(({ visible, setVisible }: IUserMenuProps) => {
   }
 
   return (
-    <Sidebar visible={visible} onHide={() => setVisible(false)} position="right">
+    <Sidebar
+      visible={visible}
+      onHide={() => setVisible(false)}
+      position="right"
+      showCloseIcon={false}
+    >
       <div className="d-flex flex-column justify-content-center align-items-center h-100 gap-3">
         <h5 className="text-center">{userId}</h5>
         <Button variant="primary" onClick={handleLogout}>

@@ -1,10 +1,17 @@
-import { Button } from 'react-bootstrap';
-import { authStore } from '../../../store/AuthStore.ts';
-import { useState } from 'react';
-import BaseLoader from '../../helpers/BaseLoader.tsx';
 import { observer } from 'mobx-react-lite';
+import { Button, Offcanvas } from 'react-bootstrap';
+import { type Dispatch, type SetStateAction, useState } from 'react';
 
-const UserMenu = observer(() => {
+import { authStore } from '../../../store/AuthStore.ts';
+
+import BaseLoader from '../../helpers/BaseLoader.tsx';
+
+interface IUserMenuProps {
+  visible: boolean;
+  setVisible: Dispatch<SetStateAction<boolean>>;
+}
+
+const UserMenu = observer(({ visible, setVisible }: IUserMenuProps) => {
   const { userId } = authStore;
   const [isLoading, setIsLoading] = useState(false);
   const handleLogout = async () => {
@@ -20,13 +27,22 @@ const UserMenu = observer(() => {
       </div>
     );
   }
+
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100 gap-3">
-      <h5 className="text-center">{userId}</h5>
-      <Button variant="primary" onClick={handleLogout}>
-        Выход
-      </Button>
-    </div>
+    <Offcanvas
+      show={visible}
+      onHide={() => setVisible(false)}
+      style={{ width: '250px' }}
+      placement="end"
+      className="p-2"
+    >
+      <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100 gap-3">
+        <h5 className="text-center">{userId}</h5>
+        <Button variant="primary" onClick={handleLogout}>
+          Выход
+        </Button>
+      </div>
+    </Offcanvas>
   );
 });
 

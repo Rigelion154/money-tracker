@@ -9,7 +9,6 @@ import { useAuth } from '../../hooks/useAuth.ts';
 import Layout from '../../components/layuot/Layout.tsx';
 import AuthPage from '../../pages/Auth/AuthPage.tsx';
 import MainPage from '../../pages/Main/MainPage.tsx';
-import UserMenuPage from '../../pages/menu/UserMenuPage.tsx';
 import AddTransactionPage from '../../pages/AddTransactionPage/AddTransactionPage.tsx';
 
 const AppRouter = observer(() => {
@@ -31,7 +30,6 @@ const AppRouter = observer(() => {
               <Route path={ROUTES.AUTH} element={<Navigate to={ROUTES.MAIN} />} />
               <Route path={ROUTES.MAIN} element={<Layout />}>
                 <Route path={ROUTES.MAIN} element={<MainPage />} />
-                <Route path={ROUTES.USER} element={<UserMenuPage />} />
                 <Route path={ROUTES.ADD_TRANSACTION} element={<AddTransactionPage />} />
               </Route>
             </>

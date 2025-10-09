@@ -33,7 +33,7 @@ const ExpenseSubcategoryItem = ({ subcategory, category }: ISubcategoryItemProps
       children: <ExpenseDetailsModal id={id} />,
     });
 
-  if (subcategory.expenses.length < 1) {
+  if (subcategory.expenses.length < 5) {
     return null;
   }
 

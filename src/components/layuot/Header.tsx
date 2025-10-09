@@ -1,31 +1,14 @@
-import { BsPersonCircle } from 'react-icons/bs';
-
-import BurgerMenu from './BurgerMenu.tsx';
-import { observer } from 'mobx-react-lite';
-import { screenStore } from '../../store/ScreenStore.ts';
-// import UserMenu from './menu/UserMenu.tsx';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '../../routes/routes.ts';
 import { useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import { BsPersonCircle } from 'react-icons/bs';
 import { RiMenu2Fill } from 'react-icons/ri';
 
-// const AppMenu = lazy(() => import('./menu/AppMenu.tsx'));
-// import AppBurger from "./AppBurger.tsx";
+import BurgerMenu from './menu/BurgerMenu.tsx';
+import UserMenu from './menu/UserMenu.tsx';
 
 const Header = observer(() => {
   const [isBurgerVisible, setIsBurgerVisible] = useState(false);
-  // const [isUserMenuVisible, setIsUserMenuVisible] = useState(false);
-  const navigate = useNavigate();
-
-  const { isMobile } = screenStore;
-
-  const handleClickUserMenu = () => {
-    if (isMobile) {
-      navigate(ROUTES.USER);
-    } else {
-      // setIsUserMenuVisible(true);
-    }
-  };
+  const [isUserMenuVisible, setIsUserMenuVisible] = useState(false);
 
   return (
     <div
@@ -33,21 +16,10 @@ const Header = observer(() => {
       style={{ height: '40px' }}
     >
       <RiMenu2Fill onClick={() => setIsBurgerVisible(true)} role="button" size={25} />
-      <BsPersonCircle onClick={handleClickUserMenu} role="button" size={25} />
+      <BsPersonCircle onClick={() => setIsUserMenuVisible(true)} role="button" size={25} />
+
       <BurgerMenu visible={isBurgerVisible} setVisible={setIsBurgerVisible} />
-      with menu && acc
-      {/*{!isMobile && (*/}
-      {/*  <Suspense>*/}
-      {/*    <AppMenu*/}
-      {/*      isVisible={isUserMenuVisible}*/}
-      {/*      onHide={() => setIsUserMenuVisible(false)}*/}
-      {/*      placement="end"*/}
-      {/*    >*/}
-      {/*      <UserMenu />*/}
-      {/*    </AppMenu>*/}
-      {/*  </Suspense>*/}
-      {/*)}*/}
-      {/*<AppBurger visible={isBurgerVisible} setVisible={setIsBurgerVisible} />*/}
+      <UserMenu visible={isUserMenuVisible} setVisible={setIsUserMenuVisible} />
     </div>
   );
 });

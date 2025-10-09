@@ -32,7 +32,7 @@ const Header = observer(() => {
     >
       {/*<RiMenu2Fill onClick={() => setIsBurgerVisible(true)} role="button" size={25} />*/}
       <BsPersonCircle onClick={handleClickUserMenu} role="button" size={25} />
-      without menu
+      without acc item
       {/*<BurgerMenu visible={isBurgerVisible} setVisible={setIsBurgerVisible} />*/}
       {/*{!isMobile && (*/}
       {/*  <Suspense>*/}

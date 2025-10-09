@@ -1,11 +1,12 @@
 import { BsPersonCircle } from 'react-icons/bs';
 
 // import BurgerMenu from './BurgerMenu.tsx';
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { screenStore } from '../../store/ScreenStore.ts';
-import { Offcanvas } from 'react-bootstrap';
 import UserMenu from './menu/UserMenu.tsx';
+
+const AppMenu = lazy(() => import('./menu/AppMenu.tsx'));
 // import AppBurger from "./AppBurger.tsx";
 
 const Header = observer(() => {
@@ -22,15 +23,15 @@ const Header = observer(() => {
       <BsPersonCircle onClick={() => setIsUserMenuVisible(true)} role="button" size={25} />
       {/*<BurgerMenu visible={isBurgerVisible} setVisible={setIsBurgerVisible} />*/}
       {!isMobile && (
-        <Offcanvas
-          show={isUserMenuVisible}
-          onHide={() => setIsUserMenuVisible(false)}
-          placement="end"
-          style={{ width: '250px' }}
-          className="p-2"
-        >
-          <UserMenu />
-        </Offcanvas>
+        <Suspense>
+          <AppMenu
+            isVisible={isUserMenuVisible}
+            onHide={() => setIsUserMenuVisible(false)}
+            placement="end"
+          >
+            <UserMenu />
+          </AppMenu>
+        </Suspense>
       )}
 
       {/*<AppBurger visible={isBurgerVisible} setVisible={setIsBurgerVisible} />*/}

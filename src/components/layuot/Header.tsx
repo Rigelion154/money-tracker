@@ -1,8 +1,9 @@
 import { BsPersonCircle } from 'react-icons/bs';
 import { RiMenu2Fill } from 'react-icons/ri';
-import BurgerMenu from './BurgerMenu';
+// import BurgerMenu from './BurgerMenu';
 import UserMenu from './UserMenu.tsx';
 import { useState } from 'react';
+import AppBurger from './AppBurger.tsx';
 
 const Header = () => {
   const [isBurgerVisible, setIsBurgerVisible] = useState(false);
@@ -14,9 +15,9 @@ const Header = () => {
     >
       <RiMenu2Fill onClick={() => setIsBurgerVisible(true)} role="button" size={25} />
       <BsPersonCircle onClick={() => setIsUserMenuVisible(true)} role="button" size={25} />
-      {/**/}
-      <BurgerMenu visible={isBurgerVisible} setVisible={setIsBurgerVisible} />
+      {/*<BurgerMenu visible={isBurgerVisible} setVisible={setIsBurgerVisible} />*/}
       <UserMenu visible={isUserMenuVisible} setVisible={setIsUserMenuVisible} />
+      <AppBurger visible={isBurgerVisible} setVisible={setIsBurgerVisible} />
     </div>
   );
 };

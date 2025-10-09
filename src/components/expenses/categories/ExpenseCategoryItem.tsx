@@ -1,4 +1,4 @@
-import { Accordion } from 'react-bootstrap';
+// import { Accordion } from 'react-bootstrap';
 import { useMemo } from 'react';
 
 import type { IExpenseCategory } from '../../../types/expenses.types.ts';
@@ -10,6 +10,7 @@ import ExpenseSubcategoryList from '../subcategories/ExpenseSubcategoryList.tsx'
 import ExpenseList from './ExpenseList.tsx';
 
 import styles from '../Expenses.module.css';
+import { Accordion, AccordionTab } from 'primereact/accordion';
 
 interface CategoryItemProps {
   category: IExpenseCategory;
@@ -27,32 +28,59 @@ const ExpenseCategoryItem = ({ category, totalAmount }: CategoryItemProps) => {
   );
 
   return (
-    <Accordion className="col-12 col-md-8 col-xl-4">
-      <Accordion.Button className="border rounded-2 p-2 shadow-sm">
-        <div className="col-6 px-0 d-flex align-items-center gap-2">
-          <i
-            className={`${category.icon} ${styles.expense__icon}`}
-            style={{ backgroundColor: category.color }}
-          />
-          <span>{category.title}</span>
-        </div>
+    <Accordion multiple className="col-12 col-md-8 col-xl-4">
+      <AccordionTab
+        header={
+          <div className="d-flex align-items-center px-2">
+            <div className="col-6 px-0 d-flex align-items-center gap-2">
+              <i
+                className={`${category.icon} ${styles.expense__icon}`}
+                style={{ backgroundColor: category.color }}
+              />
+              <span>{category.title}</span>
+            </div>
 
-        <div className="col-2 px-0 text-center">
-          <small className="fw-bold text-success">{percentage}%</small>
-        </div>
+            <div className="col-2 px-0 text-center">
+              <small className="fw-bold text-success">{percentage}%</small>
+            </div>
 
-        <div
-          className="col-4 px-0 text-end overflow-hidden fs__small"
-          style={{ textOverflow: 'ellipsis' }}
-        >
-          <span className="fw-bold text-muted text-end">{currencyString}</span>
-        </div>
-      </Accordion.Button>
-
-      <Accordion.Body className="border p-1 shadow-sm">
+            <div
+              className="col-4 px-0 text-end overflow-hidden fs__small"
+              style={{ textOverflow: 'ellipsis' }}
+            >
+              <span className="fw-bold text-muted text-end">{currencyString}</span>
+            </div>
+          </div>
+        }
+      >
         <ExpenseSubcategoryList {...{ category }} />
         <ExpenseList {...{ category }} />
-      </Accordion.Body>
+      </AccordionTab>
+      {/*<Accordion.Button className="border rounded-2 p-2 shadow-sm">*/}
+      {/*  <div className="col-6 px-0 d-flex align-items-center gap-2">*/}
+      {/*    <i*/}
+      {/*      className={`${category.icon} ${styles.expense__icon}`}*/}
+      {/*      style={{ backgroundColor: category.color }}*/}
+      {/*    />*/}
+      {/*    <span>{category.title}</span>*/}
+      {/*  </div>*/}
+
+      {/*  <div className="col-2 px-0 text-center">*/}
+      {/*    <small className="fw-bold text-success">{percentage}%</small>*/}
+      {/*  </div>*/}
+
+      {/*  <div*/}
+      {/*    className="col-4 px-0 text-end overflow-hidden fs__small"*/}
+      {/*    style={{ textOverflow: 'ellipsis' }}*/}
+      {/*  >*/}
+      {/*    <span className="fw-bold text-muted text-end">{currencyString}</span>*/}
+      {/*  </div>*/}
+      {/*</Accordion.Button>*/}
+
+      {/*<Accordion.Body className="border p-1 shadow-sm">*/}
+      {/*  <ExpenseSubcategoryList {...{ category }} />*/}
+      {/*  <ExpenseList {...{ category }} />*/}
+      {/*</Accordion.Body>*/}
     </Accordion>
   );
 };

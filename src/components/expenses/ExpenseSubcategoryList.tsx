@@ -22,7 +22,7 @@ const ExpenseSubcategoryList = ({ category, handleExpenseClick }: ISubcategoryLi
           subcategory.expenses.length > 1 && (
             <Accordion className="px-0" key={subcategory.id}>
               <Accordion.Item eventKey={subcategory.id}>
-                <Accordion.Header
+                <Accordion.Button
                   className="rounded-0 py-1 px-2 shadow-none text-white"
                   style={{ backgroundColor: category.color }}
                 >
@@ -37,7 +37,7 @@ const ExpenseSubcategoryList = ({ category, handleExpenseClick }: ISubcategoryLi
                   <div className="col-4 text-end">
                     {getCurrencyString(subcategory.subcategory_total_amount)}
                   </div>
-                </Accordion.Header>
+                </Accordion.Button>
 
                 <Accordion.Body className="p-1 border bg-light">
                   {subcategory.expenses.map((expense) => (

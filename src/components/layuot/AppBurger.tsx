@@ -7,9 +7,9 @@ interface IUserMenuProps {
 }
 
 const AppBurger = ({ visible, setVisible }: IUserMenuProps) => {
-  if (!visible) {
-    return null;
-  }
+  // if (!visible) {
+  //   return null;
+  // }
 
   return (
     <>

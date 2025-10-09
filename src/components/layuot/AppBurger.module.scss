@@ -42,16 +42,16 @@
     background-color: white;
     z-index: 200;
     flex-direction: column;
-    //transition: transform 0.2s ease-in;
+    transition: transform 0.2s ease-in;
     transform: translateX(-100%) translateZ(0);
     will-change: transform;
     //pointer-events: none;
-    display: none; // Скрываем по умолчанию
+    //display: none; // Скрываем по умолчанию
 
     &_open {
         transform: translateX(0) translateZ(0);
         //pointer-events: auto;
-        display: flex; // Показываем когда открыто
+        //display: flex; // Показываем когда открыто
     }
 }
 

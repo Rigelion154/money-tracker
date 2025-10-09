@@ -16,10 +16,9 @@ const ExpenseCategoryItem = ({ category, totalAmount, handleExpenseClick }: Cate
   const currencyString = getCurrencyString(category.category_total_amount);
 
   return (
-    // <div key={category.id}>
     <Accordion className="col-12 col-md-8 col-xl-4">
-      <Accordion.Item eventKey={category.id}>
-        <Accordion.Header className="border rounded-2 p-2 shadow-sm">
+      <Accordion.Item eventKey={category.id} className="border-0">
+        <Accordion.Button className="border rounded-2 p-2 shadow-sm">
           <div className="container-fluid">
             <div className="row align-items-center">
               <div className="col-6 px-0 d-flex align-items-center gap-2">
@@ -47,7 +46,7 @@ const ExpenseCategoryItem = ({ category, totalAmount, handleExpenseClick }: Cate
               </div>
             </div>
           </div>
-        </Accordion.Header>
+        </Accordion.Button>
 
         <Accordion.Body className="border p-1 shadow-sm">
           <ExpenseSubcategoryList {...{ category, handleExpenseClick }} />
@@ -55,7 +54,6 @@ const ExpenseCategoryItem = ({ category, totalAmount, handleExpenseClick }: Cate
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>
-    // </div>
   );
 };
 

@@ -5,9 +5,11 @@ import 'moment/dist/locale/ru';
 
 import AppRouter from './routes/AppRouter/AppRouter.tsx';
 import AppToasterComponent from './components/helpers/AppToaster/AppToasterComponent.tsx';
+import { useScreenSize } from './hooks/useScreenSize.ts';
 
 const App = observer(() => {
   moment().locale('ru');
+  useScreenSize();
 
   return (
     <>

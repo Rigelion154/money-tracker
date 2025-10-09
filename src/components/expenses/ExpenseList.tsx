@@ -3,18 +3,25 @@ import moment from 'moment';
 
 import type { IExpenseCategory } from '../../types/expenses.types.ts';
 
+import { modalStore } from '../../store/ModalStore.ts';
 import { groupExpensesByDate } from '../../utils/groupExpensesByDate.ts';
 import { getCurrencyString } from '../../utils/getCurrencyString.ts';
+
+import ExpenseDetailsModal from './ExpenseDetailsModal.tsx';
 
 import styles from './Expenses.module.css';
 
 interface IExpenseListProps {
   category: IExpenseCategory;
-  handleExpenseClick: (id: string) => void;
 }
 
-const ExpenseList = ({ category, handleExpenseClick }: IExpenseListProps) => {
+const ExpenseList = ({ category }: IExpenseListProps) => {
   const groupedExpenses = groupExpensesByDate(category.expenses);
+
+  const handleExpenseClick = (id: string) =>
+    modalStore.openModal({
+      children: <ExpenseDetailsModal id={id} />,
+    });
 
   return (
     <div className="p-1">
@@ -30,14 +37,12 @@ const ExpenseList = ({ category, handleExpenseClick }: IExpenseListProps) => {
               key={expense.id + expense.category_id}
               onClick={() => handleExpenseClick(expense.id)}
             >
-              <span style={{ color: category.color }} className="col-6">
-                {expense.subcategory_id
-                  ? category?.subcategories?.find(
-                      (subcategory) => subcategory.id === expense.subcategory_id,
-                    )?.title
-                  : category.title}
+              <span style={{ color: category.color }}>
+                {category?.subcategories?.find(
+                  (subcategory) => subcategory.id === expense.subcategory_id,
+                )?.title ?? category.title}
               </span>
-              <span className="col-6 text-end">{getCurrencyString(expense.amount)}</span>
+              <span className="text-end">{getCurrencyString(expense.amount)}</span>
             </div>
           ))}
         </div>

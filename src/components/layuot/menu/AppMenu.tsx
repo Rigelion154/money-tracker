@@ -8,18 +8,16 @@ interface IAppMenuProps {
   placement?: 'start' | 'end' | 'top' | 'bottom';
 }
 
-const AppMenu = ({ isVisible, onHide, placement, children }: IAppMenuProps) => {
-  return (
-    <Offcanvas
-      show={isVisible}
-      onHide={onHide}
-      placement={placement}
-      style={{ width: '250px' }}
-      className="p-2"
-    >
-      {children}
-    </Offcanvas>
-  );
-};
+const AppMenu = ({ isVisible, onHide, placement, children }: IAppMenuProps) => (
+  <Offcanvas
+    show={isVisible}
+    onHide={onHide}
+    placement={placement}
+    style={{ width: '250px' }}
+    className="p-2"
+  >
+    {children}
+  </Offcanvas>
+);
 
 export default AppMenu;

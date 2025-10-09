@@ -21,7 +21,7 @@ const UserMenu = observer(() => {
     );
   }
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center h-100 gap-3">
+    <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100 gap-3">
       <h5 className="text-center">{userId}</h5>
       <Button variant="primary" onClick={handleLogout}>
         Выход

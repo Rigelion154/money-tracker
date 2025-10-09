@@ -1,13 +1,16 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
-import { ROUTES } from '../routes.ts';
-import AddTransactionPage from '../../pages/AddTransactionPage/AddTransactionPage.tsx';
 import { observer } from 'mobx-react-lite';
-import { authStore } from '../../store/AuthStore.ts';
-import AuthPage from '../../pages/Auth/AuthPage.tsx';
-import { useAuth } from '../../hooks/useAuth.ts';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
+
+import { ROUTES } from '../routes.ts';
+import { authStore } from '../../store/AuthStore.ts';
+import { useAuth } from '../../hooks/useAuth.ts';
+
 import Layout from '../../components/layuot/Layout.tsx';
+import AuthPage from '../../pages/Auth/AuthPage.tsx';
 import MainPage from '../../pages/Main/MainPage.tsx';
+import UserMenuPage from '../../pages/menu/UserMenuPage.tsx';
+import AddTransactionPage from '../../pages/AddTransactionPage/AddTransactionPage.tsx';
 
 const AppRouter = observer(() => {
   const { isAuth } = authStore;
@@ -25,16 +28,11 @@ const AppRouter = observer(() => {
         <Routes>
           {isAuth && (
             <>
-              <Route
-                path={ROUTES.AUTH}
-                element={<Navigate to={ROUTES.MAIN} />}
-              />
+              <Route path={ROUTES.AUTH} element={<Navigate to={ROUTES.MAIN} />} />
               <Route path={ROUTES.MAIN} element={<Layout />}>
                 <Route path={ROUTES.MAIN} element={<MainPage />} />
-                <Route
-                  path={ROUTES.ADD_TRANSACTION}
-                  element={<AddTransactionPage />}
-                />
+                <Route path={ROUTES.USER} element={<UserMenuPage />} />
+                <Route path={ROUTES.ADD_TRANSACTION} element={<AddTransactionPage />} />
               </Route>
             </>
           )}

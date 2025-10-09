@@ -11,3 +11,10 @@
         width: 90%;
     }
 }
+
+.expenses__total_modal {
+    width: 30%;
+    @media screen and (max-width: 1200px) {
+        width: 90%;
+    }
+}

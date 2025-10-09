@@ -26,7 +26,13 @@ const UserMenu = observer(({ visible, setVisible }: IUserMenuProps) => {
   }
 
   return (
-    <Offcanvas show={visible} onHide={() => setVisible(false)} placement="end">
+    <Offcanvas
+      show={visible}
+      onHide={() => setVisible(false)}
+      placement="end"
+      style={{ width: '250px' }}
+      className="p-2"
+    >
       <div className="d-flex flex-column justify-content-center align-items-center h-100 gap-3">
         <h5 className="text-center">{userId}</h5>
         <Button variant="primary" onClick={handleLogout}>

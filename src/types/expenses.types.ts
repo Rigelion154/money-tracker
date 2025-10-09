@@ -7,6 +7,8 @@ export interface IExpense {
   date: string;
   description: string | null;
   created_at: string;
+  category?: ICategory;
+  subcategory?: ISubcategory;
 }
 
 export interface ICategory {

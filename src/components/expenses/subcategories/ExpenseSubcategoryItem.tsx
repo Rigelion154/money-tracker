@@ -2,16 +2,16 @@ import { useMemo } from 'react';
 import { Accordion } from 'react-bootstrap';
 import moment from 'moment';
 
-import type { IExpenseCategory, IExpenseSubcategory } from '../../types/expenses.types.ts';
+import type { IExpenseCategory, IExpenseSubcategory } from '../../../types/expenses.types.ts';
 
-import { modalStore } from '../../store/ModalStore.ts';
-import { calculatePercentage } from '../../utils/calculatePersentage.ts';
-import { getCurrencyString } from '../../utils/getCurrencyString.ts';
-import { FULL_MONTH_FORMAT } from '../../utils/constants.ts';
+import { modalStore } from '../../../store/ModalStore.ts';
+import { calculatePercentage } from '../../../utils/calculatePersentage.ts';
+import { getCurrencyString } from '../../../utils/getCurrencyString.ts';
+import { FULL_MONTH_FORMAT } from '../../../utils/constants.ts';
 
-import ExpenseDetailsModal from './ExpenseDetailsModal.tsx';
+import ExpenseDetailsModal from '../ExpenseDetailsModal.tsx';
 
-import styles from './Expenses.module.css';
+import styles from '../Expenses.module.css';
 
 interface ISubcategoryItemProps {
   subcategory: IExpenseSubcategory;
@@ -32,6 +32,10 @@ const ExpenseSubcategoryItem = ({ subcategory, category }: ISubcategoryItemProps
     modalStore.openModal({
       children: <ExpenseDetailsModal id={id} />,
     });
+
+  if (subcategory.expenses.length < 5) {
+    return null;
+  }
 
   return (
     <Accordion className="px-0" key={subcategory.id}>

@@ -1,15 +1,15 @@
 import { Accordion } from 'react-bootstrap';
 import { useMemo } from 'react';
 
-import type { IExpenseCategory } from '../../types/expenses.types.ts';
+import type { IExpenseCategory } from '../../../types/expenses.types.ts';
 
-import { calculatePercentage } from '../../utils/calculatePersentage.ts';
-import { getCurrencyString } from '../../utils/getCurrencyString.ts';
+import { calculatePercentage } from '../../../utils/calculatePersentage.ts';
+import { getCurrencyString } from '../../../utils/getCurrencyString.ts';
 
-import ExpenseSubcategoryList from './ExpenseSubcategoryList.tsx';
+import ExpenseSubcategoryList from '../subcategories/ExpenseSubcategoryList.tsx';
 import ExpenseList from './ExpenseList.tsx';
 
-import styles from './Expenses.module.css';
+import styles from '../Expenses.module.css';
 
 interface CategoryItemProps {
   category: IExpenseCategory;

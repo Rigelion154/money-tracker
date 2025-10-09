@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite';
 
-import { expensesStore } from '../../store/ExpensesStore.ts';
+import { expensesStore } from '../../../store/ExpensesStore.ts';
 
-import ExpensesTotalBar from './ExpensesTotalBar.tsx';
+import ExpensesTotalBar from '../total/ExpensesTotalBar.tsx';
 import ExpenseCategoryItem from './ExpenseCategoryItem.tsx';
 
 const ExpenseCategoryList = observer(() => {

@@ -1,4 +1,4 @@
-import type { IExpenseCategory } from '../../types/expenses.types.ts';
+import type { IExpenseCategory } from '../../../types/expenses.types.ts';
 
 import ExpenseSubcategoryItem from './ExpenseSubcategoryItem.tsx';
 

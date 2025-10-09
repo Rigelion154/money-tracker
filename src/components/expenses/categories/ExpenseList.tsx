@@ -1,15 +1,15 @@
 import { Divider } from 'primereact/divider';
 import moment from 'moment';
 
-import type { IExpenseCategory } from '../../types/expenses.types.ts';
+import type { IExpenseCategory } from '../../../types/expenses.types.ts';
 
-import { modalStore } from '../../store/ModalStore.ts';
-import { groupExpensesByDate } from '../../utils/groupExpensesByDate.ts';
-import { getCurrencyString } from '../../utils/getCurrencyString.ts';
+import { modalStore } from '../../../store/ModalStore.ts';
+import { groupExpensesByDate } from '../../../utils/groupExpensesByDate.ts';
+import { getCurrencyString } from '../../../utils/getCurrencyString.ts';
 
-import ExpenseDetailsModal from './ExpenseDetailsModal.tsx';
+import ExpenseDetailsModal from '../ExpenseDetailsModal.tsx';
 
-import styles from './Expenses.module.css';
+import styles from '../Expenses.module.css';
 
 interface IExpenseListProps {
   category: IExpenseCategory;

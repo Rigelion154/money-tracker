@@ -9,7 +9,12 @@ interface IBurgerMenuProps {
 
 const BurgerMenu = observer(({ visible, setVisible }: IBurgerMenuProps) => {
   return (
-    <Offcanvas show={visible} onHide={() => setVisible(false)} className="w-25">
+    <Offcanvas
+      show={visible}
+      onHide={() => setVisible(false)}
+      style={{ width: '250px' }}
+      className="p-2"
+    >
       <h2>Sidebar</h2>
     </Offcanvas>
   );

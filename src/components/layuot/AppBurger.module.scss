@@ -41,16 +41,17 @@
     height: 100%;
     background-color: white;
     z-index: 200;
-    display: flex;
     flex-direction: column;
-    transition: transform 0.2s ease-in;
+    //transition: transform 0.2s ease-in;
     transform: translateX(-100%) translateZ(0);
     will-change: transform;
-    pointer-events: none;
+    //pointer-events: none;
+    display: none; // Скрываем по умолчанию
 
     &_open {
         transform: translateX(0) translateZ(0);
-        pointer-events: auto;
+        //pointer-events: auto;
+        display: flex; // Показываем когда открыто
     }
 }
 
@@ -62,14 +63,16 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 150;
-    opacity: 0;
-    transition: opacity 0.2s ease-in;
-    pointer-events: none;
+    //opacity: 0;
+    //transition: opacity 0.2s ease-in;
+    //pointer-events: none;
     transform: translateZ(0);
     will-change: opacity;
+    display: none; // Скрываем по умолчанию
 
     &_open {
-        opacity: 1;
-        pointer-events: auto;
+        //opacity: 1;
+        //pointer-events: auto;
+        display: block; // Показываем когда открыто
     }
 }

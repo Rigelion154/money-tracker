@@ -14,7 +14,7 @@ const ExpensesTotalBar = observer(() => {
 
   return (
     <Card
-      className="col-10 col-md-7 col-xl-3 mb-3 rounded-4"
+      className="col-10 col-md-7 col-xl-3 mb-3 rounded-4 text-white gradient-animated-purple"
       onClick={handleTotalModal}
       role="button"
     >

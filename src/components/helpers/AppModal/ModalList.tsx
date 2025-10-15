@@ -2,12 +2,16 @@ import { observer } from 'mobx-react-lite';
 import { modalStore } from '../../../store/ModalStore.ts';
 import AppModal from './AppModal.tsx';
 import { useEffect } from 'react';
+import { screenStore } from '../../../store/ScreenStore.ts';
 
 const ModalList = observer(function ModalList() {
   const { modalList } = modalStore;
+  const { isMobile } = screenStore;
 
   useEffect(() => {
-    document.body.style.overflowY = modalList.length > 0 ? 'hidden' : 'scroll';
+    if (isMobile) {
+      document.body.style.overflowY = modalList.length > 0 ? 'hidden' : 'scroll';
+    }
   }, [modalList.length]);
 
   return (

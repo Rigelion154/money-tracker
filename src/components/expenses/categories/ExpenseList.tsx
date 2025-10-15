@@ -10,18 +10,30 @@ import { getCurrencyString } from '../../../utils/getCurrencyString.ts';
 import ExpenseDetailsModal from '../ExpenseDetailsModal.tsx';
 
 import styles from '../Expenses.module.css';
+import { observer } from 'mobx-react-lite';
+import { screenStore } from '../../../store/ScreenStore.ts';
+import { useNavigate } from 'react-router-dom';
 
 interface IExpenseListProps {
   category: IExpenseCategory;
 }
 
-const ExpenseList = ({ category }: IExpenseListProps) => {
+const ExpenseList = observer(({ category }: IExpenseListProps) => {
+  const { isMobile } = screenStore;
   const groupedExpenses = groupExpensesByDate(category.expenses);
+  const navigate = useNavigate();
 
-  const handleExpenseClick = (id: string) =>
-    modalStore.openModal({
-      children: <ExpenseDetailsModal id={id} />,
-    });
+  const handleExpenseClick = (id: string) => {
+    if (isMobile) {
+      navigate(`expense/${id}`);
+    }
+
+    if (!isMobile) {
+      modalStore.openModal({
+        children: <ExpenseDetailsModal id={id} />,
+      });
+    }
+  };
 
   return (
     <div className="p-1">
@@ -49,6 +61,6 @@ const ExpenseList = ({ category }: IExpenseListProps) => {
       ))}
     </div>
   );
-};
+});
 
 export default ExpenseList;

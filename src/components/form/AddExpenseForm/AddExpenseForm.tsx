@@ -1,16 +1,15 @@
-import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Button, InputGroup } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { Field, Form } from 'react-final-form';
 import { CurrencyInput } from 'react-currency-input-field';
+import moment from 'moment';
 
 import { authStore } from '../../../store/AuthStore.ts';
 import { appToaster } from '../../../store/AppToaster.ts';
 import { expensesStore } from '../../../store/ExpensesStore.ts';
 import { categoriesStore } from '../../../store/CategoriesStore.ts';
 import { ADD_EXPENSE_FIELDS } from './addExpenseform.constants.ts';
-import { ROUTES } from '../../../routes/routes.ts';
 
 import BaseLoader from '../../helpers/BaseLoader.tsx';
 import CategoryList from '../../categories/CategoryList.tsx';
@@ -20,7 +19,7 @@ import AddSubcategoryButton from '../../subcategories/AddSubcategoryButton.tsx';
 import AddCategoryButton from '../../categories/AddCategoryButton.tsx';
 import ChangeCategoryButton from '../../categories/ChangeCategoryButton.tsx';
 import AppDatepicker from '../../ui/AppDatepicker.tsx';
-import moment from 'moment';
+import PrevPageButton from '../../ui/PrevPageButton.tsx';
 
 const AddExpenseForm = observer(() => {
   const { userId } = authStore;
@@ -67,12 +66,7 @@ const AddExpenseForm = observer(() => {
       {!isLoading && categories && (
         <>
           <div>
-            <Link to={ROUTES.MAIN} style={{ color: 'inherit', textDecoration: 'none' }}>
-              <Button variant="warning" className="rounded-4 px-4">
-                <i className="bi bi-arrow-left me-2"></i>
-                Назад
-              </Button>
-            </Link>
+            <PrevPageButton />
           </div>
 
           <Form onSubmit={handleFormSubmit}>
@@ -127,6 +121,7 @@ const AddExpenseForm = observer(() => {
                     <AddCategoryButton />
                   </div>
                 </div>
+
                 <CategoryList />
 
                 <div className="d-grid gap-3" style={{ gridTemplateColumns: '1fr auto 1fr' }}>

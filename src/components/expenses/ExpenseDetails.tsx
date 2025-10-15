@@ -1,15 +1,16 @@
-import type { IExpenseDetails } from '../../types/expenses.types.ts';
-import { getCurrencyString } from '../../utils/getCurrencyString.ts';
-import moment from 'moment/moment';
 import { Button } from 'react-bootstrap';
+import moment from 'moment';
 
-const ExpensesDetails = ({
-  expense,
-  handleDeleteExpense,
-}: {
+import type { IExpenseDetails } from '../../types/expenses.types.ts';
+
+import { getCurrencyString } from '../../utils/getCurrencyString.ts';
+
+interface IDetailsProps {
   expense: IExpenseDetails;
   handleDeleteExpense: (id: string) => Promise<void>;
-}) => {
+}
+
+const ExpenseDetails = ({ expense, handleDeleteExpense }: IDetailsProps) => {
   return (
     <>
       <div className="border px-2 py-1 rounded-3 shadow-sm">
@@ -62,4 +63,4 @@ const ExpensesDetails = ({
   );
 };
 
-export default ExpensesDetails;
+export default ExpenseDetails;

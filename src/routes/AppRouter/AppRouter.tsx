@@ -11,6 +11,7 @@ import AuthPage from '../../pages/Auth/AuthPage.tsx';
 import MainPage from '../../pages/Main/MainPage.tsx';
 import AddTransactionPage from '../../pages/AddTransactionPage/AddTransactionPage.tsx';
 import ExpenseDetailsPage from '../../pages/Details/ExpenseDetailsPage.tsx';
+import ExpenseSubcategoryDetailsPage from '../../pages/Details/ExpenseSubcategoryDetailsPage.tsx';
 
 const AppRouter = observer(() => {
   const { isAuth } = authStore;
@@ -33,6 +34,10 @@ const AppRouter = observer(() => {
                 <Route path={ROUTES.MAIN} element={<MainPage />} />
                 <Route path={ROUTES.ADD_TRANSACTION} element={<AddTransactionPage />} />
                 <Route path={ROUTES.EXPENSE_DETAILS} element={<ExpenseDetailsPage />} />
+                <Route
+                  path={ROUTES.SUBCATEGORY_DETAILS}
+                  element={<ExpenseSubcategoryDetailsPage />}
+                />
               </Route>
             </>
           )}

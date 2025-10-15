@@ -8,11 +8,11 @@ import { useState } from 'react';
 import BaseLoader from '../helpers/BaseLoader.tsx';
 
 // import BurgerMenu from './menu/BurgerMenu.tsx';
-// import UserMenu from './menu/UserMenu.tsx';
+import UserMenu from './menu/UserMenu.tsx';
 
 const Header = observer(() => {
   // const [isBurgerVisible, setIsBurgerVisible] = useState(false);
-  // const [isUserMenuVisible, setIsUserMenuVisible] = useState(false);
+  const [isUserMenuVisible, setIsUserMenuVisible] = useState(false);
   const { userId } = authStore;
   const [isLoading, setIsLoading] = useState(false);
   const handleLogout = async () => {
@@ -23,9 +23,9 @@ const Header = observer(() => {
 
   if (isLoading) {
     return (
-        <div className="position-fixed top-0 start-0 w-100 h-100 bg-white" style={{ zIndex: 150 }}>
-          <BaseLoader />
-        </div>
+      <div className="position-fixed top-0 start-0 w-100 h-100 bg-white" style={{ zIndex: 150 }}>
+        <BaseLoader />
+      </div>
     );
   }
 
@@ -34,15 +34,19 @@ const Header = observer(() => {
       className="d-flex align-items-center justify-content-between bg-light px-3 w-100"
       style={{ height: '40px' }}
     >
-      <RiMenu2Fill
-          // onClick={() => setIsBurgerVisible(true)}
-          role="button" size={25} />
-      <Dropdown>
-       <Dropdown.Toggle variant='outline-dark' className='border-0 rounded-1'>
-         <BsPersonCircle
-             // onClick={() => setIsUserMenuVisible(true)}
-             role="button" size={25} />
-       </Dropdown.Toggle>
+      <Dropdown drop="end">
+        <Dropdown.Toggle variant="outline-dark" className="border-0 rounded-1">
+          <RiMenu2Fill size={25} />
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          <Dropdown.Item>Графики</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+
+      <Dropdown drop="start">
+        <Dropdown.Toggle variant="outline-dark" className="border-0 rounded-1">
+          <BsPersonCircle size={25} />
+        </Dropdown.Toggle>
         <Dropdown.Menu>
           <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100 gap-3">
             <h5 className="text-center">{userId}</h5>
@@ -52,12 +56,9 @@ const Header = observer(() => {
           </div>
         </Dropdown.Menu>
       </Dropdown>
-
-
-
-
+      <BsPersonCircle size={25} onClick={() => setIsUserMenuVisible(true)} />
       {/*<BurgerMenu visible={isBurgerVisible} setVisible={setIsBurgerVisible} />*/}
-      {/*<UserMenu visible={isUserMenuVisible} setVisible={setIsUserMenuVisible} />*/}
+      <UserMenu visible={isUserMenuVisible} setVisible={setIsUserMenuVisible} />
     </div>
   );
 });

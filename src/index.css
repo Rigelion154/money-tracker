@@ -112,7 +112,8 @@ body {
     display: none !important;
 }
 
-.dropdown-toggle:after {
+.dropdown-toggle:after,
+.dropdown-toggle:before {
     display: none !important;
 }
 

@@ -1,13 +1,13 @@
 import { observer } from 'mobx-react-lite';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { Divider } from 'primereact/divider';
 import moment from 'moment';
 
 import type { IExpense, IExpenseCategory, ISubcategory } from '../../../types/expenses.types.ts';
 
-import { ROUTES } from '../../../routes/routes.ts';
+// import { ROUTES } from '../../../routes/routes.ts';
 import { modalStore } from '../../../store/ModalStore.ts';
-import { screenStore } from '../../../store/ScreenStore.ts';
+// import { screenStore } from '../../../store/ScreenStore.ts';
 import { getCurrencyString } from '../../../utils/getCurrencyString.ts';
 
 import ExpenseDetailsModal from '../ExpenseDetailsModal.tsx';
@@ -22,18 +22,18 @@ interface IItemProps {
 }
 
 const ExpenseItem = observer(({ expenses, date, category, type }: IItemProps) => {
-  const { isMobile } = screenStore;
-  const navigate = useNavigate();
+  // const { isMobile } = screenStore;
+  // const navigate = useNavigate();
   const handleExpenseClick = (id: string) => {
-    if (isMobile) {
-      navigate(`${ROUTES.EXPENSE}/${id}`);
-    }
+    // if (isMobile) {
+    //   navigate(`${ROUTES.EXPENSE}/${id}`);
+    // }
 
-    if (!isMobile) {
-      modalStore.openModal({
-        children: <ExpenseDetailsModal id={id} />,
-      });
-    }
+    // if (!isMobile) {
+    modalStore.openModal({
+      children: <ExpenseDetailsModal id={id} />,
+    });
+    // }
   };
 
   return (

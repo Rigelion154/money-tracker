@@ -1,15 +1,14 @@
 import { observer } from 'mobx-react-lite';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
 
 import type { IExpenseCategory, IExpenseSubcategory } from '../../../types/expenses.types.ts';
 
-import { ROUTES } from '../../../routes/routes.ts';
+// import { ROUTES } from '../../../routes/routes.ts';
 import { calculatePercentage } from '../../../utils/calculatePersentage.ts';
 import { getCurrencyString } from '../../../utils/getCurrencyString.ts';
 import { modalStore } from '../../../store/ModalStore.ts';
-import { screenStore } from '../../../store/ScreenStore.ts';
-
+// import { screenStore } from '../../../store/ScreenStore.ts';
 import ExpenseSubcategoryModal from './ExpenseSubcategoryModal.tsx';
 
 interface ISubcategoryItemProps {
@@ -18,8 +17,8 @@ interface ISubcategoryItemProps {
 }
 const ExpenseSubcategoryDefaultItem = observer(
   ({ category, subcategory }: ISubcategoryItemProps) => {
-    const { isMobile } = screenStore;
-    const navigate = useNavigate();
+    // const { isMobile } = screenStore;
+    // const navigate = useNavigate();
     const percentage = useMemo(
       () =>
         calculatePercentage(category.category_total_amount, subcategory.subcategory_total_amount),
@@ -31,16 +30,17 @@ const ExpenseSubcategoryDefaultItem = observer(
     );
 
     const handleSubcategoryClick = () => {
-      if (!isMobile) {
-        modalStore.openModal({
-          children: <ExpenseSubcategoryModal subcategoryId={subcategory.id} />,
-        });
-      }
+      // if (!isMobile) {
+      modalStore.openModal({
+        children: <ExpenseSubcategoryModal subcategoryId={subcategory.id} />,
+      });
+      // }
 
-      if (isMobile) {
-        navigate(`${ROUTES.SUBCATEGORY}/${subcategory.id}`);
-      }
+      // if (isMobile) {
+      //   navigate(`${ROUTES.SUBCATEGORY}/${subcategory.id}`);
+      // }
     };
+
     if (subcategory.expenses.length < 3) {
       return null;
     }

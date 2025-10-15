@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { Divider } from 'primereact/divider';
-import moment from 'moment';
+// import { Divider } from 'primereact/divider';
 
 import type { IExpense, IExpenseCategory, ISubcategory } from '../../types/expenses.types.ts';
 
@@ -27,7 +26,7 @@ const ExpenseItem = observer(({ expenses, date, category, type }: IItemProps) =>
 
   return (
     <div key={date}>
-      <Divider className="fs__small py-1 text-muted">{moment(date).format('DD MMMM YYYY')}</Divider>
+      {/*<Divider className="fs__small py-1 text-muted">{moment(date).format('DD MMMM YYYY')}</Divider>*/}
 
       {expenses.map((expense) => (
         <div

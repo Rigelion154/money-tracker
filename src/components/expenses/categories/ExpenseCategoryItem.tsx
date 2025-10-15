@@ -6,7 +6,7 @@ import type { IExpenseCategory } from '../../../types/expenses.types.ts';
 import { calculatePercentage } from '../../../utils/calculatePersentage.ts';
 import { getCurrencyString } from '../../../utils/getCurrencyString.ts';
 
-import ExpenseSubcategoryList from '../subcategories/ExpenseSubcategoryList.tsx';
+// import ExpenseSubcategoryList from '../subcategories/ExpenseSubcategoryList.tsx';
 import ExpenseList from '../ExpenseList.tsx';
 
 import styles from '../Expenses.module.css';
@@ -50,7 +50,7 @@ const ExpenseCategoryItem = ({ category, totalAmount }: CategoryItemProps) => {
       </Accordion.Button>
 
       <Accordion.Body className="border p-1 shadow-sm">
-        <ExpenseSubcategoryList {...{ category }} />
+        {/*<ExpenseSubcategoryList {...{ category }} />*/}
         <ExpenseList {...{ category, expenses: category.expenses, type: 'category' }} />
       </Accordion.Body>
     </Accordion>

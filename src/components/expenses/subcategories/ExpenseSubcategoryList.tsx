@@ -11,7 +11,9 @@ const ExpenseSubcategoryList = ({ category }: ISubcategoryListProps) => {
     <div className="rounded-2 overflow-hidden">
       {category?.subcategories.map((subcategory) => (
         <ExpenseSubcategoryItem
-          {...{ subcategory, categoryTotal: category.category_total_amount, color: category.color }}
+          subcategory={subcategory}
+          categoryTotal={category.category_total_amount}
+          color={category.color}
           key={subcategory.id}
         />
       ))}

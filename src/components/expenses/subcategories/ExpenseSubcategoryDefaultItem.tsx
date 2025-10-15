@@ -25,6 +25,10 @@ const ExpenseSubcategoryDefaultItem = ({ category, subcategory }: ISubcategoryIt
   const handleSubcategoryClick = () =>
     modalStore.openModal({ children: <ExpenseSubcategoryModal subcategory={subcategory} /> });
 
+  if (subcategory.expenses.length < 3) {
+    return null;
+  }
+
   return (
     <div
       className="d-flex rounded-0 py-1 px-2 shadow-none text-white"

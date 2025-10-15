@@ -6,13 +6,13 @@ import { modalStore } from '../../store/ModalStore.ts';
 import { categoriesStore } from '../../store/CategoriesStore.ts';
 import { ADD_EXPENSE_FIELDS } from '../form/AddExpenseForm/addExpenseform.constants.ts';
 
-import CategoryModal from './CategoryModal.tsx';
+import ChangeCategoryModal from './ChangeCategoryModal.tsx';
 
 const ChangeCategoryButton = observer(() => {
   const { categories } = categoriesStore;
   const handleOpenCategoryModal = (categoryId: string) =>
     modalStore.openModal({
-      children: <CategoryModal {...{ categoryId }} />,
+      children: <ChangeCategoryModal {...{ categoryId }} />,
     });
 
   return (

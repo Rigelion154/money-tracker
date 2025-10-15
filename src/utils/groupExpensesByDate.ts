@@ -1,9 +1,6 @@
-import type { IExpense } from '../types/expenses.types.ts';
 import moment from 'moment';
 
-interface IGroupedExpenses {
-  [date: string]: IExpense[];
-}
+import type { IExpense, IGroupedExpenses } from '../types/expenses.types.ts';
 
 export const groupExpensesByDate = (expenses: IExpense[]): IGroupedExpenses => {
   const grouped: IGroupedExpenses = {};

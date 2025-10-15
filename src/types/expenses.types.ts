@@ -43,3 +43,7 @@ export interface IExpenseDetails extends IExpense {
   categories: IExpenseCategory;
   subcategories: IExpenseSubcategory;
 }
+
+export interface IGroupedExpenses {
+  [date: string]: IExpense[];
+}

@@ -7,7 +7,7 @@ const CloseModalButton = () => {
   return (
     <Button
       variant="outline-dark"
-      className="border-0 rounded-1 p-2 d-flex align-items-center justify-content-center"
+      className="border-0 rounded-1 p-2 d-inline-flex align-items-center justify-content-center"
       onClick={closeHandler}
     >
       <GrClose size={12} />

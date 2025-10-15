@@ -18,7 +18,7 @@ interface AddSubcategoryProps {
   subcategoryId?: string;
 }
 
-const SubcategoryModal = observer(({ categoryId, subcategoryId }: AddSubcategoryProps) => {
+const ChangeSubcategoryModal = observer(({ categoryId, subcategoryId }: AddSubcategoryProps) => {
   const { userId } = authStore;
   const { categories } = categoriesStore;
   const { currentSubcategoryList } = subcategoriesStore;
@@ -121,4 +121,4 @@ const SubcategoryModal = observer(({ categoryId, subcategoryId }: AddSubcategory
   );
 });
 
-export default SubcategoryModal;
+export default ChangeSubcategoryModal;

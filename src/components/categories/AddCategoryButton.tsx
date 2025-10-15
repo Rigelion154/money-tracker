@@ -1,11 +1,13 @@
 import { Button } from 'react-bootstrap';
+
 import { modalStore } from '../../store/ModalStore.ts';
-import CategoryModal from './CategoryModal.tsx';
+
+import ChangeCategoryModal from './ChangeCategoryModal.tsx';
 
 const AddCategoryButton = () => {
   const handleOpenAddSubcategoryModal = () =>
     modalStore.openModal({
-      children: <CategoryModal />,
+      children: <ChangeCategoryModal />,
     });
 
   return (

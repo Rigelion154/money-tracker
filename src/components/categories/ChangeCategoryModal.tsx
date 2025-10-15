@@ -1,11 +1,13 @@
-import CloseModalButton from '../ui/CloseModalButton.tsx';
+import { observer } from 'mobx-react-lite';
 import { Field, Form } from 'react-final-form';
 import { FormControl, InputGroup } from 'react-bootstrap';
+
 import { modalStore } from '../../store/ModalStore.ts';
 import { appToaster } from '../../store/AppToaster.ts';
 import { categoriesStore } from '../../store/CategoriesStore.ts';
 import { authStore } from '../../store/AuthStore.ts';
-import { observer } from 'mobx-react-lite';
+
+import CloseModalButton from '../ui/CloseModalButton.tsx';
 import SubmitModalButtons from '../ui/SubmitModalButtons.tsx';
 
 interface ICategoryModalProps {
@@ -18,7 +20,7 @@ interface IFormValues {
   categoryIcon: string;
 }
 
-const CategoryModal = observer(({ categoryId }: ICategoryModalProps) => {
+const ChangeCategoryModal = observer(({ categoryId }: ICategoryModalProps) => {
   const { userId } = authStore;
   const { categories } = categoriesStore;
   const categoryTitle = categoryId ? categories?.[categoryId]?.title : '';
@@ -154,4 +156,4 @@ const CategoryModal = observer(({ categoryId }: ICategoryModalProps) => {
   );
 });
 
-export default CategoryModal;
+export default ChangeCategoryModal;

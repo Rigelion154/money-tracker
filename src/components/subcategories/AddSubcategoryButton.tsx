@@ -2,14 +2,14 @@ import { Field } from 'react-final-form';
 import { Button } from 'react-bootstrap';
 
 import { modalStore } from '../../store/ModalStore.ts';
-
-import SubcategoryModal from './SubcategoryModal.tsx';
 import { ADD_EXPENSE_FIELDS } from '../form/AddExpenseForm/addExpenseform.constants.ts';
+
+import ChangeSubcategoryModal from './ChangeSubcategoryModal.tsx';
 
 const AddSubcategoryButton = () => {
   const handleOpenAddSubcategoryModal = (value: string) =>
     modalStore.openModal({
-      children: <SubcategoryModal categoryId={value} />,
+      children: <ChangeSubcategoryModal categoryId={value} />,
     });
 
   return (

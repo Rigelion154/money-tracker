@@ -7,7 +7,7 @@ import { calculatePercentage } from '../../../utils/calculatePersentage.ts';
 import { getCurrencyString } from '../../../utils/getCurrencyString.ts';
 
 import ExpenseSubcategoryList from '../subcategories/ExpenseSubcategoryList.tsx';
-import ExpenseList from './ExpenseList.tsx';
+import ExpenseList from '../ExpenseList.tsx';
 
 import styles from '../Expenses.module.css';
 

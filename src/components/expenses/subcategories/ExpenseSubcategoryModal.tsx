@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 
 import CloseModalButton from '../../ui/CloseModalButton.tsx';
 import BaseLoader from '../../helpers/BaseLoader.tsx';
-import ExpenseList from '../categories/ExpenseList.tsx';
+import ExpenseList from '../ExpenseList.tsx';
 import { useSubcategoryDetails } from '../../../hooks/useSubcategoryDetails.ts';
 
 const ExpenseSubcategoryModal = observer(({ subcategoryId }: { subcategoryId: string }) => {

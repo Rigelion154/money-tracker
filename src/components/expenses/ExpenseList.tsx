@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite';
 
-import type { IExpense, IExpenseCategory, ISubcategory } from '../../../types/expenses.types.ts';
+import type { IExpense, IExpenseCategory, ISubcategory } from '../../types/expenses.types.ts';
 
-import { groupExpensesByDate } from '../../../utils/groupExpensesByDate.ts';
+import { groupExpensesByDate } from '../../utils/groupExpensesByDate.ts';
 
 import ExpenseItem from './ExpenseItem.tsx';
 

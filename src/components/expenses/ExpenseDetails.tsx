@@ -13,17 +13,17 @@ interface IDetailsProps {
 const ExpenseDetails = ({ expense, handleDeleteExpense }: IDetailsProps) => {
   return (
     <>
-      <div className="border px-2 py-1 rounded-3 shadow-sm">
+      <div className="border border-secondary px-2 py-1 rounded-3 shadow-sm">
         <div className="text-muted">Сумма:</div>
         <div className="fw-bold">{getCurrencyString(expense.amount)}</div>
       </div>
 
-      <div className="border px-2 py-1 rounded-3 shadow-sm">
+      <div className="border border-secondary px-2 py-1 rounded-3 shadow-sm">
         <div className="text-muted">Дата:</div>
         <div className="fw-bold">{moment(expense.date).format('DD.MM.YYYY HH:mm:ss')}</div>
       </div>
 
-      <div className="border px-2 py-1 rounded-3 shadow-sm">
+      <div className="border border-secondary px-2 py-1 rounded-3 shadow-sm">
         <div className="text-muted">Категория:</div>
         <div className="col-6 px-0 d-flex align-items-center gap-2">
           <i
@@ -40,7 +40,7 @@ const ExpenseDetails = ({ expense, handleDeleteExpense }: IDetailsProps) => {
       </div>
 
       {expense?.subcategories && (
-        <div className="border px-2 py-1 rounded-3 shadow-sm">
+        <div className="border border-secondary px-2 py-1 rounded-3 shadow-sm">
           <div className="text-muted">Подкатегория:</div>
           <span
             style={{ backgroundColor: expense.categories.color }}

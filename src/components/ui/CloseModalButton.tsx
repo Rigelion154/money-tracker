@@ -6,8 +6,9 @@ const CloseModalButton = () => {
   const closeHandler = () => modalStore.closeModal();
   return (
     <Button
-      variant="outline-dark"
-      className="border-0 rounded-1 p-2 d-inline-flex align-items-center justify-content-center"
+      variant="dark"
+      className="rounded-circle p-2 d-inline-flex align-items-center justify-content-center position-absolute"
+      style={{ top: '-13px', right: '-13px' }}
       onClick={closeHandler}
     >
       <GrClose size={12} />

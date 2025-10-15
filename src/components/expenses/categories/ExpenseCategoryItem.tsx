@@ -51,7 +51,7 @@ const ExpenseCategoryItem = ({ category, totalAmount }: CategoryItemProps) => {
 
       <Accordion.Body
         className="border p-1 shadow-sm"
-        style={{ maxHeight: '100vh', overflow: 'auto' }}
+        style={{ maxHeight: '70vh', overflow: 'auto' }}
       >
         <ExpenseSubcategoryList {...{ category }} />
         <ExpenseList {...{ category }} />

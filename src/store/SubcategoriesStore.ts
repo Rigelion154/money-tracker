@@ -3,13 +3,24 @@ import { makeAutoObservable } from 'mobx';
 import type { ISubcategory } from '../types/expenses.types.ts';
 
 import { dbClient } from '../db/dbClient.ts';
+import { getSubcategoriesRequest } from '../api/requests/getSubcategoriesRequest.ts';
+import { getDataMap } from '../utils/getDataMap.ts';
 
 class SubcategoriesStore {
   currentSubcategoryList: ISubcategory[] = [];
+  subcategories: Record<ISubcategory['id'], ISubcategory> | null = null;
 
   constructor() {
     makeAutoObservable(this);
   }
+
+  getV2Subcategories = async () => {
+    if (!this.subcategories) {
+      const { data } = await getSubcategoriesRequest();
+
+      if (data) this.subcategories = getDataMap(data, 'id');
+    }
+  };
 
   private setCurrentSubcategoryList = (data: ISubcategory[]) =>
     (this.currentSubcategoryList = data);

@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import type { Session } from '@supabase/supabase-js';
 import { dbClient } from '../db/dbClient.ts';
+import { categoriesStore } from './CategoriesStore.ts';
 
 class AuthStore {
   session: Session | null = null;
@@ -19,6 +20,7 @@ class AuthStore {
   logoutUser = async () => {
     try {
       await dbClient.auth.signOut();
+      categoriesStore.resetV2Categories();
     } catch (e) {
       throw e;
     }

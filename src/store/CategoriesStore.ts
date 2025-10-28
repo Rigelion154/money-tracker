@@ -2,13 +2,31 @@ import { makeAutoObservable } from 'mobx';
 
 import { dbClient } from '../db/dbClient.ts';
 import type { ICategory } from '../types/expenses.types.ts';
+import { getCategoriesRequest } from '../api/requests/getCategoriesRequest.ts';
+import { appToaster } from './AppToaster.ts';
+import { getDataMap } from '../utils/getDataMap.ts';
 
 class CategoriesStore {
   categories: Record<ICategory['id'], ICategory> | null = null;
+  v2_categories: Record<ICategory['id'], ICategory> | null = null;
 
   constructor() {
     makeAutoObservable(this);
   }
+
+  getV2Categories = async () => {
+    if (!this.v2_categories) {
+      const { data, error } = await getCategoriesRequest();
+
+      if (error) return appToaster.addToast('Ошибка загрузки категорий', 'error');
+      if (data) this.setV2Categories(data);
+    }
+  };
+
+  private setV2Categories = (categories: ICategory[]) =>
+    (this.v2_categories = getDataMap(categories, 'id'));
+
+  resetV2Categories = () => (this.v2_categories = null);
 
   private setCategories(categories: ICategory[]) {
     this.categories = categories.reduce(

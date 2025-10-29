@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { makeAutoObservable } from 'mobx';
 
 import type {
@@ -9,12 +10,13 @@ import type {
 } from '../types/expenses.types.ts';
 
 import { dbClient } from '../db/dbClient.ts';
-import { appToaster } from './AppToaster.ts';
+
 import { getExpensesRequest } from '../api/requests/getExpensesRequest.ts';
 import { groupExpensesByDate } from '../utils/groupExpensesByDate.ts';
 import { calculatePercentage } from '../utils/calculatePersentage.ts';
-import moment from 'moment';
+import { REQUEST_DATE_FORMAT } from '../utils/constants.ts';
 import { authStore } from './AuthStore.ts';
+import { appToaster } from './AppToaster.ts';
 
 class ExpensesStore {
   expenses: IExpenseCategory[] = [];
@@ -87,55 +89,32 @@ class ExpensesStore {
     }
   };
 
-  private setExpenses = (expenses: IExpenseCategory[]) => (this.expenses = expenses);
   private setTotalAmount = (amount: number) => (this.totalAmount += amount);
   private resetTotalAmount = () => (this.totalAmount = 0);
 
   setActivePeriod = (activePeriod: TActivePeriod) => (this.activePeriod = activePeriod);
 
-  getUserExpenses = async (startDate?: string | null, endDate?: string | null) => {
-    const { data, error } = await dbClient.rpc('get_category_expenses', {
-      user_uuid: authStore.userId,
-      start_date: startDate,
-      end_date: endDate,
-    });
-
-    if (data) {
-      this.setExpenses(data);
-      // const totalAmount = (data as IExpenseCategory[]).reduce(
-      //   (acc, current) => acc + current.category_total_amount,
-      //   0,
-      // );
-
-      // this.setTotalAmount(totalAmount);
-    }
-
-    if (error) appToaster.addToast('Ошибка загрузки расходов', 'error');
-  };
-
   addExpense = async (
-    userId: string | null,
     categoryId: string,
     amount: string,
     subcategoryId?: string,
     date?: string,
-  ) =>
-    dbClient
+  ) => {
+    const { data, error } = await dbClient
       .from('expenses')
       .upsert({
+        user_id: authStore.userId,
         category_id: categoryId,
         subcategory_id: subcategoryId,
         amount: parseFloat(amount.replace(',', '.')),
-        user_id: userId,
-        date: moment(date).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
+        date: moment(date).format(REQUEST_DATE_FORMAT),
       })
       .select();
 
-  getExpenseById = async (expenseId: string) =>
-    await dbClient
-      .from('expenses')
-      .select(`*,categories (*), subcategories (*)`)
-      .eq('id', expenseId);
+    if (error) appToaster.addToast('Ошибка добавления суммы', 'error');
+
+    if (data) appToaster.addToast('Сумма успешно добавлена', 'success');
+  };
 
   deleteExpenseById = async (expenseId: string) =>
     await dbClient.from('expenses').delete().eq('id', expenseId).select();

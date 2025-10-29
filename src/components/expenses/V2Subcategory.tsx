@@ -1,24 +1,22 @@
-import { getCurrencyString } from '../../utils/getCurrencyString.ts';
+import { observer } from 'mobx-react-lite';
+
+import type { IV2ExpenseSubcategory } from '../../types/expenses.types.ts';
+
 import { modalStore } from '../../store/ModalStore.ts';
+import { subcategoriesStore } from '../../store/SubcategoriesStore.ts';
+import { getCurrencyString } from '../../utils/getCurrencyString.ts';
+
 import ExpenseSubcategoryModal from './ExpenseSubcategoryModal.tsx';
-import type { ICategory, ISubcategory, IV2ExpenseSubcategory } from '../../types/expenses.types.ts';
 
 interface ISubcategoryProps {
   subcategory: IV2ExpenseSubcategory;
-  subcategories: Record<string, ISubcategory>;
-  category: ICategory;
 }
 
-const V2Subcategory = ({ subcategory, subcategories, category }: ISubcategoryProps) => {
+const V2Subcategory = observer(({ subcategory }: ISubcategoryProps) => {
+  const { subcategories } = subcategoriesStore;
   const handleSubcategoryClick = () => {
     modalStore.openModal({
-      children: (
-        <ExpenseSubcategoryModal
-          subcategoryId={subcategory.subcategoryId}
-          subcategory={subcategory}
-          category={category}
-        />
-      ),
+      children: <ExpenseSubcategoryModal {...{ subcategory }} />,
     });
   };
 
@@ -32,11 +30,11 @@ const V2Subcategory = ({ subcategory, subcategories, category }: ISubcategoryPro
       role="button"
       onClick={handleSubcategoryClick}
     >
-      <div className="col-6">{subcategories[subcategory.subcategoryId].title}</div>
+      <div className="col-6">{subcategories?.[subcategory.subcategoryId].title}</div>
       <div className="col-2 text-center">{subcategory.percentage}%</div>
       <div className="col-4 text-end">{getCurrencyString(subcategory.totalAmount)}</div>
     </div>
   );
-};
+});
 
 export default V2Subcategory;

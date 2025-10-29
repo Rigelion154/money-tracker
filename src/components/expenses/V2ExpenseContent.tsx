@@ -3,23 +3,21 @@ import { observer } from 'mobx-react-lite';
 
 import { expensesStore } from '../../store/ExpensesStore.ts';
 import { categoriesStore } from '../../store/CategoriesStore.ts';
-import { subcategoriesStore } from '../../store/SubcategoriesStore.ts';
 import { getCurrencyString } from '../../utils/getCurrencyString.ts';
 
 import ExpensesTotalBar from './total/ExpensesTotalBar.tsx';
+import V2ExpensesList from './V2ExpensesList.tsx';
 import V2Subcategory from './V2Subcategory.tsx';
-import V2Expense from './V2Expense.tsx';
 
 import styles from './Expenses.module.css';
 
-const V2ExpenseList = observer(() => {
+const V2ExpenseContent = observer(() => {
   const { v2expenses } = expensesStore;
   const { v2_categories } = categoriesStore;
-  const { subcategories } = subcategoriesStore;
 
   return (
     <>
-      {v2_categories && v2expenses && subcategories && (
+      {v2_categories && v2expenses && (
         <div className="w-100 d-flex flex-column align-items-center gap-2">
           <ExpensesTotalBar />
 
@@ -55,16 +53,11 @@ const V2ExpenseList = observer(() => {
                   <div className="text-white rounded-2" style={{ backgroundColor: category.color }}>
                     {expenseCategory.subcategories &&
                       expenseCategory.subcategories.map((subcategory) => (
-                        <V2Subcategory
-                          {...{ subcategory, subcategories, category }}
-                          key={subcategory.subcategoryId}
-                        />
+                        <V2Subcategory {...{ subcategory }} key={subcategory.subcategoryId} />
                       ))}
                   </div>
 
-                  {Object.entries(expenseCategory.expenses).map(([date, expenses]) => (
-                    <V2Expense {...{ expenses, date, category, subcategories }} key={date} />
-                  ))}
+                  <V2ExpensesList expenses={expenseCategory.expenses} />
                 </Accordion.Body>
               </Accordion>
             );
@@ -75,4 +68,4 @@ const V2ExpenseList = observer(() => {
   );
 });
 
-export default V2ExpenseList;
+export default V2ExpenseContent;

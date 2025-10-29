@@ -24,14 +24,13 @@ import PrevPageButton from '../../ui/PrevPageButton.tsx';
 const AddExpenseForm = observer(() => {
   const { userId } = authStore;
   const { categories } = categoriesStore;
-  const { addExpense } = expensesStore;
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     categoriesStore.getCategories(userId ?? '').finally(() => setIsLoading(false));
   }, [userId]);
 
-  const handleFormSubmit = async (values: Record<string, string>, form: Record<string, any>) => {
+  const handleFormSubmit = async (values: Record<string, string>) => {
     if (!values[ADD_EXPENSE_FIELDS.CATEGORY_ID]) {
       return appToaster.addToast('Необходимо выбрать категорию', 'warning');
     }
@@ -42,20 +41,12 @@ const AddExpenseForm = observer(() => {
 
     setIsLoading(true);
 
-    const { error, data } = await addExpense(
-      userId,
+    await expensesStore.addExpense(
       values[ADD_EXPENSE_FIELDS.CATEGORY_ID],
       values[ADD_EXPENSE_FIELDS.AMOUNT],
       values[ADD_EXPENSE_FIELDS.SUBCATEGORY_ID],
       values[ADD_EXPENSE_FIELDS.DATE],
     );
-
-    if (error) appToaster.addToast('Ошибка добавления суммы', 'error');
-
-    if (data) {
-      appToaster.addToast('Сумма успешно добавлена', 'success');
-      form.reset();
-    }
 
     setIsLoading(false);
   };

@@ -1,41 +1,24 @@
 import { observer } from 'mobx-react-lite';
 
+import type { IV2ExpenseSubcategory } from '../../types/expenses.types.ts';
+
 import CloseModalButton from '../ui/CloseModalButton.tsx';
-import BaseLoader from '../helpers/BaseLoader.tsx';
-import { useSubcategoryDetails } from '../../hooks/useSubcategoryDetails.ts';
-import V2Expense from './V2Expense.tsx';
-import type { ICategory, IV2ExpenseSubcategory } from '../../types/expenses.types.ts';
+import V2ExpensesList from './V2ExpensesList.tsx';
 
-const ExpenseSubcategoryModal = observer(
-  ({
-    subcategoryId,
-    subcategory,
-    category,
-  }: {
-    subcategoryId: string;
-    subcategory: IV2ExpenseSubcategory;
-    category: ICategory;
-  }) => {
-    const { isLoading, expenses } = useSubcategoryDetails(subcategoryId);
+interface ModalProps {
+  subcategory: IV2ExpenseSubcategory;
+}
 
-    return (
-      <>
-        {isLoading && <BaseLoader variant="light" />}
+const ExpenseSubcategoryModal = observer(({ subcategory }: ModalProps) => {
+  return (
+    <div className="modal__content expenses__subcategory_modal">
+      <div className="text-end">
+        <CloseModalButton />
+      </div>
 
-        {!isLoading && expenses && subcategory && (
-          <div className="modal__content expenses__subcategory_modal">
-            <div className="text-end">
-              <CloseModalButton />
-            </div>
-
-            {Object.entries(subcategory.expenses).map(([date, expenses]) => (
-              <V2Expense {...{ expenses, date, category }} key={date} />
-            ))}
-          </div>
-        )}
-      </>
-    );
-  },
-);
+      <V2ExpensesList expenses={subcategory.expenses} />
+    </div>
+  );
+});
 
 export default ExpenseSubcategoryModal;

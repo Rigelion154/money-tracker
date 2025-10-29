@@ -47,3 +47,37 @@ export interface IExpenseDetails extends IExpense {
 export interface IGroupedExpenses {
   [date: string]: IExpense[];
 }
+
+export interface IV2Expense {
+  categoryId: string;
+  totalAmount: number;
+  percentage: number;
+  expenses: Record<string, IExpense[]>;
+  subcategories: IV2ExpenseSubcategory[];
+}
+
+export interface IV2ExpenseSubcategory {
+  subcategoryId: string;
+  totalAmount: number;
+  percentage: number;
+  expenses: Record<string, IExpense[]>;
+}
+
+export type TExpensesMap = Record<
+  ICategory['id'],
+  {
+    totalAmount: number;
+    categoryId: string;
+    expenses: IExpense[];
+    subcategories: Record<
+      ISubcategory['id'],
+      {
+        subcategoryId: string;
+        totalAmount: number;
+        expenses: IExpense[];
+      }
+    >;
+  }
+>;
+
+export type TActivePeriod = 'day' | 'month' | 'year' | null

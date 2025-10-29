@@ -1,128 +1,113 @@
-import { makeAutoObservable, toJS } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 
 import type {
-  ICategory,
   IExpense,
   IExpenseCategory,
-  ISubcategory,
+  IV2Expense,
+  TActivePeriod,
+  TExpensesMap,
 } from '../types/expenses.types.ts';
 
 import { dbClient } from '../db/dbClient.ts';
 import { appToaster } from './AppToaster.ts';
 import { getExpensesRequest } from '../api/requests/getExpensesRequest.ts';
 import { groupExpensesByDate } from '../utils/groupExpensesByDate.ts';
+import { calculatePercentage } from '../utils/calculatePersentage.ts';
+import moment from 'moment';
+import { authStore } from './AuthStore.ts';
 
 class ExpensesStore {
   expenses: IExpenseCategory[] = [];
   totalAmount: number = 0;
-  activePeriod: 'day' | 'month' | 'year' | null = null;
-  v2expenses: {
-    totalAmount: number;
-    categoryId: string;
-    expenses: Record<string, IExpense[]>;
-    subcategories?: {
-      subcategoryId: string;
-      totalAmount: number;
-      expenses: IExpense[];
-    }[];
-  }[] = [];
+  activePeriod: TActivePeriod = null;
+  v2expenses: IV2Expense[] = [];
 
   constructor() {
     makeAutoObservable(this);
   }
 
+  private setV2Expenses = (expenses: IV2Expense[]) => (this.v2expenses = expenses);
+
   getV2Expenses = async () => {
     const { data } = await getExpensesRequest(this.activePeriod);
 
+    this.resetTotalAmount();
+
     if (data) {
-      const categories: Record<
-        ICategory['id'],
-        {
-          totalAmount: number;
-          categoryId: string;
-          expenses: IExpense[];
-          subcategories: Record<
-            ISubcategory['id'],
-            {
-              subcategoryId: string;
-              totalAmount: number;
-              expenses: IExpense[];
-            }
-          >;
-        }
-      > = {};
+      const expensesMap: TExpensesMap = {};
 
       for (const expense of data as IExpense[]) {
-        if (!categories[expense.category_id]) {
-          categories[expense.category_id] = {
+        const catId = expense.category_id;
+        const subId = expense.subcategory_id;
+
+        if (!expensesMap[catId]) {
+          expensesMap[catId] = {
             totalAmount: 0,
-            categoryId: expense.category_id,
+            categoryId: catId,
             expenses: [],
             subcategories: {},
           };
         }
 
-        if (
-          categories[expense.category_id] &&
-          expense.subcategory_id &&
-          !categories[expense.category_id].subcategories[expense.subcategory_id]
-        ) {
-          categories[expense.category_id].subcategories[expense.subcategory_id] = {
+        if (expensesMap[catId] && subId && !expensesMap[catId].subcategories[subId]) {
+          expensesMap[catId].subcategories[subId] = {
             totalAmount: 0,
-            subcategoryId: expense.subcategory_id,
+            subcategoryId: subId,
             expenses: [],
           };
-
-          categories[expense.category_id].subcategories[expense.subcategory_id].totalAmount +=
-            expense.amount;
-          categories[expense.category_id].subcategories[expense.subcategory_id].expenses.push(
-            expense,
-          );
         }
 
-        categories[expense.category_id].totalAmount += expense.amount;
-        categories[expense.category_id].expenses.push(expense);
+        if (subId) {
+          expensesMap[catId].subcategories[subId].totalAmount += expense.amount;
+          expensesMap[catId].subcategories[subId].expenses.push(expense);
+        }
+
+        expensesMap[catId].totalAmount += expense.amount;
+        expensesMap[catId].expenses.push(expense);
+
+        this.setTotalAmount(expense.amount);
       }
 
-      console.log('categories', categories);
-
-      // @ts-ignore
-      this.v2expenses = Object.values(categories)
+      const resultExpenses = Object.values(expensesMap)
         .sort((a, b) => b.totalAmount - a.totalAmount)
         .map((category) => ({
           ...category,
+          percentage: calculatePercentage(this.totalAmount, category.totalAmount),
           expenses: groupExpensesByDate(category.expenses),
-          ...(category.subcategories && {
-            subcategories: Object.values(category.subcategories).sort(
-              (a, b) => b.totalAmount - a.totalAmount,
-            ),
-          }),
+          subcategories: Object.values(category.subcategories)
+            .sort((a, b) => b.totalAmount - a.totalAmount)
+            .map((subcategory) => ({
+              ...subcategory,
+              percentage: calculatePercentage(category.totalAmount, subcategory.totalAmount),
+              expenses: groupExpensesByDate(subcategory.expenses),
+            })),
         }));
-    }
 
-    console.log('v2expenses', toJS(this.v2expenses));
+      this.setV2Expenses(resultExpenses);
+    }
   };
 
   private setExpenses = (expenses: IExpenseCategory[]) => (this.expenses = expenses);
-  private setTotalAmount = (totalAmount: number) => (this.totalAmount = totalAmount);
+  private setTotalAmount = (amount: number) => (this.totalAmount += amount);
+  private resetTotalAmount = () => (this.totalAmount = 0);
 
-  setActivePeriod = (activePeriod: 'day' | 'month' | 'year') => (this.activePeriod = activePeriod);
+  setActivePeriod = (activePeriod: TActivePeriod) => (this.activePeriod = activePeriod);
 
-  getUserExpenses = async (userId: string, startDate?: string | null, endDate?: string | null) => {
+  getUserExpenses = async (startDate?: string | null, endDate?: string | null) => {
     const { data, error } = await dbClient.rpc('get_category_expenses', {
-      user_uuid: userId,
+      user_uuid: authStore.userId,
       start_date: startDate,
       end_date: endDate,
     });
 
     if (data) {
       this.setExpenses(data);
-      const totalAmount = (data as IExpenseCategory[]).reduce(
-        (acc, current) => acc + current.category_total_amount,
-        0,
-      );
+      // const totalAmount = (data as IExpenseCategory[]).reduce(
+      //   (acc, current) => acc + current.category_total_amount,
+      //   0,
+      // );
 
-      this.setTotalAmount(totalAmount);
+      // this.setTotalAmount(totalAmount);
     }
 
     if (error) appToaster.addToast('Ошибка загрузки расходов', 'error');
@@ -142,7 +127,7 @@ class ExpensesStore {
         subcategory_id: subcategoryId,
         amount: parseFloat(amount.replace(',', '.')),
         user_id: userId,
-        date: date ?? undefined,
+        date: moment(date).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
       })
       .select();
 

@@ -1,12 +1,13 @@
 import { authStore } from '../store/AuthStore.ts';
 import { useEffect, useState } from 'react';
-import type { IExpense, ISubcategory } from '../types/expenses.types.ts';
+import type { IGroupedExpenses, ISubcategory } from '../types/expenses.types.ts';
 import { dbClient } from '../db/dbClient.ts';
 import { appToaster } from '../store/AppToaster.ts';
+import { groupExpensesByDate } from '../utils/groupExpensesByDate.ts';
 
 export const useSubcategoryDetails = (subcategoryId: string) => {
   const { userId } = authStore;
-  const [expenses, setExpenses] = useState<IExpense[]>([]);
+  const [expenses, setExpenses] = useState<IGroupedExpenses | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [subcategory, setSubcategory] = useState<ISubcategory | null>(null);
 
@@ -28,7 +29,8 @@ export const useSubcategoryDetails = (subcategoryId: string) => {
         if (error) return appToaster.addToast('Ошибка загрузки данных', 'error');
 
         if (data) {
-          setExpenses(data);
+          const expenses = groupExpensesByDate(data);
+          setExpenses(expenses);
         }
 
         setIsLoading(false);

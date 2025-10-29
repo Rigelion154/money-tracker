@@ -6,11 +6,18 @@ import { ROUTES } from '../../../routes/routes.ts';
 import { expensesStore } from '../../../store/ExpensesStore.ts';
 
 import styles from './PeriodBar.module.css';
+import type { TActivePeriod } from '../../../types/expenses.types.ts';
 
 const PeriodBar = observer(() => {
   const { activePeriod } = expensesStore;
 
-  const handleDayClick = (type: 'day' | 'month' | 'year') => expensesStore.setActivePeriod(type);
+  const handleDayClick = (type: TActivePeriod) => {
+    if (!activePeriod) {
+      expensesStore.setActivePeriod(type);
+    } else {
+      expensesStore.setActivePeriod(null);
+    }
+  };
 
   return (
     <div className={`${styles.bar__container} border-bottom`}>

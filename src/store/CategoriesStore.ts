@@ -15,12 +15,10 @@ class CategoriesStore {
   }
 
   getV2Categories = async () => {
-    if (!this.v2_categories) {
-      const { data, error } = await getCategoriesRequest();
+    const { data, error } = await getCategoriesRequest();
 
-      if (error) return appToaster.addToast('Ошибка загрузки категорий', 'error');
-      if (data) this.setV2Categories(data);
-    }
+    if (error) return appToaster.addToast('Ошибка загрузки категорий', 'error');
+    if (data) this.setV2Categories(data);
   };
 
   private setV2Categories = (categories: ICategory[]) =>

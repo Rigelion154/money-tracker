@@ -6,7 +6,7 @@ export const groupExpensesByDate = (expenses: IExpense[]): IGroupedExpenses => {
   const grouped: IGroupedExpenses = {};
 
   expenses.forEach((expense) => {
-    const date = moment(expense.date).startOf('day').toISOString();
+    const date = moment(expense.date).startOf('day').format('YYYY-MM-DD');
 
     if (!grouped[date]) {
       grouped[date] = [];
@@ -19,9 +19,12 @@ export const groupExpensesByDate = (expenses: IExpense[]): IGroupedExpenses => {
   return Object.entries(grouped)
     .sort(([dateA], [dateB]) => new Date(dateB).getTime() - new Date(dateA).getTime())
     .reduce((acc, [date, expenses]) => {
-      acc[date] = expenses.sort(
-        (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
-      );
+      acc[date] = expenses;
+      // .sort(
+      // (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+      // );
       return acc;
     }, {} as IGroupedExpenses);
+
+  // return grouped;
 };

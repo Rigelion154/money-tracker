@@ -5,6 +5,7 @@ import type { ISubcategory } from '../types/expenses.types.ts';
 import { dbClient } from '../db/dbClient.ts';
 import { getSubcategoriesRequest } from '../api/requests/getSubcategoriesRequest.ts';
 import { getDataMap } from '../utils/getDataMap.ts';
+import { appToaster } from './AppToaster.ts';
 
 class SubcategoriesStore {
   currentSubcategoryList: ISubcategory[] = [];
@@ -15,12 +16,15 @@ class SubcategoriesStore {
   }
 
   getV2Subcategories = async () => {
-    if (!this.subcategories) {
-      const { data } = await getSubcategoriesRequest();
+    const { data, error } = await getSubcategoriesRequest();
 
-      if (data) this.subcategories = getDataMap(data, 'id');
-    }
+    if (error) return appToaster.addToast('Ошибка загрузки подкатегорий', 'error');
+
+    if (data) this.setSubcategories(getDataMap(data, 'id'));
   };
+
+  private setSubcategories = (subcategories: Record<ISubcategory['id'], ISubcategory>) =>
+    (this.subcategories = subcategories);
 
   private setCurrentSubcategoryList = (data: ISubcategory[]) =>
     (this.currentSubcategoryList = data);

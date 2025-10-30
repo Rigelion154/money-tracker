@@ -9,6 +9,7 @@ import { getCurrencyString } from '../../utils/getCurrencyString.ts';
 // import ExpenseSubcategoryModal from './ExpenseSubcategoryModal.tsx';
 import { Accordion } from 'react-bootstrap';
 import V2ExpensesList from './V2ExpensesList.tsx';
+import { authStore } from '../../store/AuthStore.ts';
 
 interface ISubcategoryProps {
   subcategory: IV2ExpenseSubcategory;
@@ -16,13 +17,9 @@ interface ISubcategoryProps {
 
 const V2Subcategory = observer(({ subcategory }: ISubcategoryProps) => {
   const { subcategories } = subcategoriesStore;
-  // const handleSubcategoryClick = () => {
-  //   modalStore.openModal({
-  //     children: <ExpenseSubcategoryModal {...{ subcategory }} />,
-  //   });
-  // };
+  const { subcategoryLimit } = authStore;
 
-  if (Object.values(subcategory.expenses).flatMap((el) => el).length < 3) {
+  if (subcategory.totalAmount < subcategoryLimit) {
     return null;
   }
 

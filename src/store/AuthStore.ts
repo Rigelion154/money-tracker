@@ -7,8 +7,10 @@ class AuthStore {
   session: Session | null = null;
   isAuth: boolean = false;
   userId: string | null = null;
+  subcategoryLimit: number = 0;
   constructor() {
     makeAutoObservable(this);
+    this.initSubcategoryLimit();
   }
 
   setSession(session: Session | null): void {
@@ -23,6 +25,21 @@ class AuthStore {
       categoriesStore.resetV2Categories();
     } catch (e) {
       throw e;
+    }
+  };
+
+  setSubcategoryLimit = (limit: number) => {
+    this.subcategoryLimit = limit;
+    localStorage.setItem('subcategoryLimit', String(limit));
+  };
+
+  initSubcategoryLimit = () => {
+    const limit = localStorage.getItem('subcategoryLimit');
+
+    if (limit !== null) {
+      this.setSubcategoryLimit(Number(limit));
+    } else {
+      this.setSubcategoryLimit(2000);
     }
   };
 }

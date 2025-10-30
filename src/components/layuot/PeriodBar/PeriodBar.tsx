@@ -12,7 +12,7 @@ const PeriodBar = observer(() => {
   const { activePeriod } = expensesStore;
 
   const handleDayClick = (type: TActivePeriod) => {
-    if (!activePeriod) {
+    if (!activePeriod || activePeriod !== type) {
       expensesStore.setActivePeriod(type);
     } else {
       expensesStore.setActivePeriod(null);

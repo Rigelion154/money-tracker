@@ -33,7 +33,7 @@ const V2Subcategory = observer(({ subcategory }: ISubcategoryProps) => {
         <div className="col-2 text-center">{subcategory.percentage}%</div>
         <div className="col-4 text-end">{getCurrencyString(subcategory.totalAmount)}</div>
       </Accordion.Button>
-      <Accordion.Body className="bg-white">
+      <Accordion.Body className="bg-light border text-dark px-0 py-1">
         <V2ExpensesList expenses={subcategory.expenses} />
       </Accordion.Body>
       {/*<div*/}

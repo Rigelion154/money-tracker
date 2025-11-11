@@ -7,7 +7,7 @@ const Layout = observer(() => {
   return (
     <div className="d-flex flex-column position-relative" style={{ minHeight: '100vh' }}>
       <Header />
-      <div className="d-flex flex-grow-1">
+      <div className="d-flex flex-grow-1 p-2">
         <Outlet />
       </div>
       <ModalList />

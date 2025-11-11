@@ -18,7 +18,7 @@ const AddTransactionPageContent = observer(() => {
   }, [userId]);
 
   return (
-    <div className="d-flex flex-column flex-grow-1 p-3">
+    <div className="d-flex flex-column flex-grow-1">
       {isLoading && <BaseLoader />}
       {!isLoading && categories && (
         <>
@@ -27,7 +27,7 @@ const AddTransactionPageContent = observer(() => {
           <ExpenseForm.FormWrapper {...{ setIsLoading }}>
             <ExpenseForm.CategoryButtons />
             <ExpenseForm.CategoryList />
-            <ExpenseForm.CategoryButtons />
+            <ExpenseForm.SubcategoryButtons />
             <ExpenseForm.SubcategoryList />
             <ExpenseForm.DateField />
             <ExpenseForm.CurrencyField />

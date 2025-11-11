@@ -90,11 +90,20 @@ const CategoryList = observer(() => {
 });
 
 const SubcategoryButtons = () => (
-  <div className="d-grid gap-3 align-items-center" style={{ gridTemplateColumns: '1fr auto 1fr' }}>
-    <ChangeSubcategoryButton />
-    <h3 className="fw-bold text-primary">Подкатегории</h3>
-    <AddSubcategoryButton />
-  </div>
+  <Field name={ADD_EXPENSE_FIELDS.CATEGORY_ID}>
+    {({ input }) =>
+      input.value && (
+        <div
+          className="d-grid gap-3 align-items-center"
+          style={{ gridTemplateColumns: '1fr auto 1fr' }}
+        >
+          <ChangeSubcategoryButton />
+          <h3 className="fw-bold text-primary">Подкатегории</h3>
+          <AddSubcategoryButton />
+        </div>
+      )
+    }
+  </Field>
 );
 
 const SubcategoryList = () => (

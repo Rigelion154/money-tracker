@@ -75,7 +75,7 @@
 
 .subcategories__container {
     width: 35%;
-    min-height: 70px;
+    min-height: 64px;
 
     @media screen and (max-width: 1200px) {
         width: 75%;

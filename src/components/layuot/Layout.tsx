@@ -5,12 +5,9 @@ import ModalList from '../helpers/AppModal/ModalList.tsx';
 
 const Layout = observer(() => {
   return (
-    <div
-      className="d-flex flex-column position-relative"
-      style={{ minHeight: '100vh' }}
-    >
+    <div className="d-flex flex-column position-relative" style={{ minHeight: '100vh' }}>
       <Header />
-      <div className="container-fluid d-flex flex-grow-1 p-3">
+      <div className="d-flex flex-grow-1">
         <Outlet />
       </div>
       <ModalList />

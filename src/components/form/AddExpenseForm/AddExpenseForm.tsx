@@ -52,7 +52,7 @@ const AddExpenseForm = observer(() => {
   };
 
   return (
-    <div className="d-flex flex-column flex-grow-1">
+    <div className="d-flex flex-column flex-grow-1 p-3">
       {isLoading && <BaseLoader />}
       {!isLoading && categories && (
         <>
@@ -70,12 +70,12 @@ const AddExpenseForm = observer(() => {
                 <div className="d-flex align-items-center gap-2">
                   <Field name={ADD_EXPENSE_FIELDS.AMOUNT}>
                     {({ input }) => (
-                      <InputGroup className="border-primary">
+                      <InputGroup className="border-primary flex-nowrap">
                         <CurrencyInput
                           name={input.name}
                           value={input.value}
                           onValueChange={(value) => input.onChange(value)}
-                          className="rounded-start-2 rounded-end-0 px-2 py-1 border border-success"
+                          className="rounded-start-2 rounded-end-0 px-2 py-1 border border-success w-100"
                           decimalsLimit={2}
                           suffix=" ₽"
                           style={{ fontSize: '1.2rem', outlineColor: '#0d6efd' }}

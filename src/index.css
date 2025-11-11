@@ -1,4 +1,5 @@
 @import "./styles/modal-styles.css";
+@import "./styles/app_colors.scss";
 
 :root {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

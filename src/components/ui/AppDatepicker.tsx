@@ -57,6 +57,7 @@ const AppDatepicker = ({ value, onChange }: { value: any; onChange: any }) => {
             e.preventDefault();
             e.stopPropagation();
             onChange(e.value);
+            console.log(e.value);
           }}
           showTime
           hourFormat="24"

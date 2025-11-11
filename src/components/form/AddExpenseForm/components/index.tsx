@@ -16,9 +16,9 @@ import CategoryItem from '../../../categories/CategoryItem.tsx';
 import ChangeSubcategoryButton from '../../../subcategories/ChangeSubcategoryButton.tsx';
 import AddSubcategoryButton from '../../../subcategories/AddSubcategoryButton.tsx';
 import SubcategoryItem from '../../../subcategories/SubcategoryItem.tsx';
-import AppDatepicker from '../../../ui/AppDatepicker.tsx';
-
+// import AppDatepicker from '../../../ui/AppDatepicker.tsx';
 import styles from '../../../categories/Categories.module.css';
+import AppCalendar from '../../../helpers/AppCalendar/AppCalendar.tsx';
 
 interface IWrapperProps {
   children: React.ReactNode;
@@ -121,16 +121,10 @@ const SubcategoryList = () => (
 const CurrencyField = observer(() => {
   const { formDate } = expensesStore;
 
-  const handleDateChange = (value: string | null) => expensesStore.setFormDate(value);
+  const handleDateChange = (value: Date | null) => expensesStore.setFormDate(value);
 
   return (
     <>
-      {formDate && (
-        <span className="text-center fw-bold fs__small text-success">
-          Выбранная дата: {moment(formDate).format('DD MMMM YYYY HH:mm')}
-        </span>
-      )}
-
       <h3 className="fw-bold text-primary mb-0">Сумма</h3>
       <div className="d-flex align-items-center gap-2">
         <Field name={ADD_EXPENSE_FIELDS.AMOUNT}>
@@ -153,8 +147,15 @@ const CurrencyField = observer(() => {
           )}
         </Field>
 
-        <AppDatepicker value={formDate} onChange={handleDateChange} />
+        {/*<AppDatepicker value={formDate} onChange={handleDateChange} />*/}
+        <AppCalendar value={formDate} onChange={handleDateChange} />
       </div>
+
+      {formDate && (
+        <span className="text-center fw-bold fs__small text-success">
+          Выбранная дата: {moment(formDate).format('DD MMMM YYYY HH:mm')}
+        </span>
+      )}
     </>
   );
 });

@@ -23,13 +23,13 @@ class ExpensesStore {
   totalAmount: number = 0;
   activePeriod: TActivePeriod = null;
   v2expenses: IV2Expense[] = [];
-  formDate: string | null = null;
+  formDate: Date | null = null;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  setFormDate = (value: string | null) => (this.formDate = value);
+  setFormDate = (value: Date | null) => (this.formDate = value);
 
   private setV2Expenses = (expenses: IV2Expense[]) => (this.v2expenses = expenses);
 
@@ -97,12 +97,7 @@ class ExpensesStore {
 
   setActivePeriod = (activePeriod: TActivePeriod) => (this.activePeriod = activePeriod);
 
-  addExpense = async (
-    categoryId: string,
-    amount: string,
-    subcategoryId?: string,
-    date?: string,
-  ) => {
+  addExpense = async (categoryId: string, amount: string, subcategoryId?: string, date?: Date) => {
     const { data, error } = await dbClient
       .from('expenses')
       .upsert({

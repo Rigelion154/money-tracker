@@ -1,0 +1,94 @@
+@import "../../../styles/app_colors";
+
+.calendar__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  border: 1px solid $app-bs-border;
+  border-radius: .75rem;
+  padding: .5rem;
+
+  -webkit-box-shadow: 0 0 5px 3px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0 0 5px 3px rgba(34, 60, 80, 0.2);
+  box-shadow: 0 0 5px 3px rgba(34, 60, 80, 0.2);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.days__wrapper {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  //background-color: $app-bs-primary;
+  //color: white;
+  font-size: 1rem;
+  //border-top-left-radius: .5rem;
+  //border-top-right-radius: .5rem;
+}
+
+.cell__wrapper {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border: 1px solid $app-bs-border;
+  border-radius: .5rem;
+  overflow: hidden;
+  //border-bottom-left-radius: .5rem;
+  //border-bottom-right-radius: .5rem;
+}
+
+.calendar__cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  font-weight: bold;
+  color: black;
+  border: 1px solid $app-bs-light-general;
+  cursor: pointer;
+  padding: 0;
+
+  &:hover {
+    background-color: $app-bs-light;
+  }
+
+  &_selected {
+    background-color: $app-bs-primary;
+    color: white;
+
+    &:hover {
+      background-color: $app-bs-primary-hover;
+    }
+  }
+
+  &_weekend {
+    color: $app-bs-danger;
+
+    &:hover {
+      color: white;
+      background-color: $app-bs-danger-hover;
+    }
+  }
+
+  &_today {
+    background-color: #0d6efd;
+    color: white;
+
+    &:hover {
+      background-color: #0b5ed7;
+
+    }
+  }
+
+  &_other {
+    color: $app-bs-secondary;
+  }
+}
+
+.footer__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

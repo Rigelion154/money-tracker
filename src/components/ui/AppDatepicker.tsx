@@ -44,7 +44,10 @@ addLocale('ru', {
 const AppDatepicker = ({ value, onChange }: { value: any; onChange: any }) => {
   return (
     <Dropdown>
-      <Dropdown.Toggle className="p-0 border-0 d-flex justify-content-center align-items-center rounded-1 bg-transparent text-secondary">
+      <Dropdown.Toggle
+        variant="outline-success"
+        className={`p-0 border-0 d-flex justify-content-center align-items-center rounded-3 p-1 ${value ? 'bg-success text-white' : ''}`}
+      >
         <IoCalendarNumberOutline size={35} />
       </Dropdown.Toggle>
       <Dropdown.Menu className="p-0">

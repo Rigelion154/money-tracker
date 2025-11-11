@@ -5,10 +5,12 @@ const PrevPageButton = () => {
   const navigate = useNavigate();
 
   return (
-    <Button variant="warning" className="rounded-4 px-4" onClick={() => navigate(-1)}>
-      <i className="bi bi-arrow-left me-2"></i>
-      Назад
-    </Button>
+    <div>
+      <Button variant="warning" className="rounded-4 px-4" onClick={() => navigate(-1)}>
+        <i className="bi bi-arrow-left me-2"></i>
+        Назад
+      </Button>
+    </div>
   );
 };
 

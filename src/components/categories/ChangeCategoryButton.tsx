@@ -20,18 +20,17 @@ const ChangeCategoryButton = observer(() => {
       {({ input }) => {
         const isDefaultCategory = categories?.[input.value]?.is_default;
 
-        return (
-          input.value &&
-          !isDefaultCategory && (
-            <Button
-              variant="warning"
-              size="sm"
-              className="rounded-circle py-1 px-2"
-              onClick={() => handleOpenCategoryModal(input.value)}
-            >
-              <i className="bi bi-pencil-fill fs-6"></i>
-            </Button>
-          )
+        return input.value && !isDefaultCategory ? (
+          <Button
+            variant="warning"
+            size="sm"
+            className="rounded-circle py-1 px-2"
+            onClick={() => handleOpenCategoryModal(input.value)}
+          >
+            <i className="bi bi-pencil-fill fs-6"></i>
+          </Button>
+        ) : (
+          <div />
         );
       }}
     </Field>

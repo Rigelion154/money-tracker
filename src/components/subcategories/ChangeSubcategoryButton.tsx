@@ -15,8 +15,7 @@ const ChangeSubcategoryButton = () => {
   return (
     <FormSpy>
       {({ values }) =>
-        values &&
-        values.subcategoryId && (
+        values && values.subcategoryId ? (
           <Button
             variant="warning"
             size="sm"
@@ -30,6 +29,8 @@ const ChangeSubcategoryButton = () => {
           >
             <i className="bi bi-pencil-fill fs-6"></i>
           </Button>
+        ) : (
+          <div />
         )
       }
     </FormSpy>

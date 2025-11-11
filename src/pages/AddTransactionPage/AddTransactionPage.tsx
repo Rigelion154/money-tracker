@@ -1,7 +1,7 @@
-import AddExpenseForm from '../../components/form/AddExpenseForm/AddExpenseForm.tsx';
+import AddTransactionPageContent from '../../components/form/AddExpenseForm/AddTransactionPageContent.tsx';
 
 const AddTransactionPage = () => {
-  return <AddExpenseForm />;
+  return <AddTransactionPageContent />;
 };
 
 export default AddTransactionPage;

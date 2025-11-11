@@ -29,7 +29,6 @@ const AddTransactionPageContent = observer(() => {
             <ExpenseForm.CategoryList />
             <ExpenseForm.SubcategoryButtons />
             <ExpenseForm.SubcategoryList />
-            <ExpenseForm.DateField />
             <ExpenseForm.CurrencyField />
             <ExpenseForm.SubmitButton />
           </ExpenseForm.FormWrapper>

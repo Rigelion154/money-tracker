@@ -25,7 +25,9 @@ interface IWrapperProps {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const FormWrapper = ({ children, setIsLoading }: IWrapperProps) => {
+const FormWrapper = observer(({ children, setIsLoading }: IWrapperProps) => {
+  const { formDate } = expensesStore;
+
   const handleFormSubmit = async (values: Record<string, string>) => {
     if (!values[ADD_EXPENSE_FIELDS.CATEGORY_ID]) {
       return appToaster.addToast('Необходимо выбрать категорию', 'warning');
@@ -41,7 +43,7 @@ const FormWrapper = ({ children, setIsLoading }: IWrapperProps) => {
       values[ADD_EXPENSE_FIELDS.CATEGORY_ID],
       values[ADD_EXPENSE_FIELDS.AMOUNT],
       values[ADD_EXPENSE_FIELDS.SUBCATEGORY_ID],
-      values[ADD_EXPENSE_FIELDS.DATE],
+      formDate ?? undefined,
     );
 
     setIsLoading(false);
@@ -59,7 +61,7 @@ const FormWrapper = ({ children, setIsLoading }: IWrapperProps) => {
       )}
     </Form>
   );
-};
+});
 
 const CategoryButtons = () => (
   <div className="d-grid gap-3 align-items-center" style={{ gridTemplateColumns: '1fr auto 1fr' }}>
@@ -116,46 +118,46 @@ const SubcategoryList = () => (
   </Field>
 );
 
-const DateField = () => (
-  <Field name={ADD_EXPENSE_FIELDS.DATE}>
-    {({ input }) =>
-      input.value && (
+const CurrencyField = observer(() => {
+  const { formDate } = expensesStore;
+
+  const handleDateChange = (value: string | null) => expensesStore.setFormDate(value);
+
+  return (
+    <>
+      {formDate && (
         <span className="text-center fw-bold fs__small text-success">
-          Выбранная дата: {moment(input.value).format('DD MMMM YYYY HH:mm')}
+          Выбранная дата: {moment(formDate).format('DD MMMM YYYY HH:mm')}
         </span>
-      )
-    }
-  </Field>
-);
+      )}
 
-const CurrencyField = () => (
-  <>
-    <h3 className="fw-bold text-primary mb-0">Сумма</h3>
-    <div className="d-flex align-items-center gap-2">
-      <Field name={ADD_EXPENSE_FIELDS.AMOUNT}>
-        {({ input }) => (
-          <InputGroup className="border-primary flex-nowrap">
-            <CurrencyInput
-              name={input.name}
-              value={input.value}
-              onValueChange={(value) => input.onChange(value)}
-              className="rounded-start-2 rounded-end-0 px-2 py-1 border border-success w-100"
-              decimalsLimit={2}
-              suffix=" ₽"
-              style={{ fontSize: '1.2rem', outlineColor: '#0d6efd' }}
-              autoComplete="off"
-            />
-            <InputGroup.Text className="border-success py-0 px-2">
-              <i className="bi bi-coin text-success fs-4"></i>
-            </InputGroup.Text>
-          </InputGroup>
-        )}
-      </Field>
+      <h3 className="fw-bold text-primary mb-0">Сумма</h3>
+      <div className="d-flex align-items-center gap-2">
+        <Field name={ADD_EXPENSE_FIELDS.AMOUNT}>
+          {({ input }) => (
+            <InputGroup className="border-primary flex-nowrap">
+              <CurrencyInput
+                name={input.name}
+                value={input.value}
+                onValueChange={(value) => input.onChange(value)}
+                className="rounded-start-2 rounded-end-0 px-2 py-1 border border-success w-100"
+                decimalsLimit={2}
+                suffix=" ₽"
+                style={{ fontSize: '1.2rem', outlineColor: '#0d6efd' }}
+                autoComplete="off"
+              />
+              <InputGroup.Text className="border-success py-0 px-2">
+                <i className="bi bi-coin text-success fs-4"></i>
+              </InputGroup.Text>
+            </InputGroup>
+          )}
+        </Field>
 
-      <Field name={ADD_EXPENSE_FIELDS.DATE}>{({ input }) => <AppDatepicker {...input} />}</Field>
-    </div>
-  </>
-);
+        <AppDatepicker value={formDate} onChange={handleDateChange} />
+      </div>
+    </>
+  );
+});
 
 const SubmitButton = () => (
   <Button
@@ -177,7 +179,6 @@ const ExpenseForm = {
   CategoryList,
   SubcategoryButtons,
   SubcategoryList,
-  DateField,
   CurrencyField,
   SubmitButton,
 };

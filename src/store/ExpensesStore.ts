@@ -23,10 +23,13 @@ class ExpensesStore {
   totalAmount: number = 0;
   activePeriod: TActivePeriod = null;
   v2expenses: IV2Expense[] = [];
+  formDate: string | null = null;
 
   constructor() {
     makeAutoObservable(this);
   }
+
+  setFormDate = (value: string | null) => (this.formDate = value);
 
   private setV2Expenses = (expenses: IV2Expense[]) => (this.v2expenses = expenses);
 

@@ -53,7 +53,11 @@ const AppDatepicker = ({ value, onChange }: { value: any; onChange: any }) => {
       <Dropdown.Menu className="p-0">
         <Calendar
           value={value}
-          onChange={(e) => onChange(e.value)}
+          onChange={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onChange(e.value);
+          }}
           showTime
           hourFormat="24"
           inline

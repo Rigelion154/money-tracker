@@ -2,8 +2,9 @@ import React from 'react';
 import moment from 'moment';
 import { observer } from 'mobx-react-lite';
 import { Field, Form } from 'react-final-form';
-import { Button, InputGroup } from 'react-bootstrap';
+import { Button, Dropdown, InputGroup } from 'react-bootstrap';
 import { CurrencyInput } from 'react-currency-input-field';
+import { IoCalendarNumberOutline } from 'react-icons/io5';
 
 import { appToaster } from '../../../../store/AppToaster.ts';
 import { expensesStore } from '../../../../store/ExpensesStore.ts';
@@ -16,9 +17,9 @@ import CategoryItem from '../../../categories/CategoryItem.tsx';
 import ChangeSubcategoryButton from '../../../subcategories/ChangeSubcategoryButton.tsx';
 import AddSubcategoryButton from '../../../subcategories/AddSubcategoryButton.tsx';
 import SubcategoryItem from '../../../subcategories/SubcategoryItem.tsx';
-// import AppDatepicker from '../../../ui/AppDatepicker.tsx';
-import styles from '../../../categories/Categories.module.css';
 import AppCalendar from '../../../helpers/AppCalendar/AppCalendar.tsx';
+
+import styles from '../../../categories/Categories.module.css';
 
 interface IWrapperProps {
   children: React.ReactNode;
@@ -147,13 +148,23 @@ const CurrencyField = observer(() => {
           )}
         </Field>
 
-        {/*<AppDatepicker value={formDate} onChange={handleDateChange} />*/}
-        <AppCalendar value={formDate} onChange={handleDateChange} />
+        <Dropdown>
+          <Dropdown.Toggle
+            variant="outline-success"
+            className="d-flex align-items-center justify-content-center p-1 border-0 rounded-2"
+            active={!!formDate}
+          >
+            <IoCalendarNumberOutline size={35} />
+          </Dropdown.Toggle>
+          <Dropdown.Menu className="w-100 p-0 border-0" style={{ minWidth: '300px' }}>
+            <AppCalendar value={formDate} onChange={handleDateChange} />
+          </Dropdown.Menu>
+        </Dropdown>
       </div>
 
       {formDate && (
-        <span className="text-center fw-bold fs__small text-success">
-          Выбранная дата: {moment(formDate).format('DD MMMM YYYY HH:mm')}
+        <span className="text-center fw-bold text-danger text-capitalize">
+          {moment(formDate).format('DD MMMM YYYY HH:mm')}
         </span>
       )}
     </>

@@ -1,36 +1,45 @@
-import styles from '../AppCalendar.module.scss';
-import { getCalendar } from '../tools/getCalendar.ts';
-import moment from 'moment';
-import { CALENDAR_DATE_FORMAT, CALENDAR_WEEK_DAYS } from '../constants.ts';
-import React from 'react';
-import type { ICalendarProps } from '../AppCalendar.tsx';
+import React, { useContext, useState } from 'react';
 import { Button, Dropdown } from 'react-bootstrap';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
+import moment from 'moment';
 
-interface ICellProps extends ICalendarProps {
-  day: moment.Moment;
-  momentValue: moment.Moment;
-}
+import { getCalendar } from '../tools/getCalendar.ts';
+import { CALENDAR_DATE_FORMAT, CALENDAR_WEEK_DAYS } from '../constants.ts';
+import { AppCalendarContext } from '../context/AppCalendarContext.ts';
 
-interface IListProps extends ICalendarProps {
-  momentValue: moment.Moment;
-}
+import styles from '../AppCalendar.module.scss';
 
-interface IHeaderProps {
-  momentValue: moment.Moment;
-  setMomentValue: React.Dispatch<React.SetStateAction<moment.Moment>>;
-}
-
-interface IFooterProps {
+interface IProviderProps {
+  children: React.ReactNode;
+  value: Date | null;
   onChange: (value: Date | null) => void;
-  handleClose: () => void;
 }
 
-const CalendarWrapper = ({ children }: { children: React.ReactNode }) => (
+const Provider = ({ children, value, onChange }: IProviderProps) => {
+  const [momentValue, setMomentValue] = useState<moment.Moment>(moment());
+  const calendar = getCalendar(momentValue);
+
+  return (
+    <AppCalendarContext.Provider
+      value={{
+        value,
+        onChange,
+        momentValue,
+        setMomentValue,
+        calendar,
+      }}
+    >
+      {children}
+    </AppCalendarContext.Provider>
+  );
+};
+
+const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <div className={styles.calendar__wrapper}>{children}</div>
 );
 
-const Header = ({ momentValue, setMomentValue }: IHeaderProps) => {
+const Header = () => {
+  const { momentValue, setMomentValue } = useContext(AppCalendarContext);
   const handleChangeMonth = (type: 'increase' | 'decrease') => {
     const newValue = momentValue
       .clone()
@@ -71,19 +80,20 @@ const DaysBar = () => (
   </div>
 );
 
-const CalendarList = ({ value, onChange, momentValue }: IListProps) => {
-  const calendar = getCalendar(momentValue);
+const CellList = () => {
+  const { calendar } = useContext(AppCalendarContext);
 
   return (
     <div className={styles.cell__wrapper}>
       {calendar.map((day) => (
-        <Cell key={day.format(CALENDAR_DATE_FORMAT)} {...{ day, value, onChange, momentValue }} />
+        <Cell key={day.format(CALENDAR_DATE_FORMAT)} {...{ day }} />
       ))}
     </div>
   );
 };
 
-const Cell = ({ day, value, onChange, momentValue }: ICellProps) => {
+const Cell = ({ day }: { day: moment.Moment }) => {
+  const { momentValue, value, onChange } = useContext(AppCalendarContext);
   const currentMonth = momentValue.month();
   const isCurrentMonth = day.month() === currentMonth;
   const isWeekend = day.day() === 0 || day.day() === 6;
@@ -116,25 +126,20 @@ const Cell = ({ day, value, onChange, momentValue }: ICellProps) => {
   );
 };
 
-const Footer = ({ onChange, handleClose }: IFooterProps) => {
-  const handleSetToday = () => {
-    onChange(moment().toDate());
-    handleClose();
-  };
-  const handleReset = () => {
-    onChange(null);
-    handleClose();
-  };
+const Footer = () => {
+  const { onChange } = useContext(AppCalendarContext);
+  const handleSetToday = () => onChange(moment().toDate());
+  const handleReset = () => onChange(null);
 
   return (
     <div className={styles.footer__wrapper}>
       <Button size="sm" onClick={handleSetToday}>
-        <Dropdown.Item className="p-0" style={{ color: 'inherit' }}>
+        <Dropdown.Item className="p-0" style={{ color: 'inherit', backgroundColor: 'inherit' }}>
           Сегодня
         </Dropdown.Item>
       </Button>
       <Button size="sm" onClick={handleReset}>
-        <Dropdown.Item className="p-0" style={{ color: 'inherit' }}>
+        <Dropdown.Item className="p-0" style={{ color: 'inherit', backgroundColor: 'inherit' }}>
           Сбросить
         </Dropdown.Item>
       </Button>
@@ -143,10 +148,11 @@ const Footer = ({ onChange, handleClose }: IFooterProps) => {
 };
 
 const Calendar = {
+  Provider,
   Header,
-  CalendarWrapper,
+  Wrapper,
   DaysBar,
-  CalendarList,
+  CellList,
   Footer,
 };
 

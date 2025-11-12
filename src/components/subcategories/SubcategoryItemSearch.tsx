@@ -36,12 +36,12 @@ const SubcategoryItemSearch = observer(
       <>
         {currentSubcategoryList.length > 5 && (
           <div className={isSearchShow ? 'w-100' : ''}>
-            <div className={`d-flex align-items-center gap-2`}>
+            <div className="d-flex align-items-center gap-2">
               <Button
-                className="d-flex align-items-center justify-content-center"
+                className="d-flex align-items-center justify-content-center py-1 px-2"
                 onClick={handleSearchShow}
               >
-                <IoSearch />
+                <IoSearch size={16} />
               </Button>
 
               {isSearchShow && (

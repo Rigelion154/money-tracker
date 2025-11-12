@@ -24,17 +24,19 @@ class ExpensesStore {
   activePeriod: TActivePeriod = null;
   v2expenses: IV2Expense[] = [];
   formDate: Date | null = null;
+  periodDate: Date | null = null;
 
   constructor() {
     makeAutoObservable(this);
   }
 
   setFormDate = (value: Date | null) => (this.formDate = value);
+  setPeriodDate = (value: Date | null) => (this.periodDate = value);
 
   private setV2Expenses = (expenses: IV2Expense[]) => (this.v2expenses = expenses);
 
   getV2Expenses = async () => {
-    const { data } = await getExpensesRequest(this.activePeriod);
+    const { data } = await getExpensesRequest(this.activePeriod, this.periodDate);
 
     this.resetTotalAmount();
 

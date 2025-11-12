@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, FormControl } from 'react-bootstrap';
 import { IoSearch } from 'react-icons/io5';
 import { observer } from 'mobx-react-lite';
-import { subcategoriesStore } from '../../store/SubcategoriesStore.ts';
+
 import type { ISubcategory } from '../../types/expenses.types.ts';
+
+import { subcategoriesStore } from '../../store/SubcategoriesStore.ts';
 
 interface ISearchProps {
   searchQuery: string;
@@ -15,12 +17,19 @@ const SubcategoryItemSearch = observer(
   ({ searchQuery, setSearchQuery, filteredList }: ISearchProps) => {
     const { currentSubcategoryList } = subcategoriesStore;
     const [isSearchShow, setIsSearchShow] = useState(false);
+    const inputRef = useRef<HTMLInputElement>(null);
     const handleSearchShow = () => {
       setIsSearchShow(!isSearchShow);
     };
 
     useEffect(() => {
       if (!isSearchShow) setSearchQuery('');
+    }, [isSearchShow]);
+
+    useEffect(() => {
+      if (isSearchShow && inputRef.current) {
+        inputRef.current.focus();
+      }
     }, [isSearchShow]);
 
     return (
@@ -37,6 +46,7 @@ const SubcategoryItemSearch = observer(
 
               {isSearchShow && (
                 <FormControl
+                  ref={inputRef}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="flex-grow-1 lh-sm shadow-none"

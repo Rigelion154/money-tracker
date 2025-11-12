@@ -4,7 +4,7 @@ import { subcategoriesStore } from '../store/SubcategoriesStore.ts';
 import { categoriesStore } from '../store/CategoriesStore.ts';
 
 export const useInitialState = () => {
-  const { activePeriod } = expensesStore;
+  const { activePeriod, periodDate } = expensesStore;
   const { v2_categories } = categoriesStore;
   const { subcategories } = subcategoriesStore;
   const [isLoading, setIsLoading] = useState(true);
@@ -25,7 +25,7 @@ export const useInitialState = () => {
     if (!isLoading) setIsLoading(true);
 
     expensesStore.getV2Expenses().finally(() => setIsLoading(false));
-  }, [activePeriod]);
+  }, [activePeriod, periodDate]);
 
   return { isLoading };
 };

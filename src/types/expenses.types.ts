@@ -80,4 +80,4 @@ export type TExpensesMap = Record<
   }
 >;
 
-export type TActivePeriod = 'day' | 'month' | 'year' | null
+export type TActivePeriod = 'day' | 'month' | 'year' | 'calendar' | null

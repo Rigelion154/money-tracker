@@ -1,5 +1,6 @@
 import { Accordion } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
+import moment from 'moment';
 
 import { expensesStore } from '../../store/ExpensesStore.ts';
 import { categoriesStore } from '../../store/CategoriesStore.ts';
@@ -12,13 +13,19 @@ import V2Subcategory from './V2Subcategory.tsx';
 import styles from './Expenses.module.css';
 
 const V2ExpenseContent = observer(() => {
-  const { v2expenses } = expensesStore;
+  const { v2expenses, periodDate } = expensesStore;
   const { v2_categories } = categoriesStore;
 
   return (
     <>
       {v2_categories && v2expenses && (
         <div className="w-100 d-flex flex-column align-items-center gap-2">
+          {periodDate && (
+            <h4 className="fw-bold text-capitalize text-primary">
+              {moment(periodDate).format('DD MMMM YYYY')}
+            </h4>
+          )}
+
           <ExpensesTotalBar />
 
           {v2expenses.map((expenseCategory) => {

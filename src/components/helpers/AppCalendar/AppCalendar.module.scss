@@ -22,11 +22,7 @@
 .days__wrapper {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  //background-color: $app-bs-primary;
-  //color: white;
   font-size: 1rem;
-  //border-top-left-radius: .5rem;
-  //border-top-right-radius: .5rem;
 }
 
 .cell__wrapper {
@@ -35,8 +31,6 @@
   border: 1px solid $app-bs-border;
   border-radius: .5rem;
   overflow: hidden;
-  //border-bottom-left-radius: .5rem;
-  //border-bottom-right-radius: .5rem;
 }
 
 .calendar__cell {
@@ -51,6 +45,7 @@
   padding: 0;
 
   &:hover {
+    color: black;
     background-color: $app-bs-light;
   }
 
@@ -59,6 +54,7 @@
     color: white;
 
     &:hover {
+      color: white;
       background-color: $app-bs-primary-hover;
     }
   }
@@ -77,8 +73,8 @@
     color: white;
 
     &:hover {
+      color: white;
       background-color: #0b5ed7;
-
     }
   }
 

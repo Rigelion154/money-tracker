@@ -68,7 +68,7 @@ const CategoryButtons = () => (
   <div className="d-grid gap-3 align-items-center" style={{ gridTemplateColumns: '1fr auto 1fr' }}>
     <ChangeCategoryButton />
 
-    <h3 className="fw-bold text-primary">Категории</h3>
+    <h3 className="fw-bold text-primary mb-0">Категории</h3>
 
     <AddCategoryButton />
   </div>
@@ -101,7 +101,7 @@ const SubcategoryButtons = () => (
           style={{ gridTemplateColumns: '1fr auto 1fr' }}
         >
           <ChangeSubcategoryButton />
-          <h3 className="fw-bold text-primary">Подкатегории</h3>
+          <h3 className="fw-bold text-primary mb-0">Подкатегории</h3>
           <AddSubcategoryButton />
         </div>
       )

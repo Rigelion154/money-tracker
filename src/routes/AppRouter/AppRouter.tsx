@@ -10,20 +10,23 @@ import Layout from '../../components/layuot/Layout.tsx';
 import AuthPage from '../../pages/Auth/AuthPage.tsx';
 import MainPage from '../../pages/Main/MainPage.tsx';
 import AddTransactionPage from '../../pages/AddTransactionPage/AddTransactionPage.tsx';
+import { useInitialState } from '../../hooks/useInitialState.ts';
 
 const AppRouter = observer(() => {
   const { isAuth } = authStore;
   const { isLoading } = useAuth();
+  const { isLoading: initialLoading } = useInitialState(isAuth);
 
   return (
     <>
-      {isLoading && (
-        <div className="d-flex align-items-center justify-content-center p-3 h-100">
-          <Spinner variant="primary" />
-        </div>
-      )}
+      {isLoading ||
+        (initialLoading && (
+          <div className="d-flex align-items-center justify-content-center p-3 vh-100">
+            <Spinner variant="primary" />
+          </div>
+        ))}
 
-      {!isLoading && (
+      {!isLoading && !initialLoading && (
         <Routes>
           {isAuth && (
             <>

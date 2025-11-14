@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Button } from 'react-bootstrap';
-import moment from 'moment/moment';
+import moment from 'moment';
 
 import type { IExpense } from '../../types/expenses.types.ts';
 

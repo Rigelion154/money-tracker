@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import moment from 'moment';
 import { observer } from 'mobx-react-lite';
-import { Field, Form } from 'react-final-form';
+import { Field, Form, FormSpy } from 'react-final-form';
 import { Button, Dropdown, InputGroup } from 'react-bootstrap';
 import { CurrencyInput } from 'react-currency-input-field';
 import { IoCalendarNumberOutline } from 'react-icons/io5';
@@ -81,11 +81,20 @@ const CategoryList = observer(() => {
     <div className={styles.categories__container}>
       <Field name={ADD_EXPENSE_FIELDS.CATEGORY_ID}>
         {({ input }) => (
-          <>
-            {Object.values(categories ?? {}).map((category) => (
-              <CategoryItem category={category} {...input} key={category.id} />
-            ))}
-          </>
+          <Field name={ADD_EXPENSE_FIELDS.SUBCATEGORY_ID}>
+            {({ input: { onChange: subcategoryChange } }) => (
+              <>
+                {Object.values(categories ?? {}).map((category) => (
+                  <CategoryItem
+                    category={category}
+                    subcategoryChange={subcategoryChange}
+                    {...input}
+                    key={category.id}
+                  />
+                ))}
+              </>
+            )}
+          </Field>
         )}
       </Field>
     </div>
@@ -119,8 +128,25 @@ const SubcategoryList = () => (
   </Field>
 );
 
-const CurrencyField = observer(() => {
+const CurrencyWrapper = () => (
+  <FormSpy>{({ values }) => <CurrencyField values={values} />}</FormSpy>
+);
+
+const CurrencyField = observer(({ values }: { values?: Record<string, any> }) => {
   const { formDate } = expensesStore;
+  const currencyRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (
+      values &&
+      currencyRef.current &&
+      values[ADD_EXPENSE_FIELDS.CATEGORY_ID] &&
+      values[ADD_EXPENSE_FIELDS.SUBCATEGORY_ID]
+    ) {
+      currencyRef.current.focus();
+      currencyRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' });
+    }
+  }, [values]);
 
   const handleDateChange = (value: Date | null) => expensesStore.setFormDate(value);
 
@@ -132,13 +158,14 @@ const CurrencyField = observer(() => {
           {({ input }) => (
             <InputGroup className="border-primary flex-nowrap">
               <CurrencyInput
+                ref={currencyRef}
                 name={input.name}
                 value={input.value}
                 onValueChange={(value) => input.onChange(value)}
                 className="rounded-start-2 rounded-end-0 px-2 py-1 border border-success w-100"
                 decimalsLimit={2}
                 suffix=" ₽"
-                style={{ fontSize: '1.2rem', outlineColor: '#0d6efd' }}
+                style={{ fontSize: '1.2rem', outlineColor: '#0d6efd', scrollMarginBottom: '4rem' }}
                 autoComplete="off"
               />
               <InputGroup.Text className="border-success py-0 px-2">
@@ -191,6 +218,7 @@ const ExpenseForm = {
   CategoryList,
   SubcategoryButtons,
   SubcategoryList,
+  CurrencyWrapper,
   CurrencyField,
   SubmitButton,
 };

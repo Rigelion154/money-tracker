@@ -11,12 +11,22 @@ interface ICategoryItemProps {
   value: string;
   onChange: (value: string) => void;
   name?: string;
+  subcategoryChange: (event: any) => void;
 }
 
-const CategoryItem = ({ category, value, onChange, name }: ICategoryItemProps) => {
+const CategoryItem = ({
+  category,
+  value,
+  onChange,
+  name,
+  subcategoryChange,
+}: ICategoryItemProps) => {
   const isChecked = value === category.id;
 
-  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value);
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    subcategoryChange(null);
+    onChange(e.target.value);
+  };
 
   return (
     <FormLabel

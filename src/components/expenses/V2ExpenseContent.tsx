@@ -18,7 +18,7 @@ const V2ExpenseContent = observer(() => {
 
   return (
     <>
-      {v2_categories && v2expenses && (
+      {v2_categories && v2expenses.length > 0 && (
         <div className="w-100 d-flex flex-column align-items-center gap-2">
           {periodDate && (
             <h4 className="fw-bold text-capitalize text-primary">

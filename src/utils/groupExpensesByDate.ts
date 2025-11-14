@@ -6,7 +6,7 @@ export const groupExpensesByDate = (expenses: IExpense[]): IGroupedExpenses => {
   const grouped: IGroupedExpenses = {};
 
   expenses.forEach((expense) => {
-    const date = moment(expense.date).startOf('day').format('YYYY-MM-DD');
+    const date = moment.utc(expense.date).startOf('day').format('YYYY-MM-DD');
 
     if (!grouped[date]) {
       grouped[date] = [];

@@ -8,6 +8,8 @@ import BaseLoader from '../../helpers/BaseLoader.tsx';
 import PrevPageButton from '../../ui/PrevPageButton.tsx';
 import ExpenseForm from './components';
 
+import styles from './TransactionPage.module.scss';
+
 const AddTransactionPageContent = observer(() => {
   const { userId } = authStore;
   const { categories } = categoriesStore;
@@ -18,10 +20,10 @@ const AddTransactionPageContent = observer(() => {
   }, [userId]);
 
   return (
-    <div className="d-flex flex-column flex-grow-1">
+    <>
       {isLoading && <BaseLoader />}
       {!isLoading && categories && (
-        <>
+        <div className={styles.transaction__page_wrapper}>
           <PrevPageButton />
 
           <ExpenseForm.FormWrapper {...{ setIsLoading }}>
@@ -32,9 +34,9 @@ const AddTransactionPageContent = observer(() => {
             <ExpenseForm.CurrencyWrapper />
             <ExpenseForm.SubmitButton />
           </ExpenseForm.FormWrapper>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 });
 

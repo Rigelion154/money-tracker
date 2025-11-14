@@ -1,4 +1,4 @@
-import moment from 'moment/moment';
+import moment from 'moment';
 import { observer } from 'mobx-react-lite';
 
 import { expensesStore } from '../../../store/ExpensesStore.ts';

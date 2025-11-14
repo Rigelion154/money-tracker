@@ -202,10 +202,10 @@ const SubmitButton = () => (
   <Button
     type="submit"
     variant="outline-success"
-    className="position-fixed start-50 bottom-0 translate-middle-x mb-2 rounded-4 px-5 text-success"
+    className="position-fixed start-50 bottom-0 translate-middle-x mb-2 rounded-4 px-5 text-success fw-bold"
     style={{
       backdropFilter: 'blur(5px)',
-      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+      backgroundColor: 'rgba(255, 255, 255, 0.7)',
     }}
   >
     Добавить

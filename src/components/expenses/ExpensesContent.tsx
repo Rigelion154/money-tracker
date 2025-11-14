@@ -22,12 +22,13 @@ const ExpensesContent = observer(() => {
       {isLoading && <BaseLoader />}
       {!isLoading && v2_categories && v2expenses.length > 0 && (
         <div className={styles.expense__wrapper}>
-          <PeriodBar />
           <ExpensesTotalBar />
           <ExpensesDateBar />
           <ExpensesCategoryList />
         </div>
       )}
+
+      <PeriodBar />
     </>
   );
 });

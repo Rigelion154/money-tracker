@@ -9,7 +9,7 @@ import { useInitialState } from '../../hooks/useInitialState.ts';
 
 import Layout from '../../components/layuot/Layout.tsx';
 import AuthPage from '../../pages/Auth/AuthPage.tsx';
-import ExpensesPage from '../../pages/Main/ExpensesPage.tsx';
+import ExpensesPage from '../../pages/ExpensesPage/ExpensesPage.tsx';
 import AddTransactionPage from '../../pages/AddTransactionPage/AddTransactionPage.tsx';
 
 const AppRouter = observer(() => {

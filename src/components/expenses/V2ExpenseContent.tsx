@@ -59,6 +59,7 @@ const V2ExpenseContent = observer(() => {
                 <Accordion.Body className="border p-1 shadow-sm">
                   <div className="text-white rounded-2" style={{ backgroundColor: category.color }}>
                     {expenseCategory.subcategories &&
+                      expenseCategory.subcategories.length > 0 &&
                       expenseCategory.subcategories.map((subcategory) => (
                         <V2Subcategory {...{ subcategory }} key={subcategory.subcategoryId} />
                       ))}

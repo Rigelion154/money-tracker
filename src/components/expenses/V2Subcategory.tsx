@@ -33,15 +33,6 @@ const V2Subcategory = observer(({ subcategory }: ISubcategoryProps) => {
       <Accordion.Body className="bg-light border text-dark px-0 py-1">
         <V2ExpensesList expenses={subcategory.expenses} />
       </Accordion.Body>
-      {/*<div*/}
-      {/*  className="d-flex rounded-0 py-1 px-2 shadow-none text-white"*/}
-      {/*  role="button"*/}
-      {/*  onClick={handleSubcategoryClick}*/}
-      {/*>*/}
-      {/*  <div className="col-6">{subcategories?.[subcategory.subcategoryId].title}</div>*/}
-      {/*  <div className="col-2 text-center">{subcategory.percentage}%</div>*/}
-      {/*  <div className="col-4 text-end">{getCurrencyString(subcategory.totalAmount)}</div>*/}
-      {/*</div>*/}
     </Accordion>
   );
 });

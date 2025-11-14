@@ -5,12 +5,12 @@ import { Spinner } from 'react-bootstrap';
 import { ROUTES } from '../routes.ts';
 import { authStore } from '../../store/AuthStore.ts';
 import { useAuth } from '../../hooks/useAuth.ts';
+import { useInitialState } from '../../hooks/useInitialState.ts';
 
 import Layout from '../../components/layuot/Layout.tsx';
 import AuthPage from '../../pages/Auth/AuthPage.tsx';
-import MainPage from '../../pages/Main/MainPage.tsx';
+import ExpensesPage from '../../pages/Main/ExpensesPage.tsx';
 import AddTransactionPage from '../../pages/AddTransactionPage/AddTransactionPage.tsx';
-import { useInitialState } from '../../hooks/useInitialState.ts';
 
 const AppRouter = observer(() => {
   const { isAuth } = authStore;
@@ -32,7 +32,7 @@ const AppRouter = observer(() => {
             <>
               <Route path={ROUTES.AUTH} element={<Navigate to={ROUTES.MAIN} />} />
               <Route path={ROUTES.MAIN} element={<Layout />}>
-                <Route path={ROUTES.MAIN} element={<MainPage />} />
+                <Route path={ROUTES.MAIN} element={<ExpensesPage />} />
                 <Route path={ROUTES.ADD_TRANSACTION} element={<AddTransactionPage />} />
               </Route>
             </>

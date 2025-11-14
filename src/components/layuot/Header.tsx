@@ -6,15 +6,14 @@ import { useState } from 'react';
 import UserMenu from './menu/UserMenu.tsx';
 import BurgerMenu from './menu/BurgerMenu.tsx';
 
+import styles from './Layout.module.scss';
+
 const Header = observer(() => {
   const [isUserMenuVisible, setIsUserMenuVisible] = useState(false);
   const [isBurgerMenuVisible, setIsBurgerMenuVisible] = useState(false);
 
   return (
-    <div
-      className="d-flex align-items-center justify-content-between bg-light px-3 w-100"
-      style={{ height: '40px' }}
-    >
+    <div className={styles.header}>
       <RiMenu2Fill size={25} onClick={() => setIsBurgerMenuVisible(true)} role="button" />
       <BsPersonCircle size={25} onClick={() => setIsUserMenuVisible(true)} role="button" />
       <UserMenu visible={isUserMenuVisible} setVisible={setIsUserMenuVisible} />

@@ -13,7 +13,7 @@ type TVariant =
 
 const BaseLoader = ({ variant = 'primary' }: { variant?: TVariant }) => {
   return (
-    <div className="d-flex align-items-center justify-content-center p-3 h-100 w-100">
+    <div className="d-flex align-items-center justify-content-center p-3 h-100 w-100 flex-grow-1">
       <Spinner variant={variant} />
     </div>
   );

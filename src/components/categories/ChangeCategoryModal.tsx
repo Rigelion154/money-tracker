@@ -22,10 +22,10 @@ interface IFormValues {
 
 const ChangeCategoryModal = observer(({ categoryId }: ICategoryModalProps) => {
   const { userId } = authStore;
-  const { categories } = categoriesStore;
-  const categoryTitle = categoryId ? categories?.[categoryId]?.title : '';
-  const categoryColor = categoryId ? categories?.[categoryId]?.color : '';
-  const categoryIcon = categoryId ? categories?.[categoryId]?.icon : '';
+  const { v2_categories } = categoriesStore;
+  const categoryTitle = categoryId ? v2_categories?.[categoryId]?.title : '';
+  const categoryColor = categoryId ? v2_categories?.[categoryId]?.color : '';
+  const categoryIcon = categoryId ? v2_categories?.[categoryId]?.icon : '';
   const handleFormSubmit = async (values: IFormValues) => {
     if (!values.categoryTitle) {
       return appToaster.addToast('Необходимо ввести название', 'warning');

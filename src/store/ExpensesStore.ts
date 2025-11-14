@@ -36,7 +36,7 @@ class ExpensesStore {
   private setV2Expenses = (expenses: IV2Expense[]) => (this.v2expenses = expenses);
 
   getV2Expenses = async () => {
-    const { data } = await getExpensesRequest(this.activePeriod, this.periodDate);
+    const { data, error } = await getExpensesRequest(this.activePeriod, this.periodDate);
 
     this.resetTotalAmount();
 
@@ -92,6 +92,8 @@ class ExpensesStore {
 
       this.setV2Expenses(resultExpenses);
     }
+
+    if (error) appToaster.addToast('Ошибка загрузки расходов', 'error');
   };
 
   private setTotalAmount = (amount: number) => (this.totalAmount += amount);

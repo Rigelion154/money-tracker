@@ -52,6 +52,7 @@ const PeriodBar = observer(() => {
         >
           День
         </Button>
+
         <Button
           variant="primary"
           className="rounded-0 btn-solid-blue border-end flex-fill w-25 py-2 fw-bold"
@@ -60,6 +61,7 @@ const PeriodBar = observer(() => {
         >
           Месяц
         </Button>
+
         <Button
           variant="primary"
           className="rounded-0 btn-solid-blue border-end flex-fill w-25 py-2 fw-bold"
@@ -68,6 +70,7 @@ const PeriodBar = observer(() => {
         >
           Год
         </Button>
+
         <Dropdown className="w-25">
           <Dropdown.Toggle
             variant="primary"

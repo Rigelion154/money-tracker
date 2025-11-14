@@ -9,7 +9,7 @@ import { ADD_EXPENSE_FIELDS } from '../form/AddExpenseForm/addExpenseform.consta
 import ChangeCategoryModal from './ChangeCategoryModal.tsx';
 
 const ChangeCategoryButton = observer(() => {
-  const { categories } = categoriesStore;
+  const { v2_categories } = categoriesStore;
   const handleOpenCategoryModal = (categoryId: string) =>
     modalStore.openModal({
       children: <ChangeCategoryModal {...{ categoryId }} />,
@@ -18,7 +18,7 @@ const ChangeCategoryButton = observer(() => {
   return (
     <Field name={ADD_EXPENSE_FIELDS.CATEGORY_ID}>
       {({ input }) => {
-        const isDefaultCategory = categories?.[input.value]?.is_default;
+        const isDefaultCategory = v2_categories?.[input.value]?.is_default;
 
         return input.value && !isDefaultCategory ? (
           <Button

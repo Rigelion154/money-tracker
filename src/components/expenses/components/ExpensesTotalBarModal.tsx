@@ -11,7 +11,7 @@ import CloseModalButton from '../../ui/CloseModalButton.tsx';
 import BaseLoader from '../../helpers/BaseLoader.tsx';
 import V2ExpensesList from '../V2ExpensesList.tsx';
 
-const ExpensesTotalModal = observer(() => {
+const ExpensesTotalBarModal = observer(() => {
   const [data, setData] = useState<Record<IExpense['date'], IExpense[]> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -47,4 +47,4 @@ const ExpensesTotalModal = observer(() => {
   );
 });
 
-export default ExpensesTotalModal;
+export default ExpensesTotalBarModal;

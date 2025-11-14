@@ -6,9 +6,12 @@ export const useAuth = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    dbClient.auth.getSession().then((res) => {
-      authStore.setSession(res.data.session);
-    });
+    dbClient.auth
+      .getSession()
+      .then((res) => {
+        authStore.setSession(res.data.session);
+      })
+      .finally(() => setIsLoading(false));
 
     const {
       data: { subscription },
@@ -16,7 +19,7 @@ export const useAuth = () => {
       authStore.setSession(session);
     });
 
-    setIsLoading(false);
+    // setIsLoading(false);
 
     return () => subscription.unsubscribe();
   }, []);

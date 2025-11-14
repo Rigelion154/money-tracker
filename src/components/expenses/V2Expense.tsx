@@ -9,7 +9,7 @@ import { getCurrencyString } from '../../utils/getCurrencyString.ts';
 
 import ExpenseDetailsModal from './ExpenseDetailsModal.tsx';
 
-import styles from './Expenses.module.css';
+import styles from './Expenses.module.scss';
 
 interface IExpenseProps {
   expense: IExpense;

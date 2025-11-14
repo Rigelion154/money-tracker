@@ -10,7 +10,7 @@ import ExpensesTotalBar from './components/ExpensesTotalBar.tsx';
 import ExpensesDateBar from './components/ExpensesDateBar.tsx';
 import ExpensesCategoryList from './components/ExpensesCategoryList.tsx';
 
-import styles from './Expenses.module.css';
+import styles from './Expenses.module.scss';
 
 const ExpensesContent = observer(() => {
   const { v2expenses } = expensesStore;

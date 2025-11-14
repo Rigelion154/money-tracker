@@ -8,7 +8,7 @@ import { categoriesStore } from '../../../store/CategoriesStore.ts';
 import V2Subcategory from '../V2Subcategory.tsx';
 import V2ExpensesList from '../V2ExpensesList.tsx';
 
-import styles from '../Expenses.module.css';
+import styles from '../Expenses.module.scss';
 
 const ExpensesCategoryItem = ({ expenseCategory }: { expenseCategory: IV2Expense }) => {
   const { v2_categories } = categoriesStore;

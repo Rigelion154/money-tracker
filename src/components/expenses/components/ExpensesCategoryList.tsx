@@ -10,7 +10,7 @@ const ExpensesCategoryList = observer(() => {
   return (
     <div className="d-flex flex-column align-items-center gap-2 w-100">
       {v2expenses.map((expenseCategory) => (
-        <ExpensesCategoryItem expenseCategory={expenseCategory} />
+        <ExpensesCategoryItem expenseCategory={expenseCategory} key={expenseCategory.categoryId} />
       ))}
     </div>
   );

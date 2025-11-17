@@ -6,9 +6,11 @@ export const useAuth = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    console.log('useAuth');
     dbClient.auth
       .getSession()
       .then((res) => {
+        console.log('GET SESSION');
         authStore.setSession(res.data.session);
       })
       .finally(() => setIsLoading(false));

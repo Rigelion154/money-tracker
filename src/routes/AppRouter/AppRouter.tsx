@@ -13,9 +13,12 @@ import ExpensesPage from '../../pages/ExpensesPage/ExpensesPage.tsx';
 import AddTransactionPage from '../../pages/AddTransactionPage/AddTransactionPage.tsx';
 
 const AppRouter = observer(() => {
-  const { isAuth } = authStore;
   const { isLoading } = useAuth();
+  const { isAuth } = authStore;
   const { isLoading: initialLoading } = useInitialState(isAuth);
+
+  console.log('isLoading', isLoading);
+  console.log('initialLoading', initialLoading);
 
   return (
     <>

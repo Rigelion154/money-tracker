@@ -5,7 +5,7 @@ import { categoriesStore } from '../store/CategoriesStore.ts';
 export const useInitialState = (isAuth: boolean) => {
   const { v2_categories } = categoriesStore;
   const { subcategories } = subcategoriesStore;
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!v2_categories && isAuth) {

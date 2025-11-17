@@ -55,6 +55,7 @@ const ChangeCategoryModal = observer(({ categoryId }: ICategoryModalProps) => {
       if (data) {
         appToaster.addToast(`Категория успешно ${categoryId ? 'изменена' : 'создана'}`, 'success');
         await categoriesStore.getCategories(userId);
+        await categoriesStore.getV2Categories();
         modalStore.closeModal();
       }
       if (error) appToaster.addToast('Ошибка создания категории', 'error');

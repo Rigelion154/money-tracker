@@ -53,6 +53,9 @@ const ChangeSubcategoryModal = observer(({ categoryId, subcategoryId }: AddSubca
           `Подкатегория успешно ${subcategoryId ? 'изменена' : 'создана'}`,
           'success',
         );
+
+        await subcategoriesStore.getV2Subcategories();
+
         modalStore.closeModal();
       }
       if (error) appToaster.addToast('Ошибка создания подкатегории', 'error');

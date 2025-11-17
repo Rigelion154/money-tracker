@@ -17,9 +17,6 @@ const AppRouter = observer(() => {
   const { isAuth } = authStore;
   const { isLoading: initialLoading } = useInitialState(isAuth);
 
-  console.log('isLoading', isLoading);
-  console.log('initialLoading', initialLoading);
-
   return (
     <>
       {isLoading ||

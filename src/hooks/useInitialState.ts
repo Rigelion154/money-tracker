@@ -10,12 +10,16 @@ export const useInitialState = (isAuth: boolean) => {
   useEffect(() => {
     if (!v2_categories && isAuth) {
       categoriesStore.getV2Categories().finally(() => setIsLoading(false));
+    } else {
+      setIsLoading(false);
     }
   }, [v2_categories, isAuth]);
 
   useEffect(() => {
     if (!subcategories && isAuth) {
       subcategoriesStore.getV2Subcategories().finally(() => setIsLoading(false));
+    } else {
+      setIsLoading(false);
     }
   }, [subcategories, isAuth]);
 

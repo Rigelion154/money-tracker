@@ -30,7 +30,7 @@ const SubcategoryItemSearch = observer(
     }, [isSearchShow]);
 
     return (
-      <div className={isSearchShow ? 'w-100' : ''}>
+      <div className={isSearchShow ? 'w-100' : 'app__fade'}>
         <div className="d-flex align-items-center gap-2">
           <Button
             className="d-flex align-items-center justify-content-center py-1 px-2"

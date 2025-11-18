@@ -26,7 +26,7 @@ const ExpenseFormSubcategoryItem = ({
     <FormLabel
       role="button"
       key={subcategory.id}
-      className="mb-0 rounded-3 px-2"
+      className="mb-0 rounded-3 px-2 app__fade"
       style={{
         border: `1px solid ${color}`,
         backgroundColor: isChecked ? color : 'transparent',

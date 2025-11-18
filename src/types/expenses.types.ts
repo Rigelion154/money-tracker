@@ -81,3 +81,10 @@ export type TExpensesMap = Record<
 >;
 
 export type TActivePeriod = 'day' | 'month' | 'year' | 'calendar' | null
+
+export interface IExpenseFormValues {
+  categoryId: string;
+  subcategoryId?: string;
+  amount: string;
+  date: Date;
+}

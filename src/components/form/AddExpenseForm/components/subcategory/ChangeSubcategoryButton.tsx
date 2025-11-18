@@ -1,7 +1,7 @@
 import { useFormState } from 'react-final-form';
 import { Button } from 'react-bootstrap';
 
-import type { IExpenseFormValues } from '../../add-expense-from.types.ts';
+import type { IExpenseFormValues } from '../../../../../types/expenses.types.ts';
 
 import { modalStore } from '../../../../../store/ModalStore.ts';
 

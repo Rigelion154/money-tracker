@@ -6,7 +6,7 @@ import { Button, Dropdown, InputGroup } from 'react-bootstrap';
 import { CurrencyInput } from 'react-currency-input-field';
 import { IoCalendarNumberOutline } from 'react-icons/io5';
 
-import type { IExpenseFormValues } from '../add-expense-from.types.ts';
+import type { IExpenseFormValues } from '../../../../types/expenses.types.ts';
 
 import { appToaster } from '../../../../store/AppToaster.ts';
 import { expensesStore } from '../../../../store/ExpensesStore.ts';

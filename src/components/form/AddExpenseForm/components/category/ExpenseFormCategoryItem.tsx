@@ -3,8 +3,7 @@ import { FormLabel } from 'react-bootstrap';
 import { useForm } from 'react-final-form';
 import FormCheckInput from 'react-bootstrap/FormCheckInput';
 
-import type { ICategory } from '../../../../../types/expenses.types.ts';
-import type { IExpenseFormValues } from '../../add-expense-from.types.ts';
+import type { ICategory, IExpenseFormValues } from '../../../../../types/expenses.types.ts';
 
 import styles from '../../TransactionPage.module.scss';
 

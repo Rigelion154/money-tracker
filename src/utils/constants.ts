@@ -1,4 +1,3 @@
 export const DEFAULT_TIME_FORMAT = 'DD.MM.YYYY HH:mm'
 export const DIVIDER_DATE_FORMAT = 'DD MMMM YYYY'
-
 export const REQUEST_DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS[Z]'

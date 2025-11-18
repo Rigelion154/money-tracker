@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Field, useFormState } from 'react-final-form';
 
-import type { ISubcategory } from '../../../../../types/expenses.types.ts';
-import type { IExpenseFormValues } from '../../add-expense-from.types.ts';
+import type { IExpenseFormValues, ISubcategory } from '../../../../../types/expenses.types.ts';
 
 import { categoriesStore } from '../../../../../store/CategoriesStore.ts';
 import { subcategoriesStore } from '../../../../../store/SubcategoriesStore.ts';

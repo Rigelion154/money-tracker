@@ -5,7 +5,7 @@ import { PrimeReactProvider } from 'primereact/api';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'primereact/resources/themes/lara-light-cyan/theme.css';
-import './index.css';
+import './index.scss';
 
 import App from './App.tsx';
 

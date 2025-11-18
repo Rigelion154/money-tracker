@@ -2,11 +2,12 @@ import { observer } from 'mobx-react-lite';
 import { useFormState } from 'react-final-form';
 import { Button } from 'react-bootstrap';
 
+import type { IExpenseFormValues } from '../../../../../types/expenses.types.ts';
+
 import { modalStore } from '../../../../../store/ModalStore.ts';
 import { categoriesStore } from '../../../../../store/CategoriesStore.ts';
 
 import ChangeCategoryModal from './ChangeCategoryModal.tsx';
-import type { IExpenseFormValues } from '../../add-expense-from.types.ts';
 
 const ChangeCategoryButton = observer(() => {
   const { categories } = categoriesStore;

@@ -14,7 +14,7 @@ interface ISubcategoryProps {
 }
 
 const V2Subcategory = observer(({ subcategory }: ISubcategoryProps) => {
-  const { subcategories } = subcategoriesStore;
+  const { subcategoriesById } = subcategoriesStore;
   const { subcategoryLimit } = authStore;
 
   if (subcategory.totalAmount < subcategoryLimit) {
@@ -22,11 +22,11 @@ const V2Subcategory = observer(({ subcategory }: ISubcategoryProps) => {
   }
 
   return (
-    subcategories &&
-    subcategories[subcategory.subcategoryId] && (
+    subcategoriesById &&
+    subcategoriesById[subcategory.subcategoryId] && (
       <Accordion>
         <Accordion.Button className="py-1 px-2 bg-transparent shadow-none text-white">
-          <div className="col-6">{subcategories?.[subcategory.subcategoryId].title}</div>
+          <div className="col-6">{subcategoriesById?.[subcategory.subcategoryId].title}</div>
           <div className="col-2 text-center">{subcategory.percentage}%</div>
           <div className="col-4 text-end">{getCurrencyString(subcategory.totalAmount)}</div>
         </Accordion.Button>

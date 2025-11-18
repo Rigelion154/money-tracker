@@ -4,7 +4,7 @@ import { categoriesStore } from '../store/CategoriesStore.ts';
 
 export const useInitialState = (isAuth: boolean) => {
   const { v2_categories } = categoriesStore;
-  const { subcategories } = subcategoriesStore;
+  const { subcategoriesById } = subcategoriesStore;
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -16,12 +16,12 @@ export const useInitialState = (isAuth: boolean) => {
   }, [v2_categories, isAuth]);
 
   useEffect(() => {
-    if (!subcategories && isAuth) {
-      subcategoriesStore.getV2Subcategories().finally(() => setIsLoading(false));
+    if (!subcategoriesById && isAuth) {
+      subcategoriesStore.getSubcategories().finally(() => setIsLoading(false));
     } else {
       setIsLoading(false);
     }
-  }, [subcategories, isAuth]);
+  }, [subcategoriesById, isAuth]);
 
   return { isLoading };
 };

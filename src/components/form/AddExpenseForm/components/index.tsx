@@ -16,7 +16,7 @@ import AddCategoryButton from '../../../categories/AddCategoryButton.tsx';
 import CategoryItem from '../../../categories/CategoryItem.tsx';
 import ChangeSubcategoryButton from '../../../subcategories/ChangeSubcategoryButton.tsx';
 import AddSubcategoryButton from '../../../subcategories/AddSubcategoryButton.tsx';
-import SubcategoryItem from '../../../subcategories/SubcategoryItem.tsx';
+import ExpenseFormSubcategoryList from './ExpenseFormSubcategoryList.tsx';
 import AppCalendar from '../../../helpers/AppCalendar/AppCalendar.tsx';
 
 import styles from '../../../categories/Categories.module.css';
@@ -118,15 +118,11 @@ const SubcategoryButtons = () => (
   </Field>
 );
 
-const SubcategoryList = () => (
+const SubcategoryList = observer(() => (
   <Field name={ADD_EXPENSE_FIELDS.CATEGORY_ID}>
-    {({ input: categoryInput }) => (
-      <Field name={ADD_EXPENSE_FIELDS.SUBCATEGORY_ID}>
-        {({ input }) => <SubcategoryItem {...{ ...input, categoryValue: categoryInput.value }} />}
-      </Field>
-    )}
+    {({ input: { value: categoryValue } }) => <ExpenseFormSubcategoryList {...{ categoryValue }} />}
   </Field>
-);
+));
 
 const CurrencyWrapper = () => (
   <FormSpy>{({ values }) => <CurrencyField values={values} />}</FormSpy>

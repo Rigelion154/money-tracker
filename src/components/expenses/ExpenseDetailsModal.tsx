@@ -23,9 +23,9 @@ interface IModalProps {
 const ExpenseDetailsModal = observer(({ expense }: IModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const { v2_categories } = categoriesStore;
-  const { subcategories } = subcategoriesStore;
+  const { subcategoriesById } = subcategoriesStore;
   const category = v2_categories?.[expense.category_id];
-  const subcategory = expense.subcategory_id ? subcategories?.[expense.subcategory_id] : null;
+  const subcategory = expense.subcategory_id ? subcategoriesById?.[expense.subcategory_id] : null;
 
   const handleDeleteExpense = async (id: string) => {
     setIsLoading(true);

@@ -16,7 +16,11 @@ const SubmitModalButtons = ({ id, handler, title }: ISubmitButtonsProps) => {
   return (
     <div>
       <div className="d-flex gap-2 justify-content-between">
-        <Button variant="outline-success" className="border-0 rounded-3 px-3" type="submit">
+        <Button
+          variant="outline-success"
+          className="border-0 rounded-3 px-3 text-uppercase"
+          type="submit"
+        >
           Принять
         </Button>
 
@@ -24,7 +28,7 @@ const SubmitModalButtons = ({ id, handler, title }: ISubmitButtonsProps) => {
           {id && !isWarningOpen && (
             <Button
               variant="outline-danger"
-              className="border-0 rounded-3 px-3"
+              className="border-0 rounded-3 px-3 text-uppercase"
               onClick={handleWarning}
             >
               Удалить
@@ -33,7 +37,7 @@ const SubmitModalButtons = ({ id, handler, title }: ISubmitButtonsProps) => {
 
           <Button
             variant="outline-secondary"
-            className="border-0 rounded-3 px-3"
+            className="border-0 rounded-3 px-3 text-uppercase"
             onClick={modalStore.closeModal}
           >
             Отменить

@@ -4,21 +4,25 @@
   flex-direction: column;
   gap: .5rem;
   padding: .5rem;
-  animation-name: fadeIn;
-  animation-duration: .3s;
-  animation-timing-function: ease;
-  animation-fill-mode: forwards;
 
   @media screen and (max-width: 1200px) {
     padding-bottom: 2rem;
   }
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
+.subcategory__container {
+  width: 35%;
+  min-height: 64px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+
+  @media screen and (max-width: 1200px) {
+    width: 75%;
   }
-  100% {
-    opacity: 1;
+  @media screen and (max-width: 768px) {
+    width: 100%;
   }
 }

@@ -48,6 +48,13 @@ body {
     will-change: opacity;
 }
 
+.app__fade {
+    animation-name: fadeIn;
+    animation-duration: .3s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -131,4 +138,5 @@ body {
     /*background: var(--gradient-purple-pink);*/
     /*background: var(--gradient-elegant-purple);*/
 }
+
 

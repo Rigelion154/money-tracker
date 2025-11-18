@@ -16,10 +16,10 @@ interface IExpenseProps {
 }
 
 const V2Expense = observer(({ expense }: IExpenseProps) => {
-  const { subcategories } = subcategoriesStore;
+  const { subcategoriesById } = subcategoriesStore;
   const { v2_categories } = categoriesStore;
   const category = v2_categories?.[expense.category_id];
-  const subcategory = expense.subcategory_id ? subcategories?.[expense.subcategory_id] : null;
+  const subcategory = expense.subcategory_id ? subcategoriesById?.[expense.subcategory_id] : null;
   const handleExpenseClick = (expense: IExpense) =>
     modalStore.openModal({
       children: <ExpenseDetailsModal {...{ expense }} />,

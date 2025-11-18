@@ -23,7 +23,7 @@ const AddTransactionPageContent = observer(() => {
     <>
       {isLoading && <BaseLoader />}
       {!isLoading && categories && (
-        <div className={styles.transaction__page_wrapper}>
+        <div className={`${styles.transaction__page_wrapper} app__fade`}>
           <PrevPageButton />
 
           <ExpenseForm.FormWrapper {...{ setIsLoading }}>

@@ -3,16 +3,14 @@ import { observer } from 'mobx-react-lite';
 import { Field, Form } from 'react-final-form';
 import { FormControl, FormLabel, InputGroup } from 'react-bootstrap';
 
-import { modalStore } from '../../store/ModalStore.ts';
-import { appToaster } from '../../store/AppToaster.ts';
-import { categoriesStore } from '../../store/CategoriesStore.ts';
-import { subcategoriesStore } from '../../store/SubcategoriesStore.ts';
+import { modalStore } from '../../../../../store/ModalStore.ts';
+import { appToaster } from '../../../../../store/AppToaster.ts';
+import { categoriesStore } from '../../../../../store/CategoriesStore.ts';
+import { subcategoriesStore } from '../../../../../store/SubcategoriesStore.ts';
 
-import CloseModalButton from '../ui/CloseModalButton.tsx';
-import SubmitModalButtons from '../ui/SubmitModalButtons.tsx';
-import BaseLoader from '../helpers/BaseLoader.tsx';
-
-import styles from '../categories/Categories.module.css';
+import CloseModalButton from '../../../../ui/CloseModalButton.tsx';
+import SubmitModalButtons from '../../../../ui/SubmitModalButtons.tsx';
+import BaseLoader from '../../../../helpers/BaseLoader.tsx';
 
 interface AddSubcategoryProps {
   categoryId: string;
@@ -47,13 +45,13 @@ const ChangeSubcategoryModal = observer(({ categoryId, subcategoryId }: AddSubca
   };
 
   const handleDeleteSubcategory = async () => {
+    setIsLoading(true);
+
     const { data } = await subcategoriesStore.deleteSubcategory(subcategoryId);
 
-    if (data) {
-      setIsLoading(true);
-      subcategoriesStore.getSubcategories().finally(() => setIsLoading(false));
-    }
+    if (data) await subcategoriesStore.getSubcategories();
 
+    setIsLoading(false);
     modalStore.closeModal();
   };
 
@@ -61,7 +59,7 @@ const ChangeSubcategoryModal = observer(({ categoryId, subcategoryId }: AddSubca
     <>
       {isLoading && <BaseLoader variant="light" />}
       {!isLoading && (
-        <div className={`${styles.add__subcategory_modal__wrapper} modal__content`}>
+        <div className="subcategory__modal modal__content">
           <div className="d-flex gap-2 justify-content-between mb-3">
             <h4 className="mb-0" style={{ lineHeight: '26px' }}>
               {subcategoryId ? 'Изменить' : 'Добавить'} подкатегорию
@@ -75,7 +73,7 @@ const ChangeSubcategoryModal = observer(({ categoryId, subcategoryId }: AddSubca
                 <div>
                   <FormLabel className="me-2 mb-0">Категория:</FormLabel>
                   <span
-                    className="px-4 py-1 rounded-4 text-white"
+                    className="px-3 py-1 rounded-4 text-white"
                     style={{ backgroundColor: categories?.[categoryId].color }}
                   >
                     {categories?.[categoryId].title}

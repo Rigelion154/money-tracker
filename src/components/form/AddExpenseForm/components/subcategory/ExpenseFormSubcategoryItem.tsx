@@ -1,7 +1,7 @@
 import { FormLabel } from 'react-bootstrap';
 import FormCheckInput from 'react-bootstrap/FormCheckInput';
 import React from 'react';
-import type { ICategory, ISubcategory } from '../../../../types/expenses.types.ts';
+import type { ICategory, ISubcategory } from '../../../../../types/expenses.types.ts';
 
 interface ISubcategoryItemProps {
   name: string;

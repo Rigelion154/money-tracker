@@ -1,7 +1,7 @@
 import { dbClient } from '../../../db/dbClient.ts';
 import { authStore } from '../../../store/AuthStore.ts';
 
-export const checkSubcategoryExist = async (
+export const checkSubcategoryExistRequest = async (
   categoryId: string,
   title: string,
   subcategoryId?: string,

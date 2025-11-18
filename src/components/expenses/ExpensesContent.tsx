@@ -14,13 +14,13 @@ import styles from './Expenses.module.scss';
 
 const ExpensesContent = observer(() => {
   const { v2expenses } = expensesStore;
-  const { v2_categories } = categoriesStore;
+  const { categories } = categoriesStore;
   const { isLoading } = useGetExpenses();
 
   return (
     <>
       {isLoading && <BaseLoader />}
-      {!isLoading && v2_categories && v2expenses.length > 0 && (
+      {!isLoading && categories && v2expenses.length > 0 && (
         <div className={styles.expense__wrapper}>
           <ExpensesTotalBar />
           <ExpensesDateBar />

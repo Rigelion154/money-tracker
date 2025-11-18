@@ -2,10 +2,10 @@ import { makeAutoObservable } from 'mobx';
 
 import type { ICategory, ISubcategory } from '../types/expenses.types.ts';
 
-import { getSubcategoriesRequest } from '../api/requests/getSubcategoriesRequest.ts';
+import { getSubcategoriesRequest } from '../api/requests/subcategory/getSubcategoriesRequest.ts';
 import { upsertSubcategoryRequest } from '../api/requests/subcategory/upsertSubcategoryRequest.ts';
 import { deleteSubcategoryRequest } from '../api/requests/subcategory/deleteSubcategoryRequest.ts';
-import { checkSubcategoryExist } from '../api/requests/subcategory/checkSubcategoryExist.ts';
+import { checkSubcategoryExistRequest } from '../api/requests/subcategory/checkSubcategoryExistRequest.ts';
 import { appToaster } from './AppToaster.ts';
 
 class SubcategoriesStore {
@@ -30,7 +30,7 @@ class SubcategoriesStore {
   };
 
   isSubcategoryExist = async (categoryId: string, title: string, subcategoryId?: string) => {
-    const { data } = await checkSubcategoryExist(categoryId, title, subcategoryId);
+    const { data } = await checkSubcategoryExistRequest(categoryId, title, subcategoryId);
     return !!data?.length;
   };
 

@@ -22,7 +22,7 @@ class AuthStore {
   logoutUser = async () => {
     try {
       await dbClient.auth.signOut();
-      categoriesStore.resetV2Categories();
+      categoriesStore.resetCategories();
     } catch (e) {
       throw e;
     }

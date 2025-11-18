@@ -1,6 +1,6 @@
 import { Button } from 'react-bootstrap';
 
-import { modalStore } from '../../store/ModalStore.ts';
+import { modalStore } from '../../../../../store/ModalStore.ts';
 
 import ChangeCategoryModal from './ChangeCategoryModal.tsx';
 

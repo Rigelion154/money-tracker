@@ -1,25 +1,22 @@
 import React, { useEffect, useRef } from 'react';
 import moment from 'moment';
 import { observer } from 'mobx-react-lite';
-import { Field, Form, FormSpy } from 'react-final-form';
+import { Field, Form, FormSpy, useFormState } from 'react-final-form';
 import { Button, Dropdown, InputGroup } from 'react-bootstrap';
 import { CurrencyInput } from 'react-currency-input-field';
 import { IoCalendarNumberOutline } from 'react-icons/io5';
 
 import { appToaster } from '../../../../store/AppToaster.ts';
 import { expensesStore } from '../../../../store/ExpensesStore.ts';
-import { categoriesStore } from '../../../../store/CategoriesStore.ts';
-import { ADD_EXPENSE_FIELDS } from '../addExpenseform.constants.ts';
+import { EXPENSE_FORM_FIELDS } from '../addExpenseform.constants.ts';
 
-import ChangeCategoryButton from '../../../categories/ChangeCategoryButton.tsx';
-import AddCategoryButton from '../../../categories/AddCategoryButton.tsx';
-import CategoryItem from '../../../categories/CategoryItem.tsx';
-import ChangeSubcategoryButton from '../../../subcategories/ChangeSubcategoryButton.tsx';
-import AddSubcategoryButton from '../../../subcategories/AddSubcategoryButton.tsx';
-import ExpenseFormSubcategoryList from './ExpenseFormSubcategoryList.tsx';
+import ChangeCategoryButton from './category/ChangeCategoryButton.tsx';
+import ExpenseFormSubcategoryList from './subcategory/ExpenseFormSubcategoryList.tsx';
 import AppCalendar from '../../../helpers/AppCalendar/AppCalendar.tsx';
-
-import styles from '../../../categories/Categories.module.css';
+import ExpenseFormCategoryList from './category/ExpenseFormCategoryList.tsx';
+import ChangeSubcategoryButton from './subcategory/ChangeSubcategoryButton.tsx';
+import AddSubcategoryButton from './subcategory/AddSubcategoryButton.tsx';
+import AddCategoryButton from './category/AddCategoryButton.tsx';
 
 interface IWrapperProps {
   children: React.ReactNode;
@@ -30,20 +27,20 @@ const FormWrapper = observer(({ children, setIsLoading }: IWrapperProps) => {
   const { formDate } = expensesStore;
 
   const handleFormSubmit = async (values: Record<string, string>) => {
-    if (!values[ADD_EXPENSE_FIELDS.CATEGORY_ID]) {
+    if (!values[EXPENSE_FORM_FIELDS.CATEGORY_ID]) {
       return appToaster.addToast('Необходимо выбрать категорию', 'warning');
     }
 
-    if (!values[ADD_EXPENSE_FIELDS.AMOUNT]) {
+    if (!values[EXPENSE_FORM_FIELDS.AMOUNT]) {
       return appToaster.addToast('Необходимо внести сумму', 'warning');
     }
 
     setIsLoading(true);
 
     await expensesStore.addExpense(
-      values[ADD_EXPENSE_FIELDS.CATEGORY_ID],
-      values[ADD_EXPENSE_FIELDS.AMOUNT],
-      values[ADD_EXPENSE_FIELDS.SUBCATEGORY_ID],
+      values[EXPENSE_FORM_FIELDS.CATEGORY_ID],
+      values[EXPENSE_FORM_FIELDS.AMOUNT],
+      values[EXPENSE_FORM_FIELDS.SUBCATEGORY_ID],
       formDate ?? undefined,
     );
 
@@ -67,59 +64,33 @@ const FormWrapper = observer(({ children, setIsLoading }: IWrapperProps) => {
 const CategoryButtons = () => (
   <div className="d-grid gap-3 align-items-center" style={{ gridTemplateColumns: '1fr auto 1fr' }}>
     <ChangeCategoryButton />
-
     <h3 className="fw-bold text-primary mb-0">Категории</h3>
-
     <AddCategoryButton />
   </div>
 );
 
-const CategoryList = observer(() => {
-  const { categories } = categoriesStore;
+const CategoryList = () => <ExpenseFormCategoryList />;
+
+const SubcategoryButtons = () => {
+  const form = useFormState();
+  const categoryId = form.values?.[EXPENSE_FORM_FIELDS.CATEGORY_ID];
 
   return (
-    <div className={styles.categories__container}>
-      <Field name={ADD_EXPENSE_FIELDS.CATEGORY_ID}>
-        {({ input }) => (
-          <Field name={ADD_EXPENSE_FIELDS.SUBCATEGORY_ID}>
-            {({ input: { onChange: subcategoryChange } }) => (
-              <>
-                {Object.values(categories ?? {}).map((category) => (
-                  <CategoryItem
-                    category={category}
-                    subcategoryChange={subcategoryChange}
-                    {...input}
-                    key={category.id}
-                  />
-                ))}
-              </>
-            )}
-          </Field>
-        )}
-      </Field>
-    </div>
+    categoryId && (
+      <div
+        className="d-grid gap-3 align-items-center"
+        style={{ gridTemplateColumns: '1fr auto 1fr' }}
+      >
+        <ChangeSubcategoryButton />
+        <h3 className="fw-bold text-primary mb-0">Подкатегории</h3>
+        <AddSubcategoryButton />
+      </div>
+    )
   );
-});
-
-const SubcategoryButtons = () => (
-  <Field name={ADD_EXPENSE_FIELDS.CATEGORY_ID}>
-    {({ input }) =>
-      input.value && (
-        <div
-          className="d-grid gap-3 align-items-center"
-          style={{ gridTemplateColumns: '1fr auto 1fr' }}
-        >
-          <ChangeSubcategoryButton />
-          <h3 className="fw-bold text-primary mb-0">Подкатегории</h3>
-          <AddSubcategoryButton />
-        </div>
-      )
-    }
-  </Field>
-);
+};
 
 const SubcategoryList = observer(() => (
-  <Field name={ADD_EXPENSE_FIELDS.CATEGORY_ID}>
+  <Field name={EXPENSE_FORM_FIELDS.CATEGORY_ID}>
     {({ input: { value: categoryValue } }) => <ExpenseFormSubcategoryList {...{ categoryValue }} />}
   </Field>
 ));
@@ -136,8 +107,8 @@ const CurrencyField = observer(({ values }: { values?: Record<string, any> }) =>
     if (
       values &&
       currencyRef.current &&
-      values[ADD_EXPENSE_FIELDS.CATEGORY_ID] &&
-      values[ADD_EXPENSE_FIELDS.SUBCATEGORY_ID]
+      values[EXPENSE_FORM_FIELDS.CATEGORY_ID] &&
+      values[EXPENSE_FORM_FIELDS.SUBCATEGORY_ID]
     ) {
       currencyRef.current.focus();
       currencyRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' });
@@ -150,7 +121,7 @@ const CurrencyField = observer(({ values }: { values?: Record<string, any> }) =>
     <>
       <h3 className="fw-bold text-primary mb-0">Сумма</h3>
       <div className="d-flex align-items-center gap-2">
-        <Field name={ADD_EXPENSE_FIELDS.AMOUNT}>
+        <Field name={EXPENSE_FORM_FIELDS.AMOUNT}>
           {({ input }) => (
             <InputGroup className="border-primary flex-nowrap">
               <CurrencyInput

@@ -16,7 +16,7 @@ const AddTransactionPageContent = observer(() => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    categoriesStore.getCategories(userId ?? '').finally(() => setIsLoading(false));
+    categoriesStore.getCategories().finally(() => setIsLoading(false));
   }, [userId]);
 
   return (

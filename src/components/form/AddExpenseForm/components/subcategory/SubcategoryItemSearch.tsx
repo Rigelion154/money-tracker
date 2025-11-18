@@ -3,7 +3,7 @@ import { Button, FormControl } from 'react-bootstrap';
 import { IoSearch } from 'react-icons/io5';
 import { observer } from 'mobx-react-lite';
 
-import type { ISubcategory } from '../../types/expenses.types.ts';
+import type { ISubcategory } from '../../../../../types/expenses.types.ts';
 
 interface ISearchProps {
   searchQuery: string;

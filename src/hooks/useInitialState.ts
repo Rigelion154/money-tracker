@@ -3,17 +3,17 @@ import { subcategoriesStore } from '../store/SubcategoriesStore.ts';
 import { categoriesStore } from '../store/CategoriesStore.ts';
 
 export const useInitialState = (isAuth: boolean) => {
-  const { v2_categories } = categoriesStore;
+  const { categories } = categoriesStore;
   const { subcategoriesById } = subcategoriesStore;
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!v2_categories && isAuth) {
-      categoriesStore.getV2Categories().finally(() => setIsLoading(false));
+    if (!categories && isAuth) {
+      categoriesStore.getCategories().finally(() => setIsLoading(false));
     } else {
       setIsLoading(false);
     }
-  }, [v2_categories, isAuth]);
+  }, [categories, isAuth]);
 
   useEffect(() => {
     if (!subcategoriesById && isAuth) {

@@ -1,44 +1,44 @@
 import React from 'react';
 import { FormLabel } from 'react-bootstrap';
+import { useForm } from 'react-final-form';
 import FormCheckInput from 'react-bootstrap/FormCheckInput';
 
-import type { ICategory } from '../../types/expenses.types.ts';
+import type { ICategory } from '../../../../../types/expenses.types.ts';
 
-import styles from './Categories.module.css';
+import { EXPENSE_FORM_FIELDS } from '../../addExpenseform.constants.ts';
+
+import styles from '../../TransactionPage.module.scss';
 
 interface ICategoryItemProps {
   category: ICategory;
   value: string;
   onChange: (value: string) => void;
   name?: string;
-  subcategoryChange: (event: any) => void;
 }
 
-const CategoryItem = ({
-  category,
-  value,
-  onChange,
-  name,
-  subcategoryChange,
-}: ICategoryItemProps) => {
+const ExpenseFormCategoryItem = ({ name, value, onChange, category }: ICategoryItemProps) => {
+  const form = useForm();
   const isChecked = value === category.id;
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    subcategoryChange(null);
+    form.change(EXPENSE_FORM_FIELDS.SUBCATEGORY_ID, undefined);
     onChange(e.target.value);
   };
 
   return (
     <FormLabel
-      className={styles.category__container}
+      className={styles.category__item}
       style={{ backgroundColor: isChecked ? category.color : '' }}
       role="button"
     >
-      <div className={styles.category__icon_wrapper} style={{ backgroundColor: category.color }}>
-        <i className={`${category.icon} ${styles.category__icon}`} />
+      <div
+        className={styles.category__item_icon_wrapper}
+        style={{ backgroundColor: category.color }}
+      >
+        <i className={`${category.icon} ${styles.category__item_icon}`} />
       </div>
 
-      <span className={`${styles.category__title} ${isChecked ? 'text-white' : ''}`}>
+      <span className={`${styles.category__item_title} ${isChecked ? 'text-white' : ''}`}>
         {category.title}
       </span>
 
@@ -54,4 +54,4 @@ const CategoryItem = ({
   );
 };
 
-export default CategoryItem;
+export default ExpenseFormCategoryItem;

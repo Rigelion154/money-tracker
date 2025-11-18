@@ -11,8 +11,8 @@ import V2ExpensesList from '../V2ExpensesList.tsx';
 import styles from '../Expenses.module.scss';
 
 const ExpensesCategoryItem = ({ expenseCategory }: { expenseCategory: IV2Expense }) => {
-  const { v2_categories } = categoriesStore;
-  const category = v2_categories?.[expenseCategory.categoryId];
+  const { categories } = categoriesStore;
+  const category = categories?.[expenseCategory.categoryId];
 
   return (
     category && (

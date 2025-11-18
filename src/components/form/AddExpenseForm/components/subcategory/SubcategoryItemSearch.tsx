@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Button, FormControl } from 'react-bootstrap';
 import { IoSearch } from 'react-icons/io5';
 import { observer } from 'mobx-react-lite';
@@ -9,10 +9,12 @@ interface ISearchProps {
   searchQuery: string;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   filteredList: ISubcategory[];
+  contRef: React.RefObject<HTMLDivElement | null>;
+  setHeight: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const SubcategoryItemSearch = observer(
-  ({ searchQuery, setSearchQuery, filteredList }: ISearchProps) => {
+  ({ searchQuery, setSearchQuery, filteredList, contRef, setHeight }: ISearchProps) => {
     const [isSearchShow, setIsSearchShow] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const handleSearchShow = () => {
@@ -29,8 +31,15 @@ const SubcategoryItemSearch = observer(
       }
     }, [isSearchShow]);
 
+    useLayoutEffect(() => {
+      if (contRef.current) {
+        const newHeight = contRef.current.clientHeight;
+        setHeight(newHeight);
+      }
+    }, [isSearchShow]);
+
     return (
-      <div className={isSearchShow ? 'w-100' : 'app__fade'}>
+      <div className={isSearchShow ? 'w-100' : ''}>
         <div className="d-flex align-items-center gap-2">
           <Button
             className="d-flex align-items-center justify-content-center py-1 px-2"

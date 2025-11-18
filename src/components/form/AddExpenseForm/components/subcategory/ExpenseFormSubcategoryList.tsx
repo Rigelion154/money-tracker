@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Field, useFormState } from 'react-final-form';
 
@@ -19,6 +19,8 @@ const ExpenseFormSubcategoryList = observer(() => {
   const { values } = useFormState<IExpenseFormValues>();
   const [subcategoryList, setSubcategoryList] = useState<ISubcategory[]>([]);
   const { filteredList, setSearchQuery, searchQuery } = useFromSubcategoryList(subcategoryList);
+  const [height, setHeight] = useState(0);
+  const contRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (values?.categoryId && subcategoriesByCategoryId) {
@@ -26,23 +28,34 @@ const ExpenseFormSubcategoryList = observer(() => {
     }
   }, [values?.categoryId, subcategoriesByCategoryId]);
 
+  useLayoutEffect(() => {
+    if (contRef.current) {
+      const newHeight = contRef.current.clientHeight;
+      setHeight(newHeight);
+    }
+  }, [subcategoryList, filteredList]);
+
   return (
     values?.categoryId && (
       <Field name="subcategoryId">
         {({ input }) => (
-          <div className={styles.subcategory__container}>
-            {subcategoryList && subcategoryList.length > 5 && (
-              <SubcategoryItemSearch {...{ searchQuery, setSearchQuery, filteredList }} />
-            )}
-
-            {categories &&
-              filteredList &&
-              filteredList.map((subcategory) => (
-                <ExpenseFormSubcategoryItem
-                  {...{ ...input, subcategory, categories }}
-                  key={subcategory.id}
+          <div className={styles.subcategory__wrapper} style={{ height }}>
+            <div ref={contRef} className={styles.subcategory__container}>
+              {subcategoryList && subcategoryList.length > 5 && (
+                <SubcategoryItemSearch
+                  {...{ searchQuery, setSearchQuery, filteredList, contRef, setHeight }}
                 />
-              ))}
+              )}
+
+              {categories &&
+                filteredList &&
+                filteredList.map((subcategory) => (
+                  <ExpenseFormSubcategoryItem
+                    {...{ ...input, subcategory, categories }}
+                    key={subcategory.id}
+                  />
+                ))}
+            </div>
           </div>
         )}
       </Field>

@@ -78,13 +78,14 @@
   }
 }
 
-.subcategory__container {
+.subcategory__wrapper {
   width: 35%;
+  overflow: hidden;
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: .5rem;
+  transition: height .35s ease;
 
   @media screen and (max-width: 1200px) {
     width: 75%;
@@ -92,4 +93,13 @@
   @media screen and (max-width: 768px) {
     width: 100%;
   }
+}
+
+.subcategory__container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
 }

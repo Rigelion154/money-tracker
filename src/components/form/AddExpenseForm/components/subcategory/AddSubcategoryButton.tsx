@@ -1,19 +1,23 @@
 import { useFormState } from 'react-final-form';
 import { Button } from 'react-bootstrap';
 
-import type { IExpenseFormValues } from '../../../../../types/expenses.types.ts';
+import type {
+  IExpenseFormValues,
+  ISubcategoriesFormButtonsProps,
+} from '../../../../../types/expenses.types.ts';
 
 import { modalStore } from '../../../../../store/ModalStore.ts';
 
 import ChangeSubcategoryModal from './ChangeSubcategoryModal.tsx';
 
-const AddSubcategoryButton = () => {
+const AddSubcategoryButton = ({ setSubcategory }: ISubcategoriesFormButtonsProps) => {
   const { values } = useFormState<IExpenseFormValues>();
   const categoryId = values?.categoryId;
+
   const handleOpenAddSubcategoryModal = () => {
     if (categoryId) {
       modalStore.openModal({
-        children: <ChangeSubcategoryModal {...{ categoryId }} />,
+        children: <ChangeSubcategoryModal {...{ categoryId, setSubcategory }} />,
       });
     }
   };

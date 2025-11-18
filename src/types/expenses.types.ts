@@ -87,3 +87,7 @@ export interface IExpenseFormValues {
   subcategoryId?: string;
   amount: string;
 }
+
+export interface ISubcategoriesFormButtonsProps {
+  setSubcategory: (value?: string) => void;
+}

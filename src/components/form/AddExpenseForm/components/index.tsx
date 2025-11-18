@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import moment from 'moment';
 import { observer } from 'mobx-react-lite';
-import { Field, Form, useFormState } from 'react-final-form';
+import { Field, Form, useForm, useFormState } from 'react-final-form';
 import { Button, Dropdown, InputGroup } from 'react-bootstrap';
 import { CurrencyInput } from 'react-currency-input-field';
 import { IoCalendarNumberOutline } from 'react-icons/io5';
@@ -71,7 +71,10 @@ const CategoryList = () => <ExpenseFormCategoryList />;
 
 const SubcategoryButtons = () => {
   const { values } = useFormState<IExpenseFormValues>();
+  const { change } = useForm<IExpenseFormValues>();
   const categoryId = values?.categoryId;
+
+  const setSubcategory = useCallback((value?: string) => change('subcategoryId', value), []);
 
   return (
     categoryId && (
@@ -79,9 +82,9 @@ const SubcategoryButtons = () => {
         className="d-grid gap-3 align-items-center"
         style={{ gridTemplateColumns: '1fr auto 1fr' }}
       >
-        <ChangeSubcategoryButton />
+        <ChangeSubcategoryButton {...{ setSubcategory }} />
         <h3 className="fw-bold text-primary mb-0">Подкатегории</h3>
-        <AddSubcategoryButton />
+        <AddSubcategoryButton {...{ setSubcategory }} />
       </div>
     )
   );

@@ -15,98 +15,109 @@ import BaseLoader from '../../../../helpers/BaseLoader.tsx';
 interface AddSubcategoryProps {
   categoryId: string;
   subcategoryId?: string;
+  setSubcategory: (value?: string) => void;
 }
 
-const ChangeSubcategoryModal = observer(({ categoryId, subcategoryId }: AddSubcategoryProps) => {
-  const { categories } = categoriesStore;
-  const { subcategoriesById } = subcategoriesStore;
-  const [isLoading, setIsLoading] = useState(false);
-  const subcategoryTitle = subcategoriesById?.[subcategoryId ?? '']?.title;
+const ChangeSubcategoryModal = observer(
+  ({ categoryId, subcategoryId, setSubcategory }: AddSubcategoryProps) => {
+    const { categories } = categoriesStore;
+    const { subcategoriesById } = subcategoriesStore;
+    const [isLoading, setIsLoading] = useState(false);
+    const subcategoryTitle = subcategoriesById?.[subcategoryId ?? '']?.title;
 
-  const handleFormSubmit = async (values: Record<string, string>) => {
-    if (!values.subcategoryTitle) {
-      return appToaster.addToast('Необходимо ввести название', 'warning');
-    }
+    const handleFormSubmit = async (values: Record<string, string>) => {
+      if (!values.subcategoryTitle) {
+        return appToaster.addToast('Необходимо ввести название', 'warning');
+      }
 
-    const title = values.subcategoryTitle;
-    const isExist = await subcategoriesStore.isSubcategoryExist(categoryId, title, subcategoryId);
+      const title = values.subcategoryTitle;
+      const isExist = await subcategoriesStore.isSubcategoryExist(categoryId, title, subcategoryId);
 
-    if (isExist) return appToaster.addToast('Категория с таким именем уже существует', 'warning');
+      if (isExist) return appToaster.addToast('Категория с таким именем уже существует', 'warning');
 
-    if (!isExist) {
+      if (!isExist) {
+        setIsLoading(true);
+        const { data } = await subcategoriesStore.upsertSubcategory(
+          categoryId,
+          title,
+          subcategoryId,
+        );
+
+        if (data) {
+          await subcategoriesStore.getSubcategories();
+          setSubcategory(data[0].id);
+        }
+
+        setIsLoading(false);
+        modalStore.closeModal();
+      }
+    };
+
+    const handleDeleteSubcategory = async () => {
       setIsLoading(true);
-      const { data } = await subcategoriesStore.upsertSubcategory(categoryId, title, subcategoryId);
+
+      const { data } = await subcategoriesStore.deleteSubcategory(subcategoryId);
 
       if (data) await subcategoriesStore.getSubcategories();
 
+      setSubcategory();
       setIsLoading(false);
       modalStore.closeModal();
-    }
-  };
+    };
 
-  const handleDeleteSubcategory = async () => {
-    setIsLoading(true);
+    return (
+      <>
+        {isLoading && <BaseLoader variant="light" />}
+        {!isLoading && (
+          <div className="subcategory__modal modal__content">
+            <div className="d-flex gap-2 justify-content-between mb-3">
+              <h4 className="mb-0" style={{ lineHeight: '26px' }}>
+                {subcategoryId ? 'Изменить' : 'Добавить'} подкатегорию
+              </h4>
+              <CloseModalButton />
+            </div>
 
-    const { data } = await subcategoriesStore.deleteSubcategory(subcategoryId);
+            <Form onSubmit={handleFormSubmit} initialValues={{ subcategoryTitle }}>
+              {({ handleSubmit }) => (
+                <form onSubmit={handleSubmit} className="d-flex flex-column gap-2">
+                  <div>
+                    <FormLabel className="me-2 mb-0">Категория:</FormLabel>
+                    <span
+                      className="px-3 py-1 rounded-4 text-white"
+                      style={{ backgroundColor: categories?.[categoryId].color }}
+                    >
+                      {categories?.[categoryId].title}
+                    </span>
+                  </div>
 
-    if (data) await subcategoriesStore.getSubcategories();
+                  <Field name="subcategoryTitle">
+                    {({ input }) => (
+                      <InputGroup>
+                        <FormControl
+                          placeholder="Веедите название"
+                          className="shadow-none border-primary"
+                          {...input}
+                        />
+                        <InputGroup.Text className="border-primary">
+                          <i className="bi bi-pencil-fill"></i>
+                        </InputGroup.Text>
+                      </InputGroup>
+                    )}
+                  </Field>
 
-    setIsLoading(false);
-    modalStore.closeModal();
-  };
-
-  return (
-    <>
-      {isLoading && <BaseLoader variant="light" />}
-      {!isLoading && (
-        <div className="subcategory__modal modal__content">
-          <div className="d-flex gap-2 justify-content-between mb-3">
-            <h4 className="mb-0" style={{ lineHeight: '26px' }}>
-              {subcategoryId ? 'Изменить' : 'Добавить'} подкатегорию
-            </h4>
-            <CloseModalButton />
+                  <SubmitModalButtons
+                    id={subcategoryId}
+                    handler={handleDeleteSubcategory}
+                    title={`подкатегории "${subcategoryTitle}"`}
+                  />
+                </form>
+              )}
+            </Form>
           </div>
-
-          <Form onSubmit={handleFormSubmit} initialValues={{ subcategoryTitle }}>
-            {({ handleSubmit }) => (
-              <form onSubmit={handleSubmit} className="d-flex flex-column gap-2">
-                <div>
-                  <FormLabel className="me-2 mb-0">Категория:</FormLabel>
-                  <span
-                    className="px-3 py-1 rounded-4 text-white"
-                    style={{ backgroundColor: categories?.[categoryId].color }}
-                  >
-                    {categories?.[categoryId].title}
-                  </span>
-                </div>
-
-                <Field name="subcategoryTitle">
-                  {({ input }) => (
-                    <InputGroup>
-                      <FormControl
-                        placeholder="Веедите название"
-                        className="shadow-none border-primary"
-                        {...input}
-                      />
-                      <InputGroup.Text className="border-primary">
-                        <i className="bi bi-pencil-fill"></i>
-                      </InputGroup.Text>
-                    </InputGroup>
-                  )}
-                </Field>
-
-                <SubmitModalButtons
-                  id={subcategoryId}
-                  handler={handleDeleteSubcategory}
-                  title={`подкатегории "${subcategoryTitle}"`}
-                />
-              </form>
-            )}
-          </Form>
-        </div>
-      )}
-    </>
-  );
-});
+        )}
+      </>
+    );
+  },
+);
 
 export default ChangeSubcategoryModal;

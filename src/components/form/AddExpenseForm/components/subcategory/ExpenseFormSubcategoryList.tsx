@@ -27,24 +27,26 @@ const ExpenseFormSubcategoryList = observer(() => {
   }, [values?.categoryId, subcategoriesByCategoryId]);
 
   return (
-    <Field name="subcategoryId">
-      {({ input }) => (
-        <div className={styles.subcategory__container}>
-          {subcategoryList && subcategoryList.length > 5 && (
-            <SubcategoryItemSearch {...{ searchQuery, setSearchQuery, filteredList }} />
-          )}
+    values?.categoryId && (
+      <Field name="subcategoryId">
+        {({ input }) => (
+          <div className={styles.subcategory__container}>
+            {subcategoryList && subcategoryList.length > 5 && (
+              <SubcategoryItemSearch {...{ searchQuery, setSearchQuery, filteredList }} />
+            )}
 
-          {categories &&
-            filteredList &&
-            filteredList.map((subcategory) => (
-              <ExpenseFormSubcategoryItem
-                {...{ ...input, subcategory, categories }}
-                key={subcategory.id}
-              />
-            ))}
-        </div>
-      )}
-    </Field>
+            {categories &&
+              filteredList &&
+              filteredList.map((subcategory) => (
+                <ExpenseFormSubcategoryItem
+                  {...{ ...input, subcategory, categories }}
+                  key={subcategory.id}
+                />
+              ))}
+          </div>
+        )}
+      </Field>
+    )
   );
 });
 

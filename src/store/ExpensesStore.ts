@@ -101,7 +101,12 @@ class ExpensesStore {
 
   setActivePeriod = (activePeriod: TActivePeriod) => (this.activePeriod = activePeriod);
 
-  addExpense = async (categoryId: string, amount: string, subcategoryId?: string, date?: Date) => {
+  addExpense = async (
+    categoryId: string,
+    amount: string,
+    subcategoryId?: string,
+    date?: Date | null,
+  ) => {
     const { data, error } = await dbClient
       .from('expenses')
       .upsert({
@@ -109,7 +114,7 @@ class ExpensesStore {
         category_id: categoryId,
         subcategory_id: subcategoryId,
         amount: parseFloat(amount.replace(',', '.')),
-        date: moment(date).format(REQUEST_DATE_FORMAT),
+        date: moment(date ?? undefined).format(REQUEST_DATE_FORMAT),
       })
       .select();
 

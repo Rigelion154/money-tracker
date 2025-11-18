@@ -28,22 +28,19 @@ const FormWrapper = observer(({ children, setIsLoading }: IWrapperProps) => {
   const { formDate } = expensesStore;
 
   const handleFormSubmit = async (values: IExpenseFormValues) => {
-    if (!values.categoryId) {
+    const { categoryId, amount, subcategoryId } = values;
+
+    if (!categoryId) {
       return appToaster.addToast('Необходимо выбрать категорию', 'warning');
     }
 
-    if (!values.amount) {
+    if (!amount) {
       return appToaster.addToast('Необходимо внести сумму', 'warning');
     }
 
     setIsLoading(true);
 
-    await expensesStore.addExpense(
-      values.categoryId,
-      values.amount,
-      values.subcategoryId,
-      formDate ?? undefined,
-    );
+    await expensesStore.addExpense(categoryId, amount, subcategoryId, formDate);
 
     setIsLoading(false);
   };
@@ -94,55 +91,13 @@ const SubcategoryList = () => <ExpenseFormSubcategoryList />;
 
 const CurrencyField = observer(() => {
   const { formDate } = expensesStore;
-  const { values } = useFormState<IExpenseFormValues>();
-  const currencyRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (values && currencyRef.current && values.categoryId && values.subcategoryId) {
-      currencyRef.current.focus();
-      currencyRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' });
-    }
-  }, [values]);
-
-  const handleDateChange = (value: Date | null) => expensesStore.setFormDate(value);
 
   return (
     <>
       <h3 className="fw-bold text-primary mb-0">Сумма</h3>
       <div className="d-flex align-items-center gap-2">
-        <Field name="amount">
-          {({ input }) => (
-            <InputGroup className="border-primary flex-nowrap">
-              <CurrencyInput
-                ref={currencyRef}
-                name={input.name}
-                value={input.value}
-                onValueChange={(value) => input.onChange(value)}
-                className="rounded-start-2 rounded-end-0 px-2 py-1 border border-success w-100"
-                decimalsLimit={2}
-                suffix=" ₽"
-                style={{ fontSize: '1.2rem', outlineColor: '#0d6efd', scrollMarginBottom: '4rem' }}
-                autoComplete="off"
-              />
-              <InputGroup.Text className="border-success py-0 px-2">
-                <i className="bi bi-coin text-success fs-4"></i>
-              </InputGroup.Text>
-            </InputGroup>
-          )}
-        </Field>
-
-        <Dropdown>
-          <Dropdown.Toggle
-            variant="outline-success"
-            className="d-flex align-items-center justify-content-center p-1 border-0 rounded-2"
-            active={!!formDate}
-          >
-            <IoCalendarNumberOutline size={35} />
-          </Dropdown.Toggle>
-          <Dropdown.Menu className="w-100 p-0 border-0" style={{ minWidth: '300px' }}>
-            <AppCalendar value={formDate} onChange={handleDateChange} />
-          </Dropdown.Menu>
-        </Dropdown>
+        <CurrencyInputField />
+        <CurrencyCalendar {...{ formDate }} />
       </div>
 
       {formDate && (
@@ -153,6 +108,60 @@ const CurrencyField = observer(() => {
     </>
   );
 });
+
+const CurrencyInputField = () => {
+  const { values } = useFormState<IExpenseFormValues>();
+  const currencyRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (values && currencyRef.current && values.categoryId && values.subcategoryId) {
+      currencyRef.current.focus();
+      currencyRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' });
+    }
+  }, [values]);
+
+  return (
+    <Field name="amount">
+      {({ input }) => (
+        <InputGroup className="border-primary flex-nowrap">
+          <CurrencyInput
+            ref={currencyRef}
+            name={input.name}
+            value={input.value}
+            onValueChange={(value) => input.onChange(value)}
+            className="rounded-start-2 rounded-end-0 px-2 py-1 border border-success w-100"
+            decimalsLimit={2}
+            suffix=" ₽"
+            style={{ fontSize: '1.2rem', outlineColor: '#0d6efd', scrollMarginBottom: '4rem' }}
+            autoComplete="off"
+          />
+          <InputGroup.Text className="border-success py-0 px-2">
+            <i className="bi bi-coin text-success fs-4"></i>
+          </InputGroup.Text>
+        </InputGroup>
+      )}
+    </Field>
+  );
+};
+
+const CurrencyCalendar = ({ formDate }: { formDate: Date | null }) => {
+  const handleDateChange = (value: Date | null) => expensesStore.setFormDate(value);
+
+  return (
+    <Dropdown>
+      <Dropdown.Toggle
+        variant="outline-success"
+        className="d-flex align-items-center justify-content-center p-1 border-0 rounded-2"
+        active={!!formDate}
+      >
+        <IoCalendarNumberOutline size={35} />
+      </Dropdown.Toggle>
+      <Dropdown.Menu className="w-100 p-0 border-0" style={{ minWidth: '300px' }}>
+        <AppCalendar value={formDate} onChange={handleDateChange} />
+      </Dropdown.Menu>
+    </Dropdown>
+  );
+};
 
 const SubmitButton = () => (
   <Button

@@ -30,7 +30,7 @@ const ExpenseFormSubcategoryList = observer(() => {
 
   useLayoutEffect(() => {
     if (contRef.current) {
-      const newHeight = contRef.current.clientHeight;
+      const newHeight = contRef.current.clientHeight + 10;
       setHeight(newHeight);
     }
   }, [subcategoryList, filteredList]);
@@ -39,7 +39,7 @@ const ExpenseFormSubcategoryList = observer(() => {
     values?.categoryId && (
       <Field name="subcategoryId">
         {({ input }) => (
-          <div className={styles.subcategory__wrapper} style={{ height }}>
+          <div className={`${styles.subcategory__wrapper} border border-dark`} style={{ height }}>
             <div ref={contRef} className={styles.subcategory__container}>
               {subcategoryList && subcategoryList.length > 5 && (
                 <SubcategoryItemSearch

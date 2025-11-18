@@ -33,7 +33,7 @@ const SubcategoryItemSearch = observer(
 
     useLayoutEffect(() => {
       if (contRef.current) {
-        const newHeight = contRef.current.clientHeight;
+        const newHeight = contRef.current.clientHeight + 10;
         setHeight(newHeight);
       }
     }, [isSearchShow]);

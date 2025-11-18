@@ -4,15 +4,15 @@ import { Button } from 'react-bootstrap';
 
 import { modalStore } from '../../../../../store/ModalStore.ts';
 import { categoriesStore } from '../../../../../store/CategoriesStore.ts';
-import { EXPENSE_FORM_FIELDS } from '../../addExpenseform.constants.ts';
 
 import ChangeCategoryModal from './ChangeCategoryModal.tsx';
+import type { IExpenseFormValues } from '../../add-expense-from.types.ts';
 
 const ChangeCategoryButton = observer(() => {
   const { categories } = categoriesStore;
-  const state = useFormState();
-  const categoryId = state.values?.[EXPENSE_FORM_FIELDS.CATEGORY_ID];
-  const isDefaultCategory = categories?.[categoryId]?.is_default;
+  const { values } = useFormState<IExpenseFormValues>();
+  const categoryId = values?.categoryId;
+  const isDefaultCategory = categoryId && categories?.[categoryId]?.is_default;
 
   const handleOpenCategoryModal = () =>
     modalStore.openModal({

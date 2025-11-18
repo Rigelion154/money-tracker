@@ -23,10 +23,11 @@ interface IFormValues {
 
 const ChangeCategoryModal = observer(({ categoryId }: ICategoryModalProps) => {
   const { categories } = categoriesStore;
+  const [isLoading, setIsLoading] = useState(false);
   const categoryTitle = categoryId ? categories?.[categoryId]?.title : '';
   const categoryColor = categoryId ? categories?.[categoryId]?.color : '';
   const categoryIcon = categoryId ? categories?.[categoryId]?.icon : '';
-  const [isLoading, setIsLoading] = useState(false);
+
   const handleFormSubmit = async (values: IFormValues) => {
     const title = values.categoryTitle;
     const color = values.categoryColor;

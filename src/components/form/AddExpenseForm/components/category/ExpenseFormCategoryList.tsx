@@ -1,7 +1,5 @@
 import { Field } from 'react-final-form';
 import { observer } from 'mobx-react-lite';
-
-import { EXPENSE_FORM_FIELDS } from '../../addExpenseform.constants.ts';
 import { categoriesStore } from '../../../../../store/CategoriesStore.ts';
 
 import ExpenseFormCategoryItem from './ExpenseFormCategoryItem.tsx';
@@ -12,11 +10,11 @@ const ExpenseFormCategoryList = observer(() => {
   const { categories } = categoriesStore;
 
   return (
-    <Field name={EXPENSE_FORM_FIELDS.CATEGORY_ID}>
+    <Field name="categoryId">
       {({ input }) => (
         <div className={styles.categories__container}>
           {Object.values(categories ?? {}).map((category) => (
-            <ExpenseFormCategoryItem {...input} category={category} key={category.id} />
+            <ExpenseFormCategoryItem {...{ ...input, category }} key={category.id} />
           ))}
         </div>
       )}

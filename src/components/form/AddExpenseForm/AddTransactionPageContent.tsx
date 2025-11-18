@@ -31,7 +31,7 @@ const AddTransactionPageContent = observer(() => {
             <ExpenseForm.CategoryList />
             <ExpenseForm.SubcategoryButtons />
             <ExpenseForm.SubcategoryList />
-            <ExpenseForm.CurrencyWrapper />
+            <ExpenseForm.CurrencyField />
             <ExpenseForm.SubmitButton />
           </ExpenseForm.FormWrapper>
         </div>

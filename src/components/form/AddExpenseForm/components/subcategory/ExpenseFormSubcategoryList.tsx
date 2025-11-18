@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Field } from 'react-final-form';
+import { Field, useFormState } from 'react-final-form';
 
 import type { ISubcategory } from '../../../../../types/expenses.types.ts';
+import type { IExpenseFormValues } from '../../add-expense-from.types.ts';
 
-import { EXPENSE_FORM_FIELDS } from '../../addExpenseform.constants.ts';
 import { categoriesStore } from '../../../../../store/CategoriesStore.ts';
 import { subcategoriesStore } from '../../../../../store/SubcategoriesStore.ts';
 import { useFromSubcategoryList } from '../../hooks/useFromSubcategoryList.ts';
@@ -14,24 +14,21 @@ import ExpenseFormSubcategoryItem from './ExpenseFormSubcategoryItem.tsx';
 
 import styles from '../../TransactionPage.module.scss';
 
-interface ISubcategoryListProps {
-  categoryValue: string;
-}
-
-const ExpenseFormSubcategoryList = observer(({ categoryValue }: ISubcategoryListProps) => {
-  const { categories: categories } = categoriesStore;
+const ExpenseFormSubcategoryList = observer(() => {
+  const { categories } = categoriesStore;
   const { subcategoriesByCategoryId } = subcategoriesStore;
+  const { values } = useFormState<IExpenseFormValues>();
   const [subcategoryList, setSubcategoryList] = useState<ISubcategory[]>([]);
   const { filteredList, setSearchQuery, searchQuery } = useFromSubcategoryList(subcategoryList);
 
   useEffect(() => {
-    if (categoryValue && subcategoriesByCategoryId) {
-      setSubcategoryList(subcategoriesByCategoryId[categoryValue]);
+    if (values?.categoryId && subcategoriesByCategoryId) {
+      setSubcategoryList(subcategoriesByCategoryId[values?.categoryId]);
     }
-  }, [categoryValue, subcategoriesByCategoryId]);
+  }, [values?.categoryId, subcategoriesByCategoryId]);
 
   return (
-    <Field name={EXPENSE_FORM_FIELDS.SUBCATEGORY_ID}>
+    <Field name="subcategoryId">
       {({ input }) => (
         <div className={styles.subcategory__container}>
           {subcategoryList && subcategoryList.length > 5 && (

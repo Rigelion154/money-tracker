@@ -4,8 +4,7 @@ import { useForm } from 'react-final-form';
 import FormCheckInput from 'react-bootstrap/FormCheckInput';
 
 import type { ICategory } from '../../../../../types/expenses.types.ts';
-
-import { EXPENSE_FORM_FIELDS } from '../../addExpenseform.constants.ts';
+import type { IExpenseFormValues } from '../../add-expense-from.types.ts';
 
 import styles from '../../TransactionPage.module.scss';
 
@@ -17,11 +16,11 @@ interface ICategoryItemProps {
 }
 
 const ExpenseFormCategoryItem = ({ name, value, onChange, category }: ICategoryItemProps) => {
-  const form = useForm();
+  const form = useForm<IExpenseFormValues>();
   const isChecked = value === category.id;
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    form.change(EXPENSE_FORM_FIELDS.SUBCATEGORY_ID, undefined);
+    form.change('subcategoryId', undefined);
     onChange(e.target.value);
   };
 

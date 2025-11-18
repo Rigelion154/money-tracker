@@ -1,14 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import moment from 'moment';
 import { observer } from 'mobx-react-lite';
-import { Field, Form, FormSpy, useFormState } from 'react-final-form';
+import { Field, Form, useFormState } from 'react-final-form';
 import { Button, Dropdown, InputGroup } from 'react-bootstrap';
 import { CurrencyInput } from 'react-currency-input-field';
 import { IoCalendarNumberOutline } from 'react-icons/io5';
 
+import type { IExpenseFormValues } from '../add-expense-from.types.ts';
+
 import { appToaster } from '../../../../store/AppToaster.ts';
 import { expensesStore } from '../../../../store/ExpensesStore.ts';
-import { EXPENSE_FORM_FIELDS } from '../addExpenseform.constants.ts';
 
 import ChangeCategoryButton from './category/ChangeCategoryButton.tsx';
 import ExpenseFormSubcategoryList from './subcategory/ExpenseFormSubcategoryList.tsx';
@@ -26,21 +27,21 @@ interface IWrapperProps {
 const FormWrapper = observer(({ children, setIsLoading }: IWrapperProps) => {
   const { formDate } = expensesStore;
 
-  const handleFormSubmit = async (values: Record<string, string>) => {
-    if (!values[EXPENSE_FORM_FIELDS.CATEGORY_ID]) {
+  const handleFormSubmit = async (values: IExpenseFormValues) => {
+    if (!values.categoryId) {
       return appToaster.addToast('Необходимо выбрать категорию', 'warning');
     }
 
-    if (!values[EXPENSE_FORM_FIELDS.AMOUNT]) {
+    if (!values.amount) {
       return appToaster.addToast('Необходимо внести сумму', 'warning');
     }
 
     setIsLoading(true);
 
     await expensesStore.addExpense(
-      values[EXPENSE_FORM_FIELDS.CATEGORY_ID],
-      values[EXPENSE_FORM_FIELDS.AMOUNT],
-      values[EXPENSE_FORM_FIELDS.SUBCATEGORY_ID],
+      values.categoryId,
+      values.amount,
+      values.subcategoryId,
       formDate ?? undefined,
     );
 
@@ -72,8 +73,8 @@ const CategoryButtons = () => (
 const CategoryList = () => <ExpenseFormCategoryList />;
 
 const SubcategoryButtons = () => {
-  const form = useFormState();
-  const categoryId = form.values?.[EXPENSE_FORM_FIELDS.CATEGORY_ID];
+  const { values } = useFormState<IExpenseFormValues>();
+  const categoryId = values?.categoryId;
 
   return (
     categoryId && (
@@ -89,27 +90,15 @@ const SubcategoryButtons = () => {
   );
 };
 
-const SubcategoryList = observer(() => (
-  <Field name={EXPENSE_FORM_FIELDS.CATEGORY_ID}>
-    {({ input: { value: categoryValue } }) => <ExpenseFormSubcategoryList {...{ categoryValue }} />}
-  </Field>
-));
+const SubcategoryList = () => <ExpenseFormSubcategoryList />;
 
-const CurrencyWrapper = () => (
-  <FormSpy>{({ values }) => <CurrencyField values={values} />}</FormSpy>
-);
-
-const CurrencyField = observer(({ values }: { values?: Record<string, any> }) => {
+const CurrencyField = observer(() => {
   const { formDate } = expensesStore;
+  const { values } = useFormState<IExpenseFormValues>();
   const currencyRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (
-      values &&
-      currencyRef.current &&
-      values[EXPENSE_FORM_FIELDS.CATEGORY_ID] &&
-      values[EXPENSE_FORM_FIELDS.SUBCATEGORY_ID]
-    ) {
+    if (values && currencyRef.current && values.categoryId && values.subcategoryId) {
       currencyRef.current.focus();
       currencyRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' });
     }
@@ -121,7 +110,7 @@ const CurrencyField = observer(({ values }: { values?: Record<string, any> }) =>
     <>
       <h3 className="fw-bold text-primary mb-0">Сумма</h3>
       <div className="d-flex align-items-center gap-2">
-        <Field name={EXPENSE_FORM_FIELDS.AMOUNT}>
+        <Field name="amount">
           {({ input }) => (
             <InputGroup className="border-primary flex-nowrap">
               <CurrencyInput
@@ -185,7 +174,6 @@ const ExpenseForm = {
   CategoryList,
   SubcategoryButtons,
   SubcategoryList,
-  CurrencyWrapper,
   CurrencyField,
   SubmitButton,
 };

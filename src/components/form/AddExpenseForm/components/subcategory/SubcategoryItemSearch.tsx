@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { Button, FormControl } from 'react-bootstrap';
 import { IoSearch } from 'react-icons/io5';
 import { observer } from 'mobx-react-lite';
@@ -11,11 +11,20 @@ interface ISearchProps {
   filteredList: ISubcategory[];
   contRef: React.RefObject<HTMLDivElement | null>;
   setHeight: React.Dispatch<React.SetStateAction<number>>;
+  isSearchShow: boolean;
+  setIsSearchShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SubcategoryItemSearch = observer(
-  ({ searchQuery, setSearchQuery, filteredList, contRef, setHeight }: ISearchProps) => {
-    const [isSearchShow, setIsSearchShow] = useState(false);
+  ({
+    searchQuery,
+    setSearchQuery,
+    filteredList,
+    contRef,
+    setHeight,
+    isSearchShow,
+    setIsSearchShow,
+  }: ISearchProps) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const handleSearchShow = () => {
       setIsSearchShow(!isSearchShow);

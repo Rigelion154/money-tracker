@@ -20,11 +20,14 @@ const ExpenseFormSubcategoryList = observer(() => {
   const [subcategoryList, setSubcategoryList] = useState<ISubcategory[]>([]);
   const { filteredList, setSearchQuery, searchQuery } = useFromSubcategoryList(subcategoryList);
   const [height, setHeight] = useState(0);
+  const [isSearchShow, setIsSearchShow] = useState(false);
   const contRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (values?.categoryId && subcategoriesByCategoryId) {
       setSubcategoryList(subcategoriesByCategoryId[values?.categoryId]);
+      setSearchQuery('');
+      setIsSearchShow(false);
     }
   }, [values?.categoryId, subcategoriesByCategoryId]);
 
@@ -45,7 +48,15 @@ const ExpenseFormSubcategoryList = observer(() => {
             <div ref={contRef} className={styles.subcategory__container}>
               {subcategoryList && subcategoryList.length > 5 && (
                 <SubcategoryItemSearch
-                  {...{ searchQuery, setSearchQuery, filteredList, contRef, setHeight }}
+                  {...{
+                    searchQuery,
+                    setSearchQuery,
+                    filteredList,
+                    contRef,
+                    setHeight,
+                    isSearchShow,
+                    setIsSearchShow,
+                  }}
                 />
               )}
 

@@ -53,7 +53,12 @@ const SubcategoryItemSearch = observer(
               ref={inputRef}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-grow-1 lh-sm shadow-none"
+              className="flex-grow-1 lh-sm shadow-none rounded-1 p-1 app__fade"
+              style={{
+                maxHeight: '26px',
+                fontSize: '14px',
+                lineHeight: '14px',
+              }}
             />
           )}
         </div>

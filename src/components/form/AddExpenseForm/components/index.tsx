@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 import { observer } from 'mobx-react-lite';
 import { Field, Form, useForm, useFormState } from 'react-final-form';
@@ -166,19 +166,40 @@ const CurrencyCalendar = ({ formDate }: { formDate: Date | null }) => {
   );
 };
 
-const SubmitButton = () => (
-  <Button
-    type="submit"
-    variant="outline-success"
-    className="position-fixed start-50 bottom-0 translate-middle-x mb-2 rounded-4 px-5 text-success fw-bold"
-    style={{
-      backdropFilter: 'blur(5px)',
-      backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    }}
-  >
-    Добавить
-  </Button>
-);
+const SubmitButton = () => {
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    const updateHeight = () => {
+      setHeight(document.body.clientHeight);
+    };
+
+    // Первоначальная установка
+    updateHeight();
+
+    const resizeObserver = new ResizeObserver(updateHeight);
+    resizeObserver.observe(document.body);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []); // Пустой массив зависимостей - эффект выполняется только при монтировании
+
+  return (
+    <Button
+      type="submit"
+      variant="outline-success"
+      className="position-fixed start-50 bottom-0 translate-middle-x mb-2 rounded-4 px-5 text-success fw-bold"
+      style={{
+        backdropFilter: 'blur(5px)',
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+      }}
+    >
+      Добавить
+      {height}
+    </Button>
+  );
+};
 
 const ExpenseForm = {
   FormWrapper,

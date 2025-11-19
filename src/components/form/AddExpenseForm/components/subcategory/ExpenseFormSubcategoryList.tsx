@@ -29,8 +29,10 @@ const ExpenseFormSubcategoryList = observer(() => {
   }, [values?.categoryId, subcategoriesByCategoryId]);
 
   useLayoutEffect(() => {
-    if (contRef.current) {
-      const newHeight = contRef.current.clientHeight + 10;
+    if (contRef?.current) {
+      const currentHeight = contRef.current.clientHeight;
+      const newHeight = currentHeight > 0 ? currentHeight + 10 : currentHeight;
+
       setHeight(newHeight);
     }
   }, [subcategoryList, filteredList]);

@@ -50,7 +50,7 @@ const FormWrapper = observer(({ children, setIsLoading }: IWrapperProps) => {
       {({ handleSubmit }) => (
         <form
           onSubmit={handleSubmit}
-          className="d-flex flex-column align-items-center mt-3 gap-3 flex-grow-1"
+          className="d-flex flex-column align-items-center mt-3 gap-3 flex-grow-1 pb-5"
         >
           {children}
         </form>
@@ -96,7 +96,7 @@ const CurrencyField = observer(() => {
   const { formDate } = expensesStore;
 
   return (
-    <div className="text-center" style={{ marginBottom: '46px' }}>
+    <>
       <h3 className="fw-bold text-primary mb-0">Сумма</h3>
       <div className="d-flex align-items-center gap-2">
         <CurrencyInputField />
@@ -108,7 +108,7 @@ const CurrencyField = observer(() => {
           {moment(formDate).format('DD MMMM YYYY HH:mm')}
         </span>
       )}
-    </div>
+    </>
   );
 });
 
@@ -135,7 +135,7 @@ const CurrencyInputField = () => {
             className="rounded-start-2 rounded-end-0 px-2 py-1 border border-success w-100"
             decimalsLimit={2}
             suffix=" ₽"
-            style={{ fontSize: '1.2rem', outlineColor: '#0d6efd', scrollMarginBottom: '86px' }}
+            style={{ fontSize: '1.2rem', outlineColor: '#0d6efd', scrollMarginBottom: '4rem' }}
             autoComplete="off"
           />
           <InputGroup.Text className="border-success py-0 px-2">
@@ -167,36 +167,39 @@ const CurrencyCalendar = ({ formDate }: { formDate: Date | null }) => {
 };
 
 const SubmitButton = () => {
-  const [height, setHeight] = useState(0);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   useEffect(() => {
-    const updateHeight = () => {
-      setHeight(document.body.clientHeight);
+    if (!window.visualViewport) return;
+
+    const handleResize = () => {
+      const viewportHeight = window.visualViewport!.height;
+      const windowHeight = window.innerHeight;
+      const keyboardHeight = Math.max(0, windowHeight - viewportHeight);
+
+      setKeyboardHeight(keyboardHeight);
     };
 
-    // Первоначальная установка
-    updateHeight();
-
-    const resizeObserver = new ResizeObserver(updateHeight);
-    resizeObserver.observe(document.body);
+    window.visualViewport.addEventListener('resize', handleResize);
 
     return () => {
-      resizeObserver.disconnect();
+      window.visualViewport!.removeEventListener('resize', handleResize);
     };
-  }, []); // Пустой массив зависимостей - эффект выполняется только при монтировании
+  }, []);
 
   return (
     <Button
       type="submit"
       variant="outline-success"
-      className="position-fixed start-50 bottom-0 translate-middle-x mb-2 rounded-4 px-5 text-success fw-bold"
+      className="position-fixed start-50 translate-middle-x mb-2 rounded-4 px-5 text-success fw-bold"
       style={{
         backdropFilter: 'blur(5px)',
         backgroundColor: 'rgba(255, 255, 255, 0.7)',
+        bottom: `calc(0.5rem + ${keyboardHeight}px)`,
+        transition: 'bottom 0.2s ease',
       }}
     >
       Добавить
-      {height}
     </Button>
   );
 };
